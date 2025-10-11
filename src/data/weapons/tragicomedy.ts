@@ -12,8 +12,8 @@ export const tragicomedy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
     ascension: '',
   },
   image: '/weapons/tragicomedy.png',

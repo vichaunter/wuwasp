@@ -12,8 +12,8 @@ export const woodland_aria: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Flawless Phlogiston',
     ascension: '',
   },
   image: '/weapons/woodland-aria.png',

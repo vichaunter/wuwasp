@@ -12,8 +12,8 @@ export const ages_of_harvest: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Whisperin Core',
+    forgery: 'Waveworn Residue',
     ascension: '',
   },
   image: '/weapons/ages-of-harvest.png',

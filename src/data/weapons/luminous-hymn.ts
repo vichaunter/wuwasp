@@ -12,8 +12,8 @@ export const luminous_hymn: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Presto Helix',
     ascension: '',
   },
   image: '/weapons/luminous-hymn.png',

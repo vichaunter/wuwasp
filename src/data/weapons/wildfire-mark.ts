@@ -12,8 +12,8 @@ export const wildfire_mark: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Whisperin Core',
+    forgery: 'Waveworn Residue',
     ascension: '',
   },
   image: '/weapons/wildfire-mark.png',

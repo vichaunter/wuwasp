@@ -12,8 +12,8 @@ export const blazing_brilliance: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Heterized Metallic Drip',
     ascension: '',
   },
   image: '/weapons/blazing-brilliance.png',

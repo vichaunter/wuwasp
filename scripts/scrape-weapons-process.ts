@@ -187,54 +187,73 @@ function processHtml(html: string, slug: string, weaponImage: string): ScrapedWe
     }
   });
   
-  // Extract materials - look for the ascension materials table/section
+  // Extract materials from the "Total Materials to MAX Level" table
   const materials = {
     common: '',
     forgery: '',
-    ascension: '',
+    ascension: '', // Weapons don't have ascension materials
   };
   
-  // Find the ascension materials section
-  $('h2, h3').each((_, heading) => {
+  const materialsFound: string[] = [];
+  
+  // Find the "Total Materials to Max Level" table
+  $('h4').each((_, heading) => {
     const headingText = $(heading).text().trim();
-    if (headingText.includes('Ascension') && headingText.includes('Materials')) {
-      // Look for the next table or list
-      let section = $(heading).next();
+    if (headingText.includes('Total Materials') && headingText.toLowerCase().includes('max level')) {
+      // Get the next table (could have elements in between)
+      let nextElement = $(heading).next();
+      let table = null;
       
-      // If it's not a table, look for the next table
-      while (section.length && !section.is('table')) {
-        section = section.next();
+      // Look for the next table within the next 3 elements
+      for (let i = 0; i < 3 && nextElement.length; i++) {
+        if (nextElement.is('table')) {
+          table = nextElement;
+          break;
+        }
+        nextElement = nextElement.next();
       }
       
-      if (section.is('table')) {
-        section.find('tr').each((_, row) => {
-          const $row = $(row);
-          const cells = $row.find('td');
-          
-          if (cells.length >= 2) {
-            const materialTypeCell = cells.eq(0);
-            const materialNameCell = cells.eq(1);
-            
-            const materialType = materialTypeCell.text().trim().toLowerCase();
-            const materialLink = materialNameCell.find('a');
-            const materialName = materialLink.text().trim();
-            
-            if (materialName) {
-              const normalizedName = normalizeMaterialName(materialName);
-              
-              if (materialType.includes('common')) {
-                materials.common = normalizedName;
-              } else if (materialType.includes('forgery')) {
-                materials.forgery = normalizedName;
-              } else if (materialType.includes('ascension') || materialType.includes('boss')) {
-                materials.ascension = normalizedName;
-              }
-            }
+      if (table) {
+        // Get all material links from the table
+        table.find('a').each((_, link) => {
+          const materialName = $(link).text().trim();
+          if (materialName) {
+            materialsFound.push(materialName);
           }
         });
       }
     }
   });
+  
+  // Process found materials
+  // Common materials have LF/MF/HF/FF prefixes
+  // Forgery materials have different names per quality
+  const uniqueBaseMaterials = new Set<string>();
+  
+  for (const mat of materialsFound) {
+    const normalized = normalizeMaterialName(mat);
+    uniqueBaseMaterials.add(normalized);
+  }
+  
+  // Convert to array to analyze
+  const uniqueMaterials = Array.from(uniqueBaseMaterials);
+  
+  // Identify which is common and which is forgery
+  // Common materials typically are: Core, Ring, Residuum, Polygon
+  // Forgery materials typically are: Helix, Phlogiston, Metallic Drip, Residue, Seed
+  for (const mat of uniqueMaterials) {
+    const lowerMat = mat.toLowerCase();
+    
+    if (lowerMat.includes('core') || lowerMat.includes('ring') || 
+        lowerMat.includes('residuum') || lowerMat.includes('polygon')) {
+      materials.common = mat;
+    } else if (lowerMat.includes('helix') || lowerMat.includes('phlogiston') ||
+               lowerMat.includes('metallic drip') || lowerMat.includes('residue') ||
+               lowerMat.includes('seed') || lowerMat.includes('bud') || 
+               lowerMat.includes('leaf') || lowerMat.includes('blossom')) {
+      materials.forgery = mat;
+    }
+  }
   
   // Get weapon name from h1
   const name = $('h1.a-header--1').text().trim();

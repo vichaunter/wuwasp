@@ -12,8 +12,8 @@ export const emerald_of_genesis: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Heterized Metallic Drip',
     ascension: '',
   },
   image: '/weapons/emerald-of-genesis.png',

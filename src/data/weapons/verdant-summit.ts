@@ -12,8 +12,8 @@ export const verdant_summit: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Whisperin Core',
+    forgery: 'Waveworn Residue',
     ascension: '',
   },
   image: '/weapons/verdant-summit.png',

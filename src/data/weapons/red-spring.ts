@@ -12,8 +12,8 @@ export const red_spring: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Heterized Metallic Drip',
     ascension: '',
   },
   image: '/weapons/red-spring.png',

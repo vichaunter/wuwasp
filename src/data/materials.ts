@@ -643,6 +643,7 @@ export const materials: Material[] = [
     name: 'Shell Credit',
     baseName: 'Shell Credit',
     category: 'CURRENCY',
+    image: '/materials/shell-credits.png',
   }
 ];
 

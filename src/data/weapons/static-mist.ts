@@ -12,8 +12,8 @@ export const static_mist: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Flawless Phlogiston',
     ascension: '',
   },
   image: '/weapons/static-mist.png',

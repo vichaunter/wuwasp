@@ -12,8 +12,8 @@ export const amity_accord: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
     ascension: '',
   },
   image: '/weapons/amity-accord.png',

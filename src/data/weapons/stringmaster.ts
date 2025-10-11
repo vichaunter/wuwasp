@@ -12,8 +12,8 @@ export const stringmaster: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Presto Helix',
     ascension: '',
   },
   image: '/weapons/stringmaster.png',

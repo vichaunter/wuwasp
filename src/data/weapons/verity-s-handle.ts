@@ -12,8 +12,8 @@ export const verity_s_handle: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
     ascension: '',
   },
   image: '/weapons/verity-s-handle.png',

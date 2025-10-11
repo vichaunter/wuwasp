@@ -12,8 +12,8 @@ export const lux_umbra: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Flawless Phlogiston',
     ascension: '',
   },
   image: '/weapons/lux-umbra.png',

@@ -12,8 +12,8 @@ export const abyss_surges: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
     ascension: '',
   },
   image: '/weapons/abyss-surges.png',

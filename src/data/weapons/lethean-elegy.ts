@@ -12,8 +12,8 @@ export const lethean_elegy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Presto Helix',
     ascension: '',
   },
   image: '/weapons/lethean-elegy.png',

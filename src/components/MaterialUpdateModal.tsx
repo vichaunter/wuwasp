@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Modal } from '@/components/Modal';
 import { MaterialInput } from '@/components/MaterialInput';
 import { materials, getMaterialById } from '@/data/materials';
 import type { Material } from '@/types';
@@ -52,70 +53,41 @@ export function MaterialUpdateModal({ isOpen, onClose, materialId }: MaterialUpd
     setIsLargeCollection(grid.length > 10);
   }, [isOpen, materialId]);
 
-  if (!isOpen) return null;
-
   return (
-    <>
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
-        onClick={onClose}
-      />
-      
-      {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-        <div 
-          className={`bg-gray-800 rounded-2xl border border-gray-700 shadow-2xl w-full max-h-[80vh] overflow-hidden pointer-events-auto ${
-            isLargeCollection ? 'max-w-7xl' : 'max-w-[580px]'
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-700">
-            <h2 className="text-2xl font-bold text-gray-100">
-              {modalTitle}
-            </h2>
-            <button
-              onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-gray-100 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Content */}
-          <div className="p-6 overflow-y-auto max-h-[calc(80vh-88px)]">
-            {/* Clicked Material (only for boss/overworld) */}
-            {clickedMaterial && (
-              <>
-                <div className="flex justify-center mb-4">
-                  <div className="w-[140px]">
-                    <MaterialInput materialId={clickedMaterial.id} />
-                  </div>
-                </div>
-                <div className="border-t border-gray-700 mb-6"></div>
-              </>
-            )}
-            
-            {/* Grid of materials */}
-            <div 
-              className="grid gap-3" 
-              style={{ 
-                gridTemplateColumns: isLargeCollection 
-                  ? 'repeat(auto-fill, minmax(120px, 120px))' 
-                  : 'repeat(4, minmax(120px, 120px))' 
-              }}
-            >
-              {gridMaterials.map(material => (
-                <MaterialInput key={material.id} materialId={material.id} />
-              ))}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={modalTitle}
+      maxWidth={isLargeCollection ? 'max-w-7xl' : 'max-w-[580px]'}
+      maxHeight="max-h-[80vh]"
+      contentPadding="p-6"
+    >
+      {/* Clicked Material (only for boss/overworld) */}
+      {clickedMaterial && (
+        <>
+          <div className="flex justify-center mb-4">
+            <div className="w-[140px]">
+              <MaterialInput materialId={clickedMaterial.id} />
             </div>
           </div>
-        </div>
+          <div className="border-t border-gray-700 mb-6"></div>
+        </>
+      )}
+      
+      {/* Grid of materials */}
+      <div 
+        className="grid gap-3" 
+        style={{ 
+          gridTemplateColumns: isLargeCollection 
+            ? 'repeat(auto-fill, minmax(120px, 120px))' 
+            : 'repeat(4, minmax(120px, 120px))' 
+        }}
+      >
+        {gridMaterials.map(material => (
+          <MaterialInput key={material.id} materialId={material.id} />
+        ))}
       </div>
-    </>
+    </Modal>
   );
 }
 

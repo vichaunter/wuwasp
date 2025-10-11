@@ -12,8 +12,8 @@ export const whispers_of_sirens: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Presto Helix',
     ascension: '',
   },
   image: '/weapons/whispers-of-sirens.png',

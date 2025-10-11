@@ -12,8 +12,8 @@ export const moongazer_s_sigil: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
     ascension: '',
   },
   image: '/weapons/moongazer-s-sigil.png',

@@ -12,8 +12,8 @@ export const stellar_symphony: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Tailored Ring',
+    forgery: 'Presto Helix',
     ascension: '',
   },
   image: '/weapons/stellar-symphony.png',

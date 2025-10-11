@@ -12,8 +12,8 @@ export const lustrous_razor: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Whisperin Core',
+    forgery: 'Waveworn Residue',
     ascension: '',
   },
   image: '/weapons/lustrous-razor.png',
