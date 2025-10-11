@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import Home from '@/pages/Home';
 import CharacterList from '@/pages/CharacterList';
+import WeaponList from '@/pages/WeaponList';
 import Inventory from '@/pages/Inventory';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/characters" element={<CharacterList />} />
+          <Route path="/weapons" element={<WeaponList />} />
           <Route path="/inventory" element={<Inventory />} />
         </Routes>
       </div>

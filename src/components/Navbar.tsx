@@ -43,6 +43,17 @@ export function Navbar() {
             </Link>
             
             <Link
+              to="/weapons"
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive('/weapons')
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              Armas
+            </Link>
+            
+            <Link
               to="/inventory"
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 isActive('/inventory')

@@ -40,6 +40,31 @@ export interface Character {
   image?: string;
 }
 
+// Weapon types
+export type WeaponType = 'Sword' | 'Broadblade' | 'Pistol' | 'Gauntlet' | 'Rectifier';
+
+// Weapon material references
+export interface WeaponMaterials {
+  common: string;      // e.g., "Howler Core" (has 4 qualities: LF, MF, HF, FF)
+  forgery: string;     // e.g., "Waveworn Residue" (has 4 qualities: 210, 226, 235, 239)
+  ascension: string;   // e.g., "Monument Bell" (weapon-specific ascension material, unique)
+}
+
+export interface Weapon {
+  id: string;
+  name: string;
+  slug: string;
+  url: string;
+  rarity: 3 | 4 | 5;
+  type: WeaponType;
+  baseAtk: number;
+  subStat: string;        // e.g., "ATK+8.1%", "Crit Rate+5.4%"
+  skill: string;          // Skill name
+  skillDescription: string;
+  materials: WeaponMaterials;
+  image?: string;
+}
+
 // User data
 export interface CharacterPriority {
   characterId: string;
