@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const verity_s_handle: Weapon = {
   id: 'verity-s-handle',
-  name: 'Verity\'s Handle',
+  name: 'verity-s-handle',
   slug: 'verity-s-handle',
   url: 'https://game8.co/games/Wuthering-Waves/archives/464110',
   rarity: 5,
@@ -12,8 +12,8 @@ export const verity_s_handle: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Cadence Bud',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/verity-s-handle.png',

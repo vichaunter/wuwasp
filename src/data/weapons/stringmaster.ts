@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const stringmaster: Weapon = {
   id: 'stringmaster',
-  name: 'Stringmaster',
+  name: 'stringmaster',
   slug: 'stringmaster',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455927',
   rarity: 5,
@@ -12,8 +12,8 @@ export const stringmaster: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/stringmaster.png',

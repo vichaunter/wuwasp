@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const whispers_of_sirens: Weapon = {
   id: 'whispers-of-sirens',
-  name: 'Whispers of Sirens',
+  name: 'whispers-of-sirens',
   slug: 'whispers-of-sirens',
   url: 'https://game8.co/games/Wuthering-Waves/archives/506482',
   rarity: 5,
@@ -12,8 +12,8 @@ export const whispers_of_sirens: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/whispers-of-sirens.png',

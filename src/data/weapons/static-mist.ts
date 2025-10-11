@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const static_mist: Weapon = {
   id: 'static-mist',
-  name: 'Static Mist',
+  name: 'static-mist',
   slug: 'static-mist',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455904',
   rarity: 5,
@@ -12,8 +12,8 @@ export const static_mist: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/static-mist.png',

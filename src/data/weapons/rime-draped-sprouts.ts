@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const rime_draped_sprouts: Weapon = {
   id: 'rime-draped-sprouts',
-  name: 'Rime-Draped Sprouts',
+  name: 'rime-draped-sprouts',
   slug: 'rime-draped-sprouts',
   url: 'https://game8.co/games/Wuthering-Waves/archives/464109',
   rarity: 5,
@@ -12,8 +12,8 @@ export const rime_draped_sprouts: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/rime-draped-sprouts.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const verdant_summit: Weapon = {
   id: 'verdant-summit',
-  name: 'Verdant Summit',
+  name: 'verdant-summit',
   slug: 'verdant-summit',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455951',
   rarity: 5,
@@ -12,8 +12,8 @@ export const verdant_summit: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Whisperin Core',
-    forgery: 'Waveworn Residue 239',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/verdant-summit.png',

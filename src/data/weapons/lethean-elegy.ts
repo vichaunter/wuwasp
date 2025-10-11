@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const lethean_elegy: Weapon = {
   id: 'lethean-elegy',
-  name: 'Lethean Elegy',
+  name: 'lethean-elegy',
   slug: 'lethean-elegy',
   url: 'https://game8.co/games/Wuthering-Waves/archives/537943',
   rarity: 5,
@@ -12,8 +12,8 @@ export const lethean_elegy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/lethean-elegy.png',

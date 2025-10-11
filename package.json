@@ -15,7 +15,10 @@
     "reprocess:characters": "tsx scripts/reprocess-characters.ts",
     "reprocess:cache": "tsx scripts/reprocess-from-cache.ts",
     "generate:materials": "tsx scripts/generate-materials-db.ts",
-    "scrape:weapons": "tsx scripts/scrape-weapons.ts"
+    "scrape:weapons": "tsx scripts/scrape-weapons.ts",
+    "scrape:weapons:download": "tsx scripts/scrape-weapons-download.ts",
+    "scrape:weapons:process": "tsx scripts/scrape-weapons-process.ts",
+    "reprocess:weapons": "tsx scripts/reprocess-weapons-cache.ts"
   },
   "dependencies": {
     "react": "^19.1.1",

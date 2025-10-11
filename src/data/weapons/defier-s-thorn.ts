@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const defier_s_thorn: Weapon = {
   id: 'defier-s-thorn',
-  name: 'Defier\'s Thorn',
+  name: 'defier-s-thorn',
   slug: 'defier-s-thorn',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524868',
   rarity: 5,
@@ -12,8 +12,8 @@ export const defier_s_thorn: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/defier-s-thorn.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const unflickering_valor: Weapon = {
   id: 'unflickering-valor',
-  name: 'Unflickering Valor',
+  name: 'unflickering-valor',
   slug: 'unflickering-valor',
   url: 'https://game8.co/games/Wuthering-Waves/archives/498528',
   rarity: 5,
@@ -12,8 +12,8 @@ export const unflickering_valor: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/unflickering-valor.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const abyss_surges: Weapon = {
   id: 'abyss-surges',
-  name: 'Abyss Surges',
+  name: 'abyss-surges',
   slug: 'abyss-surges',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455915',
   rarity: 5,
@@ -12,8 +12,8 @@ export const abyss_surges: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Cadence Bud',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/abyss-surges.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const emerald_of_genesis: Weapon = {
   id: 'emerald-of-genesis',
-  name: 'Emerald of Genesis',
+  name: 'emerald-of-genesis',
   slug: 'emerald-of-genesis',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455939',
   rarity: 5,
@@ -12,8 +12,8 @@ export const emerald_of_genesis: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/emerald-of-genesis.png',

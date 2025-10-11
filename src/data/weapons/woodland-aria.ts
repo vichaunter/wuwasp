@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const woodland_aria: Weapon = {
   id: 'woodland-aria',
-  name: 'Woodland Aria',
+  name: 'woodland-aria',
   slug: 'woodland-aria',
   url: 'https://game8.co/games/Wuthering-Waves/archives/514610',
   rarity: 5,
@@ -12,8 +12,8 @@ export const woodland_aria: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/woodland-aria.png',

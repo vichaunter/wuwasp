@@ -1,16 +1,15 @@
-import { chromium } from 'playwright';
 import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import https from 'https';
+import { chromium } from 'playwright';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BASE_URL = 'https://game8.co';
 const WEAPONS_LIST_URL = 'https://game8.co/games/Wuthering-Waves/archives/452490';
-const DELAY_MS = 2000; // 2 seconds delay between requests
 const HTML_CACHE_DIR = path.join(__dirname, 'weapons-cache');
 const PUBLIC_WEAPONS_DIR = path.join(__dirname, '../public/weapons');
 
@@ -28,7 +27,6 @@ async function downloadImage(url: string, outputPath: string): Promise<boolean> 
     
     https.get(url, (response) => {
       if (response.statusCode !== 200) {
-        console.error(`    ❌ Error descargando ${url}: ${response.statusCode}`);
         fs.unlinkSync(outputPath);
         resolve(false);
         return;
@@ -41,7 +39,6 @@ async function downloadImage(url: string, outputPath: string): Promise<boolean> 
         resolve(true);
       });
     }).on('error', (err) => {
-      console.error(`    ❌ Error descargando ${url}:`, err.message);
       fs.unlinkSync(outputPath);
       resolve(false);
     });
@@ -67,10 +64,6 @@ interface ScrapedWeapon {
   image?: string;
 }
 
-function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -78,34 +71,17 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-// Save/load HTML cache
-function saveHtmlCache(slug: string, html: string): void {
-  if (!fs.existsSync(HTML_CACHE_DIR)) {
-    fs.mkdirSync(HTML_CACHE_DIR, { recursive: true });
-  }
-  fs.writeFileSync(path.join(HTML_CACHE_DIR, `${slug}.html`), html, 'utf-8');
+function normalizeMaterialName(name: string): string {
+  // Remove quality prefixes like "LF", "MF", "HF", "FF" or "(T1)", "(T2)", etc.
+  return name
+    .replace(/^(LF|MF|HF|FF)\s+/i, '') // Remove LF/MF/HF/FF prefix
+    .replace(/\s+\d{3}$/, '') // Remove numeric suffix like " 210"
+    .replace(/\s+\(T\d\)$/g, '') // Remove (T1), (T2), etc.
+    .trim();
 }
 
-function loadHtmlCache(slug: string): string | null {
-  const filePath = path.join(HTML_CACHE_DIR, `${slug}.html`);
-  if (fs.existsSync(filePath)) {
-    return fs.readFileSync(filePath, 'utf-8');
-  }
-  return null;
-}
-
-// Get list of already scraped weapons
-function getExistingWeapons(): Set<string> {
-  const weaponsDir = path.join(__dirname, '../src/data/weapons');
-  if (!fs.existsSync(weaponsDir)) {
-    return new Set();
-  }
-  const files = fs.readdirSync(weaponsDir).filter(f => f.endsWith('.ts'));
-  return new Set(files.map(f => f.replace('.ts', '')));
-}
-
-async function scrapeWeaponsList(): Promise<Array<{ name: string; url: string; image: string }>> {
-  console.log('📋 Scraping weapons list...');
+async function getWeaponsListImages(): Promise<Map<string, string>> {
+  console.log('📋 Fetching weapons list for images...');
   
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
@@ -115,62 +91,30 @@ async function scrapeWeaponsList(): Promise<Array<{ name: string; url: string; i
   await browser.close();
   
   const $ = cheerio.load(html);
-  const weapons: Array<{ name: string; url: string; image: string }> = [];
+  const imagesMap = new Map<string, string>();
   
-  // Find weapons in the table
   $('table tbody tr').each((_, row) => {
     const $row = $(row);
     const link = $row.find('td:first-child a').first();
     const name = link.text().trim();
-    let url = link.attr('href');
     
-    // Extract image from the link
     const img = link.find('img');
     const imgSrc = img.attr('data-src') || img.attr('src');
     const image = imgSrc && !imgSrc.startsWith('data:image') 
       ? (imgSrc.startsWith('http') ? imgSrc : BASE_URL + imgSrc)
       : '';
     
-    if (name && url) {
-      url = url.startsWith('http') ? url : BASE_URL + url;
-      weapons.push({ name, url, image });
+    if (name && image) {
+      const slug = slugify(name);
+      imagesMap.set(slug, image);
     }
   });
   
-  console.log(`  ✅ Found ${weapons.length} weapons`);
-  return weapons;
+  console.log(`  ✅ Found ${imagesMap.size} weapon images\n`);
+  return imagesMap;
 }
 
-async function scrapeWeaponDetails(url: string, name: string, imageFromList: string, useCache = true): Promise<ScrapedWeapon | null> {
-  const slug = slugify(name);
-  let html: string;
-  
-  // Try to use cache first if it exists
-  const cached = loadHtmlCache(slug);
-  if (cached) {
-    console.log(`  💾 Using cached HTML for ${name}`);
-    html = cached;
-  } else {
-    console.log(`  📄 Scraping ${name}...`);
-    const browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
-    
-    try {
-      await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-      html = await page.content();
-      
-      saveHtmlCache(slug, html);
-      console.log(`  💾 Saved HTML cache for ${name}`);
-      
-      await browser.close();
-    } catch (error) {
-      console.error(`  ❌ Error scraping ${name}:`, error);
-      await browser.close();
-      return null;
-    }
-  }
-  
-  // Parse the HTML
+function processHtml(html: string, slug: string, weaponImage: string): ScrapedWeapon | null {
   const $ = cheerio.load(html);
   
   // Extract basic info
@@ -180,7 +124,13 @@ async function scrapeWeaponDetails(url: string, name: string, imageFromList: str
   let subStat = '';
   let skill = '';
   let skillDescription = '';
-  let image = '';
+  let url = '';
+  
+  // Get canonical URL
+  const canonical = $('link[rel="canonical"]').attr('href');
+  if (canonical) {
+    url = canonical;
+  }
   
   // Find rarity (count stars)
   $('table tr').each((_, row) => {
@@ -223,7 +173,7 @@ async function scrapeWeaponDetails(url: string, name: string, imageFromList: str
     }
   });
   
-  // Find skill (look for bolded skill name in "Base Weapon Skill" or "Skill" table row)
+  // Find skill
   $('table tr').each((_, row) => {
     const $row = $(row);
     const thText = $row.find('th').text().trim();
@@ -232,54 +182,66 @@ async function scrapeWeaponDetails(url: string, name: string, imageFromList: str
       const boldText = td.find('strong').first().text().trim();
       if (boldText) {
         skill = boldText.replace(':', '');
-        // Get description (text after the bold skill name)
         skillDescription = td.text().replace(boldText, '').replace(/^:\s*/, '').trim();
       }
     }
   });
   
-  // Use image from the weapons list (more reliable than page image)
-  image = imageFromList;
-  
-  // Extract materials (we'll need to look for material sections in the page)
-  // For now, set empty strings - we'll enhance this later
+  // Extract materials - look for the ascension materials table/section
   const materials = {
     common: '',
     forgery: '',
     ascension: '',
   };
   
-  // Try to extract materials from "Ascension Materials" or similar sections
+  // Find the ascension materials section
   $('h2, h3').each((_, heading) => {
     const headingText = $(heading).text().trim();
-    if (headingText.includes('Ascension') || headingText.includes('Materials')) {
-      // Look for material links/images after this heading
-      const section = $(heading).nextAll().first();
-      const materialLinks = section.find('a');
+    if (headingText.includes('Ascension') && headingText.includes('Materials')) {
+      // Look for the next table or list
+      let section = $(heading).next();
       
-      materialLinks.each((_, link) => {
-        const materialName = $(link).text().trim();
-        const materialLower = materialName.toLowerCase();
-        
-        // Classify material by name patterns
-        if (materialLower.includes('core') || materialLower.includes('ring') || 
-            materialLower.includes('residuum') || materialLower.includes('polygon')) {
-          materials.common = materialName;
-        } else if (materialLower.includes('helix') || materialLower.includes('phlogiston') ||
-                   materialLower.includes('metallic drip') || materialLower.includes('residue') ||
-                   materialLower.includes('seed') || materialLower.includes('bud')) {
-          materials.forgery = materialName;
-        } else if (materialLower.includes('bell') || materialLower.includes('dagger') ||
-                   materialLower.includes('tacet core') || materialLower.includes('feather')) {
-          materials.ascension = materialName;
-        }
-      });
+      // If it's not a table, look for the next table
+      while (section.length && !section.is('table')) {
+        section = section.next();
+      }
+      
+      if (section.is('table')) {
+        section.find('tr').each((_, row) => {
+          const $row = $(row);
+          const cells = $row.find('td');
+          
+          if (cells.length >= 2) {
+            const materialTypeCell = cells.eq(0);
+            const materialNameCell = cells.eq(1);
+            
+            const materialType = materialTypeCell.text().trim().toLowerCase();
+            const materialLink = materialNameCell.find('a');
+            const materialName = materialLink.text().trim();
+            
+            if (materialName) {
+              const normalizedName = normalizeMaterialName(materialName);
+              
+              if (materialType.includes('common')) {
+                materials.common = normalizedName;
+              } else if (materialType.includes('forgery')) {
+                materials.forgery = normalizedName;
+              } else if (materialType.includes('ascension') || materialType.includes('boss')) {
+                materials.ascension = normalizedName;
+              }
+            }
+          }
+        });
+      }
     }
   });
   
+  // Get weapon name from h1
+  const name = $('h1.a-header--1').text().trim();
+  
   return {
     id: slug,
-    name: name,
+    name: name || slug,
     slug,
     url,
     rarity,
@@ -289,14 +251,13 @@ async function scrapeWeaponDetails(url: string, name: string, imageFromList: str
     skill,
     skillDescription,
     materials,
-    image,
+    image: weaponImage,
   };
 }
 
 async function generateWeaponFile(weapon: ScrapedWeapon): Promise<string> {
   const varName = weapon.slug.replace(/-/g, '_');
   
-  // Escape single quotes
   const escape = (str: string) => str.replace(/'/g, "\\'");
   
   // Download weapon image locally
@@ -339,52 +300,63 @@ export const ${varName}: Weapon = {
 }
 
 async function saveWeapon(weapon: ScrapedWeapon): Promise<void> {
-  const filePath = path.join(__dirname, '../src/data/weapons', `${weapon.slug}.ts`);
+  const weaponsDir = path.join(__dirname, '../src/data/weapons');
+  if (!fs.existsSync(weaponsDir)) {
+    fs.mkdirSync(weaponsDir, { recursive: true });
+  }
+  
+  const filePath = path.join(weaponsDir, `${weapon.slug}.ts`);
   const content = await generateWeaponFile(weapon);
   
   fs.writeFileSync(filePath, content, 'utf-8');
-  console.log(`  ✅ Saved ${weapon.name} to ${weapon.slug}.ts`);
+  console.log(`  ✅ Saved ${weapon.name}`);
 }
 
 async function main() {
-  console.log('🗡️  Starting weapons scraper...\n');
+  console.log('⚙️  Starting weapons processor...\n');
   
-  // Get existing weapons
-  const existing = getExistingWeapons();
-  console.log(`📦 Found ${existing.size} existing weapons\n`);
-  
-  // Get weapons list
-  const weaponsList = await scrapeWeaponsList();
-  
-  // Filter out existing
-  const newWeapons = weaponsList.filter(w => !existing.has(slugify(w.name)));
-  
-  console.log(`\n🆕 ${newWeapons.length} new weapons to scrape\n`);
-  
-  if (newWeapons.length === 0) {
-    console.log('✅ All weapons already scraped!');
+  if (!fs.existsSync(HTML_CACHE_DIR)) {
+    console.error('❌ El directorio weapons-cache no existe. Ejecuta primero scrape-weapons-download');
     return;
   }
   
-  const scrapedWeapons: ScrapedWeapon[] = [];
+  const htmlFiles = fs.readdirSync(HTML_CACHE_DIR).filter(f => f.endsWith('.html'));
   
-  for (const wpn of newWeapons) {
-    const details = await scrapeWeaponDetails(wpn.url, wpn.name, wpn.image);
+  console.log(`📦 Found ${htmlFiles.length} cached HTML files\n`);
+  
+  // Get weapon images from the list
+  const weaponImages = await getWeaponsListImages();
+  
+  let processed = 0;
+  let errors = 0;
+  
+  for (const htmlFile of htmlFiles) {
+    const slug = htmlFile.replace('.html', '');
+    const htmlPath = path.join(HTML_CACHE_DIR, htmlFile);
+    const html = fs.readFileSync(htmlPath, 'utf-8');
     
-    if (details) {
-      await saveWeapon(details);
-      scrapedWeapons.push(details);
-    }
-    
-    // Only delay if we actually made a web request (not using cache)
-    const slug = slugify(wpn.name);
-    const cached = loadHtmlCache(slug);
-    if (!cached) {
-      await delay(DELAY_MS);
+    try {
+      const weaponImage = weaponImages.get(slug) || '';
+      const weapon = processHtml(html, slug, weaponImage);
+      
+      if (weapon) {
+        await saveWeapon(weapon);
+        processed++;
+      } else {
+        console.log(`  ⚠️  Could not process ${slug}`);
+        errors++;
+      }
+    } catch (error) {
+      console.error(`  ❌ Error processing ${slug}:`, error);
+      errors++;
     }
   }
   
-  console.log(`\n✅ Scraped ${scrapedWeapons.length} weapons!`);
+  console.log(`\n✅ Processing completed!`);
+  console.log(`   Processed: ${processed}`);
+  if (errors > 0) {
+    console.log(`   Errors: ${errors}`);
+  }
 }
 
 main().catch(console.error);

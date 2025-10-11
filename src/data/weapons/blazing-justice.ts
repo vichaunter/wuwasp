@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const blazing_justice: Weapon = {
   id: 'blazing-justice',
-  name: 'Blazing Justice',
+  name: 'blazing-justice',
   slug: 'blazing-justice',
   url: 'https://game8.co/games/Wuthering-Waves/archives/514609',
   rarity: 5,
@@ -12,8 +12,8 @@ export const blazing_justice: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Cadence Bud',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/blazing-justice.png',

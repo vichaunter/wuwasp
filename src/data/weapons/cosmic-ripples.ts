@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const cosmic_ripples: Weapon = {
   id: 'cosmic-ripples',
-  name: 'Cosmic Ripples',
+  name: 'cosmic-ripples',
   slug: 'cosmic-ripples',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455928',
   rarity: 5,
@@ -12,8 +12,8 @@ export const cosmic_ripples: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/cosmic-ripples.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const luminous_hymn: Weapon = {
   id: 'luminous-hymn',
-  name: 'Luminous Hymn',
+  name: 'luminous-hymn',
   slug: 'luminous-hymn',
   url: 'https://game8.co/games/Wuthering-Waves/archives/498527',
   rarity: 5,
@@ -12,8 +12,8 @@ export const luminous_hymn: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/luminous-hymn.png',

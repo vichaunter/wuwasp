@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const lux_umbra: Weapon = {
   id: 'lux-umbra',
-  name: 'Lux ＆ Umbra',
+  name: 'lux-umbra',
   slug: 'lux-umbra',
   url: 'https://game8.co/games/Wuthering-Waves/archives/553561',
   rarity: 5,
@@ -12,8 +12,8 @@ export const lux_umbra: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/lux-umbra.png',

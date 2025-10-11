@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const moongazer_s_sigil: Weapon = {
   id: 'moongazer-s-sigil',
-  name: 'Moongazer\'s Sigil',
+  name: 'moongazer-s-sigil',
   slug: 'moongazer-s-sigil',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544474',
   rarity: 5,
@@ -12,8 +12,8 @@ export const moongazer_s_sigil: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Cadence Bud',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/moongazer-s-sigil.png',

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const red_spring: Weapon = {
   id: 'red-spring',
-  name: 'Red Spring',
+  name: 'red-spring',
   slug: 'red-spring',
   url: 'https://game8.co/games/Wuthering-Waves/archives/483281',
   rarity: 5,
@@ -12,8 +12,8 @@ export const red_spring: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'FF Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    common: '',
+    forgery: '',
     ascension: '',
   },
   image: '/weapons/red-spring.png',
