@@ -20,5 +20,5 @@ export const augusta: Character = {
       boss: 'When Irises Bloom',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4235648/07013a4de3552067737471a65129ca89.png/show',
 };

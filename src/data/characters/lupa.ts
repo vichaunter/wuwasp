@@ -20,5 +20,5 @@ export const lupa: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4168366/19001d913841f4fd682ca41a15b219c4.png/show',
 };

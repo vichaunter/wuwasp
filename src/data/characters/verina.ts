@@ -20,5 +20,5 @@ export const verina: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/3940609/beb65ce1346ff04fd48368ba62f06786.png/show',
 };

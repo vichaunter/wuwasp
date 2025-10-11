@@ -73,9 +73,10 @@ function processHtml(html: string, slug: string): ScrapedCharacter | null {
   const weaponCell = $('table:contains("Weapon") td').last();
   weapon = weaponCell.text().trim() || '';
   
-  // Find character image
-  const imgSrc = $('table:contains("Resonator Information") img').first().attr('src');
-  if (imgSrc) {
+  // Find character image (use data-src for lazy-loaded images)
+  const imgElem = $('table:contains("Resonator Information") img').first();
+  const imgSrc = imgElem.attr('data-src') || imgElem.attr('src');
+  if (imgSrc && !imgSrc.startsWith('data:image')) {
     image = imgSrc.startsWith('http') ? imgSrc : 'https://game8.co' + imgSrc;
   }
   

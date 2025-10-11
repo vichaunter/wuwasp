@@ -20,5 +20,5 @@ export const xiangli_yao: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/3948512/2c856b17caca80df5e62833ad81f13be.png/show',
 };

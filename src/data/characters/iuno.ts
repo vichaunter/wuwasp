@@ -20,5 +20,5 @@ export const iuno: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4235647/9966108e3c229efdfb4ae1961fe4cf98.png/show',
 };

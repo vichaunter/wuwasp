@@ -20,5 +20,5 @@ export const cantarella: Character = {
       boss: 'When Irises Bloom',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4113458/6db9373b63508adb1163193e34372d46.png/show',
 };

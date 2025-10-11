@@ -35,6 +35,7 @@ export interface Character {
   rarity: 4 | 5;
   element: string;
   weapon: string;
+  tier?: string; // e.g., "S", "A", "B", "C"
   materials: CharacterMaterials;
   image?: string;
 }

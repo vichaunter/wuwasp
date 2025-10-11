@@ -20,5 +20,5 @@ export const rover_spectro: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/3940653/42f406dcfb08e373122dd72898b08ad1.png/show',
 };

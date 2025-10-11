@@ -20,5 +20,5 @@ export const zani: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4145711/7e358365585b078b9d96e5b1539f8328.png/show',
 };

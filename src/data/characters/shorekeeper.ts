@@ -20,5 +20,5 @@ export const shorekeeper: Character = {
       boss: 'Sentinel\'s Dagger',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/3994515/a5b2281d01ef723d7e3f9064fb7c0441.png/show',
 };

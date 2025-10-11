@@ -20,5 +20,5 @@ export const camellya: Character = {
       boss: 'Dreamless Feather',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4033263/b95c0de3c31700aefb2bdd3e47550aaf.png/show',
 };

@@ -20,5 +20,5 @@ export const rover_aero: Character = {
       boss: 'When Irises Bloom',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4135629/9e85f448853be93f585cd31f27e13c14.png/show',
 };

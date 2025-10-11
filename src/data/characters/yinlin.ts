@@ -20,5 +20,5 @@ export const yinlin: Character = {
       boss: 'Dreamless Feather',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/3940610/e06ce8c0812a4fd426592f4641aab616.png/show',
 };

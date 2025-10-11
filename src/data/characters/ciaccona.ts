@@ -20,5 +20,5 @@ export const ciaccona: Character = {
       boss: 'When Irises Bloom',
     },
   },
-  image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+  image: 'https://img.game8.co/4145722/b4d732a258b2a2496c44764419c8971b.png/show',
 };
