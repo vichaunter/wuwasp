@@ -1,17 +1,20 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useInventoryStore } from '@/store/inventory';
 import { getMaterialById } from '@/data/materials';
 import { MaterialUpdateModal } from '@/components/MaterialUpdateModal';
+import { formatMaterialAvailability } from '@/utils/material-synthesis';
+import type { MaterialRequirement } from '@/utils/material-calculator';
 
 interface MaterialCardProps {
   materialId: string;
   required: number;
+  allMaterialsOfSameBase?: MaterialRequirement[]; // All materials with same baseName for synthesis calculation
 }
 
-export function MaterialCard({ materialId, required }: MaterialCardProps) {
+export function MaterialCard({ materialId, required, allMaterialsOfSameBase }: MaterialCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const owned = useInventoryStore((state) => state.getMaterialQuantity(materialId));
+  const getMaterialQuantity = useInventoryStore((state) => state.getMaterialQuantity);
   const material = getMaterialById(materialId);
   
   if (!material) {
@@ -22,7 +25,43 @@ export function MaterialCard({ materialId, required }: MaterialCardProps) {
     );
   }
   
-  const progress = Math.min((owned / required) * 100, 100);
+  // Calculate effective availability considering synthesis
+  const { available, hasEnough, progress } = useMemo(() => {
+    const ownedQty = getMaterialQuantity(materialId);
+    
+    // If we have quality tiers and all materials of same base, use synthesis calculation
+    if (material.quality && material.baseName && allMaterialsOfSameBase && allMaterialsOfSameBase.length > 1) {
+      // Build requirements and owned for all qualities of this base material
+      const requirements: Record<string, number> = {};
+      const ownedByQuality: Record<string, number> = {};
+      
+      allMaterialsOfSameBase.forEach(mat => {
+        const m = getMaterialById(mat.materialId);
+        if (m && m.quality) {
+          requirements[m.quality] = mat.quantity;
+          ownedByQuality[m.quality] = getMaterialQuantity(mat.materialId);
+        }
+      });
+      
+      // Calculate synthesis
+      const result = formatMaterialAvailability(material.quality, required, ownedByQuality, requirements);
+      
+      return {
+        owned: ownedQty,
+        available: result.available,
+        hasEnough: result.hasEnough,
+        progress: Math.min((result.available / required) * 100, 100),
+      };
+    }
+    
+    // No synthesis, use direct comparison
+    return {
+      owned: ownedQty,
+      available: ownedQty,
+      hasEnough: ownedQty >= required,
+      progress: Math.min((ownedQty / required) * 100, 100),
+    };
+  }, [materialId, required, material.quality, material.baseName, allMaterialsOfSameBase, getMaterialQuantity]);
   
   // Determinar el color base según calidad o categoría
   let colorKey: 'green' | 'blue' | 'purple' | 'amber' | 'red' | 'gray';
@@ -106,8 +145,8 @@ export function MaterialCard({ materialId, required }: MaterialCardProps) {
         {/* Quantity Info */}
         <div className="w-full">
           <div className="flex items-center justify-center gap-2 text-lg font-bold">
-            <span className={owned >= required ? 'text-green-400' : 'text-gray-300'}>
-              {owned}
+            <span className={hasEnough ? 'text-green-400' : 'text-gray-300'}>
+              {available}
             </span>
             <span className="text-gray-600">/</span>
             <span className="text-gray-400">{required}</span>

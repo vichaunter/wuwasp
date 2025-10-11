@@ -9,6 +9,7 @@ import { ConfigButton } from '@/components/ConfigButton';
 import { MaterialCard } from '@/components/MaterialCard';
 import { calculateCharacterTotalMaterials } from '@/utils/material-calculator';
 import { sortMaterialsByCategory } from '@/utils/material-sorter';
+import { getMaterialsOfSameBase } from '@/utils/material-grouping';
 
 interface CharacterCardProps {
   character: Character;
@@ -153,6 +154,7 @@ export function CharacterCard({ character, plannerMode = false }: CharacterCardP
                       key={mat.materialId}
                       materialId={mat.materialId}
                       required={mat.quantity}
+                      allMaterialsOfSameBase={getMaterialsOfSameBase(mat.materialId, requiredMaterials)}
                     />
                   ))}
                 </div>

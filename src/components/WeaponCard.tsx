@@ -9,6 +9,7 @@ import { ConfigButton } from '@/components/ConfigButton';
 import { MaterialCard } from '@/components/MaterialCard';
 import { calculateWeaponTotalMaterials } from '@/utils/material-calculator';
 import { sortMaterialsByCategory } from '@/utils/material-sorter';
+import { getMaterialsOfSameBase } from '@/utils/material-grouping';
 
 interface WeaponCardProps {
   weapon: Weapon;
@@ -144,6 +145,7 @@ export function WeaponCard({ weapon, plannerMode = false }: WeaponCardProps) {
                       key={mat.materialId}
                       materialId={mat.materialId}
                       required={mat.quantity}
+                      allMaterialsOfSameBase={getMaterialsOfSameBase(mat.materialId, requiredMaterials)}
                     />
                   ))}
                 </div>
