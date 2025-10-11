@@ -1,8 +1,11 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
-import type { CharacterProgress, WeaponProgress } from '@/types';
-import { applyMigrations, CURRENT_STORAGE_VERSION } from '@/utils/storage-migrations';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import type { CharacterProgress, WeaponProgress } from "@/types";
+import {
+  applyMigrations,
+  CURRENT_STORAGE_VERSION,
+} from "@/utils/storage-migrations";
 
 interface InventoryState {
   version?: number; // Storage version for migrations
@@ -10,28 +13,61 @@ interface InventoryState {
   characterProgress: Record<string, CharacterProgress>; // characterId -> progress
   weaponProgress: Record<string, WeaponProgress>; // weaponId -> progress
   collapsedSections: Record<string, boolean>; // itemId -> isCollapsed
-  
+
   // Material methods
   getMaterialQuantity: (materialId: string) => number;
   setMaterialQuantity: (materialId: string, quantity: number) => void;
   updateMaterialQuantity: (materialId: string, delta: number) => void;
   clearInventory: () => void;
-  
+
   // Character progress methods
   getCharacterProgress: (characterId: string) => CharacterProgress | null;
-  setCharacterProgress: (characterId: string, progress: CharacterProgress) => void;
-  updateCharacterLevel: (characterId: string, current: number, target: number) => void;
-  updateCharacterAscension: (characterId: string, current: number, target: number, order?: number) => void;
-  updateCharacterForte: (characterId: string, node: keyof CharacterProgress['forte'], current: number, target: number) => void;
+  setCharacterProgress: (
+    characterId: string,
+    progress: CharacterProgress
+  ) => void;
+  updateCharacterLevel: (
+    characterId: string,
+    current: number,
+    target: number
+  ) => void;
+  updateCharacterAscension: (
+    characterId: string,
+    current: number,
+    target: number,
+    order?: number
+  ) => void;
+  updateCharacterForte: (
+    characterId: string,
+    node: keyof CharacterProgress["forte"],
+    current: number,
+    target: number
+  ) => void;
   toggleCharacterEnabled: (characterId: string, enabled: boolean) => void;
-  
+
   // Weapon progress methods
   getWeaponProgress: (weaponId: string) => WeaponProgress | null;
   setWeaponProgress: (weaponId: string, progress: WeaponProgress) => void;
-  updateWeaponLevel: (weaponId: string, current: number, target: number) => void;
-  updateWeaponAscension: (weaponId: string, current: number, target: number, order?: number) => void;
+  updateWeaponLevel: (
+    weaponId: string,
+    current: number,
+    target: number
+  ) => void;
+  updateWeaponAscension: (
+    weaponId: string,
+    current: number,
+    target: number,
+    order?: number
+  ) => void;
   toggleWeaponEnabled: (weaponId: string, enabled: boolean) => void;
-  
+
+  // Reordering methods
+  reorderPlannerItems: (
+    itemId: string,
+    itemType: "character" | "weapon",
+    newOrder: number
+  ) => void;
+
   // UI state methods
   isCollapsed: (itemId: string) => boolean;
   toggleCollapsed: (itemId: string) => void;
@@ -45,12 +81,12 @@ export const useInventoryStore = create<InventoryState>()(
       characterProgress: {},
       weaponProgress: {},
       collapsedSections: {},
-      
+
       // Material methods
       getMaterialQuantity: (materialId: string) => {
         return get().inventory[materialId] || 0;
       },
-      
+
       setMaterialQuantity: (materialId: string, quantity: number) => {
         set((state) => ({
           inventory: {
@@ -59,22 +95,25 @@ export const useInventoryStore = create<InventoryState>()(
           },
         }));
       },
-      
+
       updateMaterialQuantity: (materialId: string, delta: number) => {
         const current = get().getMaterialQuantity(materialId);
         get().setMaterialQuantity(materialId, current + delta);
       },
-      
+
       clearInventory: () => {
         set({ inventory: {} });
       },
-      
+
       // Character progress methods
       getCharacterProgress: (characterId: string) => {
         return get().characterProgress[characterId] || null;
       },
-      
-      setCharacterProgress: (characterId: string, progress: CharacterProgress) => {
+
+      setCharacterProgress: (
+        characterId: string,
+        progress: CharacterProgress
+      ) => {
         set((state) => ({
           characterProgress: {
             ...state.characterProgress,
@@ -82,26 +121,37 @@ export const useInventoryStore = create<InventoryState>()(
           },
         }));
       },
-      
-      updateCharacterLevel: (characterId: string, current: number, target: number) => {
+
+      updateCharacterLevel: (
+        characterId: string,
+        current: number,
+        target: number
+      ) => {
         set((state) => {
           const existing = state.characterProgress[characterId];
           if (!existing) return;
-          
+
           existing.level = { current, target };
         });
       },
-      
-      updateCharacterAscension: (characterId: string, current: number, target: number, order?: number) => {
+
+      updateCharacterAscension: (
+        characterId: string,
+        current: number,
+        target: number,
+        order?: number
+      ) => {
         set((state) => {
           const existing = state.characterProgress[characterId];
-          
+
           // Calculate default order: count ALL enabled items (characters + weapons)
-          const defaultOrder = order ?? (
-            Object.values(state.characterProgress).filter(p => p.enabled).length +
-            Object.values(state.weaponProgress).filter(p => p.enabled).length
-          );
-          
+          const defaultOrder =
+            order ??
+            Object.values(state.characterProgress).filter((p) => p.enabled)
+              .length +
+              Object.values(state.weaponProgress).filter((p) => p.enabled)
+                .length;
+
           // Create or update progress
           if (!existing) {
             state.characterProgress[characterId] = {
@@ -132,20 +182,24 @@ export const useInventoryStore = create<InventoryState>()(
               existing.level = { current: 1, target: 90 };
             }
           }
-          
+
           // Handle ordering
           if (order !== undefined) {
             const progress = state.characterProgress[characterId];
             progress.order = order;
-            
+
             // Reorder ALL enabled items (characters AND weapons) if necessary
-            Object.values(state.characterProgress).forEach(p => {
-              if (p.characterId !== characterId && p.enabled && p.order >= order) {
+            Object.values(state.characterProgress).forEach((p) => {
+              if (
+                p.characterId !== characterId &&
+                p.enabled &&
+                p.order >= order
+              ) {
                 p.order++;
               }
             });
-            
-            Object.values(state.weaponProgress).forEach(p => {
+
+            Object.values(state.weaponProgress).forEach((p) => {
               if (p.enabled && p.order >= order) {
                 p.order++;
               }
@@ -153,30 +207,35 @@ export const useInventoryStore = create<InventoryState>()(
           }
         });
       },
-      
-      updateCharacterForte: (characterId: string, node: keyof CharacterProgress['forte'], current: number, target: number) => {
+
+      updateCharacterForte: (
+        characterId: string,
+        node: keyof CharacterProgress["forte"],
+        current: number,
+        target: number
+      ) => {
         set((state) => {
           const existing = state.characterProgress[characterId];
           if (!existing) return;
-          
+
           existing.forte[node] = { current, target };
         });
       },
-      
+
       toggleCharacterEnabled: (characterId: string, enabled: boolean) => {
         set((state) => {
           const existing = state.characterProgress[characterId];
           if (!existing) return;
-          
+
           existing.enabled = enabled;
         });
       },
-      
+
       // Weapon progress methods
       getWeaponProgress: (weaponId: string) => {
         return get().weaponProgress[weaponId] || null;
       },
-      
+
       setWeaponProgress: (weaponId: string, progress: WeaponProgress) => {
         set((state) => ({
           weaponProgress: {
@@ -185,26 +244,37 @@ export const useInventoryStore = create<InventoryState>()(
           },
         }));
       },
-      
-      updateWeaponLevel: (weaponId: string, current: number, target: number) => {
+
+      updateWeaponLevel: (
+        weaponId: string,
+        current: number,
+        target: number
+      ) => {
         set((state) => {
           const existing = state.weaponProgress[weaponId];
           if (!existing) return;
-          
+
           existing.level = { current, target };
         });
       },
-      
-      updateWeaponAscension: (weaponId: string, current: number, target: number, order?: number) => {
+
+      updateWeaponAscension: (
+        weaponId: string,
+        current: number,
+        target: number,
+        order?: number
+      ) => {
         set((state) => {
           const existing = state.weaponProgress[weaponId];
-          
+
           // Calculate default order: count ALL enabled items (characters + weapons)
-          const defaultOrder = order ?? (
-            Object.values(state.characterProgress).filter(p => p.enabled).length +
-            Object.values(state.weaponProgress).filter(p => p.enabled).length
-          );
-          
+          const defaultOrder =
+            order ??
+            Object.values(state.characterProgress).filter((p) => p.enabled)
+              .length +
+              Object.values(state.weaponProgress).filter((p) => p.enabled)
+                .length;
+
           // Create or update progress
           if (!existing) {
             state.weaponProgress[weaponId] = {
@@ -222,20 +292,20 @@ export const useInventoryStore = create<InventoryState>()(
               existing.level = { current: 1, target: 90 };
             }
           }
-          
+
           // Handle ordering
           if (order !== undefined) {
             const progress = state.weaponProgress[weaponId];
             progress.order = order;
-            
+
             // Reorder ALL enabled items (characters AND weapons) if necessary
-            Object.values(state.characterProgress).forEach(p => {
+            Object.values(state.characterProgress).forEach((p) => {
               if (p.enabled && p.order >= order) {
                 p.order++;
               }
             });
-            
-            Object.values(state.weaponProgress).forEach(p => {
+
+            Object.values(state.weaponProgress).forEach((p) => {
               if (p.weaponId !== weaponId && p.enabled && p.order >= order) {
                 p.order++;
               }
@@ -243,21 +313,69 @@ export const useInventoryStore = create<InventoryState>()(
           }
         });
       },
-      
+
       toggleWeaponEnabled: (weaponId: string, enabled: boolean) => {
         set((state) => {
           const existing = state.weaponProgress[weaponId];
           if (!existing) return;
-          
+
           existing.enabled = enabled;
         });
       },
-      
+
+      // Reordering methods
+      reorderPlannerItems: (
+        itemId: string,
+        itemType: "character" | "weapon",
+        newOrder: number
+      ) => {
+        set((state) => {
+          // Get the item to move
+          const item =
+            itemType === "character"
+              ? state.characterProgress[itemId]
+              : state.weaponProgress[itemId];
+
+          if (!item || !item.enabled) return;
+
+          const oldOrder = item.order;
+
+          // If the order hasn't changed, do nothing
+          if (oldOrder === newOrder) return;
+
+          // Update orders for all items
+          const allItems = [
+            ...Object.values(state.characterProgress).filter((p) => p.enabled),
+            ...Object.values(state.weaponProgress).filter((p) => p.enabled),
+          ];
+
+          // If moving down (increasing order)
+          if (newOrder > oldOrder) {
+            allItems.forEach((p) => {
+              if (p.order > oldOrder && p.order <= newOrder) {
+                p.order -= 1;
+              }
+            });
+          }
+          // If moving up (decreasing order)
+          else {
+            allItems.forEach((p) => {
+              if (p.order >= newOrder && p.order < oldOrder) {
+                p.order += 1;
+              }
+            });
+          }
+
+          // Set the new order for the moved item
+          item.order = newOrder;
+        });
+      },
+
       // UI state methods
       isCollapsed: (itemId: string) => {
         return get().collapsedSections[itemId] ?? true; // Default to collapsed
       },
-      
+
       toggleCollapsed: (itemId: string) => {
         set((state) => ({
           collapsedSections: {
@@ -268,17 +386,16 @@ export const useInventoryStore = create<InventoryState>()(
       },
     })),
     {
-      name: 'wuwa-planner-inventory',
+      name: "wuwa-planner-inventory",
       version: CURRENT_STORAGE_VERSION,
       migrate: (persistedState: any, version: number) => {
         console.log(`🔧 Storage migration triggered from version ${version}`);
-        
+
         // Apply migrations to bring data to current version
         const migratedState = applyMigrations(persistedState);
-        
+
         return migratedState;
       },
     }
   )
 );
-

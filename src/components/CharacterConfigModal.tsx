@@ -20,17 +20,12 @@ export function CharacterConfigModal({
   character,
   progress,
 }: CharacterConfigModalProps) {
-  const updateLevel = useInventoryStore((state) => state.updateCharacterLevel);
   const updateAscension = useInventoryStore(
     (state) => state.updateCharacterAscension
   );
   const updateForte = useInventoryStore((state) => state.updateCharacterForte);
 
   // Local state for the form
-  const [levelCurrent, setLevelCurrent] = useState(
-    progress?.level?.current ?? 1
-  );
-  const [levelTarget, setLevelTarget] = useState(progress?.level?.target ?? 90);
   const [ascensionCurrent, setAscensionCurrent] = useState(
     progress?.ascension.current ?? 0
   );
