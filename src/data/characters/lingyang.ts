@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const lingyang: Character = {
   id: 'lingyang',
-  name: 'Lingyang',
+  name: 'lingyang',
   slug: 'lingyang',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454223',
   rarity: 5,

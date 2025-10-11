@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const rover_aero: Character = {
   id: 'rover-aero',
-  name: 'Rover (Aero)',
+  name: 'rover-aero',
   slug: 'rover-aero',
   url: 'https://game8.co/games/Wuthering-Waves/archives/505267',
   rarity: 5,

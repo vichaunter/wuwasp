@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const jiyan: Character = {
   id: 'jiyan',
-  name: 'Jiyan',
+  name: 'jiyan',
   slug: 'jiyan',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454216',
   rarity: 5,

@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const verina: Character = {
   id: 'verina',
-  name: 'Verina',
+  name: 'verina',
   slug: 'verina',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454229',
   rarity: 5,

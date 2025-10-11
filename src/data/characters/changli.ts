@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const changli: Character = {
   id: 'changli',
-  name: 'Changli',
+  name: 'changli',
   slug: 'changli',
   url: 'https://game8.co/games/Wuthering-Waves/archives/452826',
   rarity: 5,
@@ -17,7 +17,7 @@ export const changli: Character = {
     forte: {
       common: 'Crude Ring',
       forgery: 'Inert Metallic Drip',
-      boss: 'Sentinel's Dagger',
+      boss: 'Sentinel\'s Dagger',
     },
   },
   image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',

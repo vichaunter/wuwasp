@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const calcharo: Character = {
   id: 'calcharo',
-  name: 'Calcharo',
+  name: 'calcharo',
   slug: 'calcharo',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454217',
   rarity: 5,

@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const lupa: Character = {
   id: 'lupa',
-  name: 'Lupa',
+  name: 'lupa',
   slug: 'lupa',
   url: 'https://game8.co/games/Wuthering-Waves/archives/520661',
   rarity: 5,
@@ -17,7 +17,7 @@ export const lupa: Character = {
     forte: {
       common: 'Howler Core',
       forgery: 'Waveworn Residue',
-      boss: 'The Netherworld's Stare',
+      boss: 'The Netherworld\'s Stare',
     },
   },
   image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',

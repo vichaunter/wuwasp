@@ -159,29 +159,32 @@ function processHtml(html: string, slug: string): ScrapedCharacter | null {
 function generateCharacterFile(character: ScrapedCharacter): string {
   const varName = character.slug.replace(/-/g, '_');
   
+  // Escape single quotes in strings
+  const escape = (str: string) => str.replace(/'/g, "\\'");
+  
   return `import type { Character } from '@/types';
 
 export const ${varName}: Character = {
-  id: '${character.id}',
-  name: '${character.name}',
-  slug: '${character.slug}',
-  url: '${character.url}',
+  id: '${escape(character.id)}',
+  name: '${escape(character.name)}',
+  slug: '${escape(character.slug)}',
+  url: '${escape(character.url)}',
   rarity: ${character.rarity},
-  element: '${character.element}',
-  weapon: '${character.weapon}',
+  element: '${escape(character.element)}',
+  weapon: '${escape(character.weapon)}',
   materials: {
     ascension: {
-      common: '${character.materials.ascension.common}',
-      boss: '${character.materials.ascension.boss}',
-      overworld: '${character.materials.ascension.overworld}',
+      common: '${escape(character.materials.ascension.common)}',
+      boss: '${escape(character.materials.ascension.boss)}',
+      overworld: '${escape(character.materials.ascension.overworld)}',
     },
     forte: {
-      common: '${character.materials.forte.common}',
-      forgery: '${character.materials.forte.forgery}',
-      boss: '${character.materials.forte.boss}',
+      common: '${escape(character.materials.forte.common)}',
+      forgery: '${escape(character.materials.forte.forgery)}',
+      boss: '${escape(character.materials.forte.boss)}',
     },
   },
-  image: '${character.image || ''}',
+  image: '${escape(character.image || '')}',
 };
 `;
 }

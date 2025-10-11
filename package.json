@@ -13,7 +13,8 @@
     "test:coverage": "vitest --coverage",
     "scrape:characters": "tsx scripts/scrape-characters.ts",
     "reprocess:characters": "tsx scripts/reprocess-characters.ts",
-    "reprocess:cache": "tsx scripts/reprocess-from-cache.ts"
+    "reprocess:cache": "tsx scripts/reprocess-from-cache.ts",
+    "generate:materials": "tsx scripts/generate-materials-db.ts"
   },
   "dependencies": {
     "react": "^19.1.1",

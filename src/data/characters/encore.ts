@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const encore: Character = {
   id: 'encore',
-  name: 'Encore',
+  name: 'encore',
   slug: 'encore',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454221',
   rarity: 5,

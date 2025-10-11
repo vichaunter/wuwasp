@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const cartethyia: Character = {
   id: 'cartethyia',
-  name: 'Cartethyia',
+  name: 'cartethyia',
   slug: 'cartethyia',
   url: 'https://game8.co/games/Wuthering-Waves/archives/507777',
   rarity: 5,

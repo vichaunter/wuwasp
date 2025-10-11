@@ -1,23 +1,16 @@
-// Material types
-export type MaterialQuality = 'LF' | 'MF' | 'HF' | 'FF' | 'UNIQUE';
-export type MaterialCategory = 'ASCENSION' | 'FORTE' | 'BOSS' | 'OVERWORLD' | 'CURRENCY';
+// Material quality tiers (generic)
+export type MaterialQualityTier = 'T1' | 'T2' | 'T3' | 'T4';
+
+// Material categories
+export type MaterialCategory = 'COMMON' | 'FORGERY' | 'BOSS' | 'OVERWORLD' | 'CURRENCY';
 
 export interface Material {
-  id: string;
-  name: string;
+  id: string; // e.g., "lf-tidal-residuum" or "tidal-residuum" (for non-quality materials)
+  name: string; // Full display name, e.g., "LF Tidal Residuum" or "Tidal Residuum"
+  baseName: string; // Base name without quality, e.g., "Tidal Residuum"
   category: MaterialCategory;
-  quality?: MaterialQuality;
+  quality?: MaterialQualityTier; // undefined for unique materials (boss, overworld, currency)
   image?: string;
-}
-
-// Material requirements by ascension/forte level
-export interface MaterialRequirementByLevel {
-  level: number; // 1-10 for ascension, 1-10 for forte
-  type: 'ASCENSION' | 'FORTE' | 'STAT_BONUS' | 'INHERENT_SKILL';
-  requirements: {
-    quality: MaterialQuality | 'UNIQUE' | 'CURRENCY';
-    quantity: number;
-  }[];
 }
 
 // Character material references (just IDs/names, not quantities)

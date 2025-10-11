@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const brant: Character = {
   id: 'brant',
-  name: 'Brant',
+  name: 'brant',
   slug: 'brant',
   url: 'https://game8.co/games/Wuthering-Waves/archives/486245',
   rarity: 5,
@@ -17,7 +17,7 @@ export const brant: Character = {
     forte: {
       common: 'Tidal Residuum',
       forgery: 'Inert Metallic Drip',
-      boss: 'The Netherworld's Stare',
+      boss: 'The Netherworld\'s Stare',
     },
   },
   image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',

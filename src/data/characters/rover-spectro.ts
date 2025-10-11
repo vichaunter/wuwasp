@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const rover_spectro: Character = {
   id: 'rover-spectro',
-  name: 'Rover (Spectro)',
+  name: 'rover-spectro',
   slug: 'rover-spectro',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454228',
   rarity: 5,

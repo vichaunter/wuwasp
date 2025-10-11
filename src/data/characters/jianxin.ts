@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const jianxin: Character = {
   id: 'jianxin',
-  name: 'Jianxin',
+  name: 'jianxin',
   slug: 'jianxin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454213',
   rarity: 5,

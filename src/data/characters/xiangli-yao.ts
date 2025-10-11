@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const xiangli_yao: Character = {
   id: 'xiangli-yao',
-  name: 'Xiangli Yao',
+  name: 'xiangli-yao',
   slug: 'xiangli-yao',
   url: 'https://game8.co/games/Wuthering-Waves/archives/461501',
   rarity: 5,

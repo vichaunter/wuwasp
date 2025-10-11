@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const zhezhi: Character = {
   id: 'zhezhi',
-  name: 'Zhezhi',
+  name: 'zhezhi',
   slug: 'zhezhi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/461497',
   rarity: 5,

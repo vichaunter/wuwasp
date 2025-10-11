@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const shorekeeper: Character = {
   id: 'shorekeeper',
-  name: 'Shorekeeper',
+  name: 'shorekeeper',
   slug: 'shorekeeper',
   url: 'https://game8.co/games/Wuthering-Waves/archives/463667',
   rarity: 5,
@@ -17,7 +17,7 @@ export const shorekeeper: Character = {
     forte: {
       common: 'Whisperin Core',
       forgery: 'Lento Helix',
-      boss: 'Sentinel's Dagger',
+      boss: 'Sentinel\'s Dagger',
     },
   },
   image: 'https://game8.codata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',

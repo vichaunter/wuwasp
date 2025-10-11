@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const camellya: Character = {
   id: 'camellya',
-  name: 'Camellya',
+  name: 'camellya',
   slug: 'camellya',
   url: 'https://game8.co/games/Wuthering-Waves/archives/473332',
   rarity: 5,

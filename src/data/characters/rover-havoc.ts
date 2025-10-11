@@ -2,7 +2,7 @@ import type { Character } from '@/types';
 
 export const rover_havoc: Character = {
   id: 'rover-havoc',
-  name: 'Rover (Havoc)',
+  name: 'rover-havoc',
   slug: 'rover-havoc',
   url: 'https://game8.co/games/Wuthering-Waves/archives/456120',
   rarity: 5,
