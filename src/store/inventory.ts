@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import type { CharacterProgress, WeaponProgress } from '@/types';
 
 interface InventoryState {
@@ -34,7 +35,7 @@ interface InventoryState {
 
 export const useInventoryStore = create<InventoryState>()(
   persist(
-    (set, get) => ({
+    immer((set, get) => ({
       materials: {},
       characterProgress: {},
       weaponProgress: {},
@@ -78,71 +79,75 @@ export const useInventoryStore = create<InventoryState>()(
       },
       
       updateCharacterAscension: (characterId: string, current: number, target: number, order?: number) => {
-        const existing = get().getCharacterProgress(characterId);
-        
-        // Calculate default order: count ALL enabled items (characters + weapons)
-        const defaultOrder = order ?? (
-          Object.values(get().characterProgress).filter(p => p.enabled).length +
-          Object.values(get().weaponProgress).filter(p => p.enabled).length
-        );
-        
-        const progress: CharacterProgress = existing || {
-          characterId,
-          enabled: true,
-          order: defaultOrder,
-          ascension: { current: 0, target: 6 },
-          forte: {
-            basic: { current: 1, target: 10 },
-            skill: { current: 1, target: 10 },
-            liberation: { current: 1, target: 10 },
-            intro: { current: 1, target: 10 },
-            outro: { current: 1, target: 10 },
-            passive1: { current: 0, target: 1 },
-            passive2: { current: 0, target: 1 },
-            bonusPassive: { current: 0, target: 1 },
-          },
-        };
-        
-        // Always enable when updating ascension (used when adding to planner)
-        progress.enabled = true;
-        
-        if (order !== undefined) {
-          progress.order = order;
-          // Reorder ALL enabled items (characters AND weapons) if necessary
-          const allCharProgress = get().characterProgress;
-          const allWeaponProgress = get().weaponProgress;
+        set((state) => {
+          const existing = state.characterProgress[characterId];
           
-          Object.values(allCharProgress).forEach(p => {
-            if (p.characterId !== characterId && p.enabled && p.order >= order) {
-              p.order++;
-            }
-          });
+          // Calculate default order: count ALL enabled items (characters + weapons)
+          const defaultOrder = order ?? (
+            Object.values(state.characterProgress).filter(p => p.enabled).length +
+            Object.values(state.weaponProgress).filter(p => p.enabled).length
+          );
           
-          Object.values(allWeaponProgress).forEach(p => {
-            if (p.enabled && p.order >= order) {
-              p.order++;
-            }
-          });
-        }
-        
-        progress.ascension = { current, target };
-        get().setCharacterProgress(characterId, progress);
+          // Create or update progress
+          if (!existing) {
+            state.characterProgress[characterId] = {
+              characterId,
+              enabled: true,
+              order: defaultOrder,
+              ascension: { current, target },
+              forte: {
+                basic: { current: 1, target: 10 },
+                skill: { current: 1, target: 10 },
+                liberation: { current: 1, target: 10 },
+                intro: { current: 1, target: 10 },
+                outro: { current: 1, target: 10 },
+                passive1: { current: 0, target: 1 },
+                passive2: { current: 0, target: 1 },
+                bonusPassive: { current: 0, target: 1 },
+              },
+            };
+          } else {
+            existing.enabled = true;
+            existing.ascension = { current, target };
+          }
+          
+          // Handle ordering
+          if (order !== undefined) {
+            const progress = state.characterProgress[characterId];
+            progress.order = order;
+            
+            // Reorder ALL enabled items (characters AND weapons) if necessary
+            Object.values(state.characterProgress).forEach(p => {
+              if (p.characterId !== characterId && p.enabled && p.order >= order) {
+                p.order++;
+              }
+            });
+            
+            Object.values(state.weaponProgress).forEach(p => {
+              if (p.enabled && p.order >= order) {
+                p.order++;
+              }
+            });
+          }
+        });
       },
       
       updateCharacterForte: (characterId: string, node: keyof CharacterProgress['forte'], current: number, target: number) => {
-        const existing = get().getCharacterProgress(characterId);
-        if (!existing) return;
-        
-        existing.forte[node] = { current, target };
-        get().setCharacterProgress(characterId, existing);
+        set((state) => {
+          const existing = state.characterProgress[characterId];
+          if (!existing) return;
+          
+          existing.forte[node] = { current, target };
+        });
       },
       
       toggleCharacterEnabled: (characterId: string, enabled: boolean) => {
-        const existing = get().getCharacterProgress(characterId);
-        if (!existing) return;
-        
-        existing.enabled = enabled;
-        get().setCharacterProgress(characterId, existing);
+        set((state) => {
+          const existing = state.characterProgress[characterId];
+          if (!existing) return;
+          
+          existing.enabled = enabled;
+        });
       },
       
       // Weapon progress methods
@@ -160,53 +165,56 @@ export const useInventoryStore = create<InventoryState>()(
       },
       
       updateWeaponAscension: (weaponId: string, current: number, target: number, order?: number) => {
-        const existing = get().getWeaponProgress(weaponId);
-        
-        // Calculate default order: count ALL enabled items (characters + weapons)
-        const defaultOrder = order ?? (
-          Object.values(get().characterProgress).filter(p => p.enabled).length +
-          Object.values(get().weaponProgress).filter(p => p.enabled).length
-        );
-        
-        const progress: WeaponProgress = existing || {
-          weaponId,
-          enabled: true,
-          order: defaultOrder,
-          ascension: { current: 0, target: 7 },
-        };
-        
-        // Always enable when updating ascension (used when adding to planner)
-        progress.enabled = true;
-        
-        if (order !== undefined) {
-          progress.order = order;
-          // Reorder ALL enabled items (characters AND weapons) if necessary
-          const allCharProgress = get().characterProgress;
-          const allWeaponProgress = get().weaponProgress;
+        set((state) => {
+          const existing = state.weaponProgress[weaponId];
           
-          Object.values(allCharProgress).forEach(p => {
-            if (p.enabled && p.order >= order) {
-              p.order++;
-            }
-          });
+          // Calculate default order: count ALL enabled items (characters + weapons)
+          const defaultOrder = order ?? (
+            Object.values(state.characterProgress).filter(p => p.enabled).length +
+            Object.values(state.weaponProgress).filter(p => p.enabled).length
+          );
           
-          Object.values(allWeaponProgress).forEach(p => {
-            if (p.weaponId !== weaponId && p.enabled && p.order >= order) {
-              p.order++;
-            }
-          });
-        }
-        
-        progress.ascension = { current, target };
-        get().setWeaponProgress(weaponId, progress);
+          // Create or update progress
+          if (!existing) {
+            state.weaponProgress[weaponId] = {
+              weaponId,
+              enabled: true,
+              order: defaultOrder,
+              ascension: { current, target },
+            };
+          } else {
+            existing.enabled = true;
+            existing.ascension = { current, target };
+          }
+          
+          // Handle ordering
+          if (order !== undefined) {
+            const progress = state.weaponProgress[weaponId];
+            progress.order = order;
+            
+            // Reorder ALL enabled items (characters AND weapons) if necessary
+            Object.values(state.characterProgress).forEach(p => {
+              if (p.enabled && p.order >= order) {
+                p.order++;
+              }
+            });
+            
+            Object.values(state.weaponProgress).forEach(p => {
+              if (p.weaponId !== weaponId && p.enabled && p.order >= order) {
+                p.order++;
+              }
+            });
+          }
+        });
       },
       
       toggleWeaponEnabled: (weaponId: string, enabled: boolean) => {
-        const existing = get().getWeaponProgress(weaponId);
-        if (!existing) return;
-        
-        existing.enabled = enabled;
-        get().setWeaponProgress(weaponId, existing);
+        set((state) => {
+          const existing = state.weaponProgress[weaponId];
+          if (!existing) return;
+          
+          existing.enabled = enabled;
+        });
       },
       
       // UI state methods
@@ -222,7 +230,7 @@ export const useInventoryStore = create<InventoryState>()(
           },
         }));
       },
-    }),
+    })),
     {
       name: 'wuwa-planner-inventory',
     }
