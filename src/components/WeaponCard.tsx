@@ -207,28 +207,32 @@ export function WeaponCard({
                   </div>
 
                   {/* Special Requirements: EXP and Shell Credits (Total) */}
-                  {(expRequirement || totalShellCredits > 0) && (
-                    <div className="mb-3 space-y-1.5 text-sm">
-                      {expRequirement && (
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-gray-400 text-xs">EXP:</span>
-                          <span className="text-gray-300">
-                            0 / {expRequirement.quantity.toLocaleString()}
-                          </span>
-                        </div>
-                      )}
-                      {totalShellCredits > 0 && (
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-gray-400 text-xs">
-                            Credits:
-                          </span>
-                          <span className="text-gray-300">
-                            0 / {totalShellCredits.toLocaleString()}
-                          </span>
-                        </div>
-                      )}
+                  <div className="mb-3 space-y-1.5 text-sm">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs">EXP:</span>
+                      <span
+                        className={`text-gray-300 ${
+                          !expRequirement ? "opacity-50" : ""
+                        }`}
+                      >
+                        {expRequirement
+                          ? `0 / ${expRequirement.quantity.toLocaleString()}`
+                          : "N/A"}
+                      </span>
                     </div>
-                  )}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs">Credits:</span>
+                      <span
+                        className={`text-gray-300 ${
+                          totalShellCredits === 0 ? "opacity-50" : ""
+                        }`}
+                      >
+                        {totalShellCredits > 0
+                          ? `0 / ${totalShellCredits.toLocaleString()}`
+                          : "N/A"}
+                      </span>
+                    </div>
+                  </div>
 
                   {/* Materials Needed */}
                   {allMaterialsDisplay.length > 0 && (
