@@ -20,5 +20,5 @@ export const lingyang: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://img.game8.co/3940597/fe6f16224f32f64005115afdb12754d1.png/show',
+  image: '/characters/lingyang.png',
 };

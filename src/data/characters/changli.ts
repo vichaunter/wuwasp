@@ -20,5 +20,5 @@ export const changli: Character = {
       boss: 'Sentinel\'s Dagger',
     },
   },
-  image: 'https://img.game8.co/3940620/cb71c70b33ae2aa52c0dce573b861323.png/show',
+  image: '/characters/changli.png',
 };

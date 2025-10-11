@@ -20,5 +20,5 @@ export const mortefi: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940603/0b98821424d895c39638dcc8493bb409.png/show',
+  image: '/characters/mortefi.png',
 };

@@ -20,5 +20,5 @@ export const zhezhi: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3948516/b575e55adbbf8c31653f187a56d3b5a2.png/show',
+  image: '/characters/zhezhi.png',
 };

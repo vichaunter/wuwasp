@@ -20,5 +20,5 @@ export const lumi: Character = {
       boss: 'Sentinel\'s Dagger',
     },
   },
-  image: 'https://img.game8.co/4033262/9736c1c988ac7d5f5934496cf6257077.png/show',
+  image: '/characters/lumi.png',
 };

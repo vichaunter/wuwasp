@@ -20,5 +20,5 @@ export const brant: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://img.game8.co/4080129/f56dfa501ff573a2dc49f7031d1001aa.png/show',
+  image: '/characters/brant.png',
 };

@@ -20,5 +20,5 @@ export const carlotta: Character = {
       boss: '',
     },
   },
-  image: 'https://img.game8.co/4075118/e9221fc974639c0a0844cca66669acd1.png/show',
+  image: '/characters/carlotta.png',
 };

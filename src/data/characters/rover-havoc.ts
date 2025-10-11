@@ -20,5 +20,5 @@ export const rover_havoc: Character = {
       boss: 'Dreamless Feather',
     },
   },
-  image: 'https://img.game8.co/3940652/f2df66e9a4ed56b3375e0dffecd12546.png/show',
+  image: '/characters/rover-havoc.png',
 };

@@ -20,5 +20,5 @@ export const jianxin: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://img.game8.co/3940598/702049e5491b198157b977c724917672.png/show',
+  image: '/characters/jianxin.png',
 };

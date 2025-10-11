@@ -20,5 +20,5 @@ export const sanhua: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://img.game8.co/3940594/5a50dfd046bf0b4de04c062ed0a92b7f.png/show',
+  image: '/characters/sanhua.png',
 };

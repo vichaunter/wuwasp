@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import https from 'https';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,42 @@ const BASE_URL = 'https://game8.co';
 const CHARACTER_LIST_URL = 'https://game8.co/games/Wuthering-Waves/archives/452489';
 const DELAY_MS = 2000; // 2 seconds delay between requests
 const HTML_CACHE_DIR = path.join(__dirname, 'html-cache');
+const PUBLIC_CHARACTERS_DIR = path.join(__dirname, '../public/characters');
+
+/**
+ * Descarga una imagen desde una URL y la guarda localmente
+ */
+async function downloadImage(url: string, outputPath: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    // Si ya existe, no descargar de nuevo
+    if (fs.existsSync(outputPath)) {
+      resolve(true);
+      return;
+    }
+
+    const file = fs.createWriteStream(outputPath);
+    
+    https.get(url, (response) => {
+      if (response.statusCode !== 200) {
+        console.error(`    ❌ Error descargando ${url}: ${response.statusCode}`);
+        fs.unlinkSync(outputPath);
+        resolve(false);
+        return;
+      }
+
+      response.pipe(file);
+      
+      file.on('finish', () => {
+        file.close();
+        resolve(true);
+      });
+    }).on('error', (err) => {
+      console.error(`    ❌ Error descargando ${url}:`, err.message);
+      fs.unlinkSync(outputPath);
+      resolve(false);
+    });
+  });
+}
 
 interface ScrapedCharacter {
   id: string;
@@ -363,11 +400,27 @@ async function scrapeCharacterDetails(url: string, name: string, useCache = fals
   };
 }
 
-function generateCharacterFile(character: ScrapedCharacter): string {
+async function generateCharacterFile(character: ScrapedCharacter): Promise<string> {
   const varName = character.slug.replace(/-/g, '_');
   
   // Escape single quotes in strings
   const escape = (str: string) => str.replace(/'/g, "\\'");
+  
+  // Download character image locally
+  let localImagePath = '';
+  if (character.image) {
+    if (!fs.existsSync(PUBLIC_CHARACTERS_DIR)) {
+      fs.mkdirSync(PUBLIC_CHARACTERS_DIR, { recursive: true });
+    }
+    
+    const imageFileName = `${character.id}.png`;
+    const imagePath = path.join(PUBLIC_CHARACTERS_DIR, imageFileName);
+    const success = await downloadImage(character.image, imagePath);
+    
+    if (success) {
+      localImagePath = `/characters/${imageFileName}`;
+    }
+  }
   
   return `import type { Character } from '@/types';
 
@@ -391,14 +444,14 @@ export const ${varName}: Character = {
       boss: '${escape(character.materials.forte.boss)}',
     },
   },
-  image: '${escape(character.image || '')}',
+  image: '${escape(localImagePath)}',
 };
 `;
 }
 
-function saveCharacter(character: ScrapedCharacter): void {
+async function saveCharacter(character: ScrapedCharacter): Promise<void> {
   const filePath = path.join(__dirname, '../src/data/characters', `${character.slug}.ts`);
-  const content = generateCharacterFile(character);
+  const content = await generateCharacterFile(character);
   
   fs.writeFileSync(filePath, content, 'utf-8');
   console.log(`  ✅ Saved ${character.name} to ${character.slug}.ts`);
@@ -438,7 +491,7 @@ async function main() {
     const details = await scrapeCharacterDetails(char.url, char.name, false);
     
     if (details) {
-      saveCharacter(details);
+      await saveCharacter(details);
       scrapedCharacters.push(details);
     }
     

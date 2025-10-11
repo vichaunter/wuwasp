@@ -20,5 +20,5 @@ export const calcharo: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940615/5aa93589aeaf92c1854e7596a5229c62.png/show',
+  image: '/characters/calcharo.png',
 };

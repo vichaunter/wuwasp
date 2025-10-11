@@ -20,5 +20,5 @@ export const cartethyia: Character = {
       boss: 'When Irises Bloom',
     },
   },
-  image: 'https://img.game8.co/4168348/c4c7152ec6d23ebe96e3bb75a4d0d963.png/show',
+  image: '/characters/cartethyia.png',
 };

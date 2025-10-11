@@ -20,5 +20,5 @@ export const yangyang: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://img.game8.co/3940612/e746b879e8bcafd483c0c7c2a8dee63c.png/show',
+  image: '/characters/yangyang.png',
 };

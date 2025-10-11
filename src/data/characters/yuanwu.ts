@@ -20,5 +20,5 @@ export const yuanwu: Character = {
       boss: 'Unending Destruction',
     },
   },
-  image: 'https://img.game8.co/3940601/052d16ea71a08844d952193a2e8817d4.png/show',
+  image: '/characters/yuanwu.png',
 };

@@ -20,5 +20,5 @@ export const danjin: Character = {
       boss: 'Dreamless Feather',
     },
   },
-  image: 'https://img.game8.co/3940626/0e58b78dfcf65d56004603a04975d36b.png/show',
+  image: '/characters/danjin.png',
 };

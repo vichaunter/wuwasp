@@ -20,5 +20,5 @@ export const roccia: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://img.game8.co/4087703/e5c955c5238f8f9d301f7e7239e80724.png/show',
+  image: '/characters/roccia.png',
 };

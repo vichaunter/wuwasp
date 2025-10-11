@@ -20,5 +20,5 @@ export const baizhi: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940621/a3ef8d43b808677bc07db927c530651c.png/show',
+  image: '/characters/baizhi.png',
 };

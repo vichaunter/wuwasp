@@ -20,5 +20,5 @@ export const youhu: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3994516/ddc6dac2db71c2ba33b8552c442de38d.png/show',
+  image: '/characters/youhu.png',
 };

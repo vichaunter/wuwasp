@@ -20,5 +20,5 @@ export const galbrena: Character = {
       boss: 'Curse of the Abyss',
     },
   },
-  image: 'https://img.game8.co/4268728/7a76ebbd36fb35e8007d5b2f04f158cb.png/show',
+  image: '/characters/galbrena.png',
 };

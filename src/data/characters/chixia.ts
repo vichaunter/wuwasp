@@ -20,5 +20,5 @@ export const chixia: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940624/bf1e23bc1341ae58a4b6d4da03aef57d.png/show',
+  image: '/characters/chixia.png',
 };

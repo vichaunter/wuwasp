@@ -20,5 +20,5 @@ export const jinhsi: Character = {
       boss: 'Sentinel\'s Dagger',
     },
   },
-  image: 'https://img.game8.co/3940629/1e3526e600ff8abd63b8d0d7f091744b.png/show',
+  image: '/characters/jinhsi.png',
 };

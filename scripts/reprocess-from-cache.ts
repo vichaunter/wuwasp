@@ -2,11 +2,46 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import * as cheerio from 'cheerio';
+import https from 'https';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const HTML_CACHE_DIR = path.join(__dirname, 'html-cache');
+const PUBLIC_CHARACTERS_DIR = path.join(__dirname, '../public/characters');
+
+/**
+ * Descarga una imagen desde una URL y la guarda localmente
+ */
+async function downloadImage(url: string, outputPath: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    // Si ya existe, no descargar de nuevo
+    if (fs.existsSync(outputPath)) {
+      resolve(true);
+      return;
+    }
+
+    const file = fs.createWriteStream(outputPath);
+    
+    https.get(url, (response) => {
+      if (response.statusCode !== 200) {
+        fs.unlinkSync(outputPath);
+        resolve(false);
+        return;
+      }
+
+      response.pipe(file);
+      
+      file.on('finish', () => {
+        file.close();
+        resolve(true);
+      });
+    }).on('error', (err) => {
+      fs.unlinkSync(outputPath);
+      resolve(false);
+    });
+  });
+}
 
 interface ScrapedCharacter {
   id: string;
@@ -170,11 +205,27 @@ function processHtml(html: string, slug: string): ScrapedCharacter | null {
   };
 }
 
-function generateCharacterFile(character: ScrapedCharacter): string {
+async function generateCharacterFile(character: ScrapedCharacter): Promise<string> {
   const varName = character.slug.replace(/-/g, '_');
   
   // Escape single quotes in strings
   const escape = (str: string) => str.replace(/'/g, "\\'");
+  
+  // Download character image locally
+  let localImagePath = '';
+  if (character.image) {
+    if (!fs.existsSync(PUBLIC_CHARACTERS_DIR)) {
+      fs.mkdirSync(PUBLIC_CHARACTERS_DIR, { recursive: true });
+    }
+    
+    const imageFileName = `${character.id}.png`;
+    const imagePath = path.join(PUBLIC_CHARACTERS_DIR, imageFileName);
+    const success = await downloadImage(character.image, imagePath);
+    
+    if (success) {
+      localImagePath = `/characters/${imageFileName}`;
+    }
+  }
   
   return `import type { Character } from '@/types';
 
@@ -198,14 +249,14 @@ export const ${varName}: Character = {
       boss: '${escape(character.materials.forte.boss)}',
     },
   },
-  image: '${escape(character.image || '')}',
+  image: '${escape(localImagePath)}',
 };
 `;
 }
 
-function saveCharacter(character: ScrapedCharacter): void {
+async function saveCharacter(character: ScrapedCharacter): Promise<void> {
   const filePath = path.join(__dirname, '../src/data/characters', `${character.slug}.ts`);
-  const content = generateCharacterFile(character);
+  const content = await generateCharacterFile(character);
   
   fs.writeFileSync(filePath, content, 'utf-8');
   console.log(`  ✅ Updated ${character.name}`);
@@ -242,7 +293,7 @@ async function main() {
       const character = processHtml(html, slug);
       
       if (character) {
-        saveCharacter(character);
+        await saveCharacter(character);
         processed++;
       } else {
         console.log(`  ⚠️  No se pudo procesar ${slug}`);

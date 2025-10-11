@@ -20,5 +20,5 @@ export const aalto: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940616/af905245b0910b5155bd524ee8854867.png/show',
+  image: '/characters/aalto.png',
 };

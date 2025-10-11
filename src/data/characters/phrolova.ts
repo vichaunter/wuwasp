@@ -20,5 +20,5 @@ export const phrolova: Character = {
       boss: 'The Netherworld\'s Stare',
     },
   },
-  image: 'https://img.game8.co/4199688/c57fc1dbf55e67f7ce59ce85ec13b2f7.png/show',
+  image: '/characters/phrolova.png',
 };

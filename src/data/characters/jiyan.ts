@@ -20,5 +20,5 @@ export const jiyan: Character = {
       boss: 'Monument Bell',
     },
   },
-  image: 'https://img.game8.co/3940611/003ec9a16a816ae808c628be42b5aa59.png/show',
+  image: '/characters/jiyan.png',
 };

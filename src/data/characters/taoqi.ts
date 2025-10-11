@@ -20,5 +20,5 @@ export const taoqi: Character = {
       boss: 'Dreamless Feather',
     },
   },
-  image: 'https://img.game8.co/3940599/ecc467b4cfc8c301644cc8f58e0a42ad.png/show',
+  image: '/characters/taoqi.png',
 };

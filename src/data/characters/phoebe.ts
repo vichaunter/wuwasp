@@ -20,5 +20,5 @@ export const phoebe: Character = {
       boss: 'Sentinel\'s Dagger',
     },
   },
-  image: 'https://img.game8.co/4080130/c0545155fc8f2f0187c45ad95fec0620.png/show',
+  image: '/characters/phoebe.png',
 };
