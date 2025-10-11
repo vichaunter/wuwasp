@@ -3,7 +3,12 @@ import type { MaterialQualityTier } from '@/types';
 // Forte requirements for characters
 // Based on official documentation: docs/manual-progresión-resonador.md
 
+// Forte circuit layout - same for all characters
+export const FORTE_STAT_BONUSES = ['Crit. Rate+', 'ATK+', 'ATK+', 'Crit. Rate+'] as const;
+export const FORTE_INHERENT_SKILLS = 'Inherent Skills';
+
 export interface ForteNodeRequirement {
+  level?: number; // Target level (e.g., 2 for 1→2 upgrade)
   description: string;
   common?: Partial<Record<MaterialQualityTier, number>>; // Tier -> quantity (MAT_BASE)
   forgery?: Partial<Record<MaterialQualityTier, number>>; // Tier -> quantity (MAT_FORTE)
@@ -12,71 +17,135 @@ export interface ForteNodeRequirement {
 }
 
 export interface ForteRequirements {
-  mainNodes: ForteNodeRequirement; // PER NODE (Basic, Skill, Liberation, Intro, Outro)
-  statBonus1: ForteNodeRequirement; // Inherent Skill 1 (Pasivo Menor)
-  statBonus2: ForteNodeRequirement; // Inherent Skill 2 (Pasivo Menor)
-  inherentSkill1: ForteNodeRequirement; // Pasivo Mayor 1
-  inherentSkill2: ForteNodeRequirement; // Pasivo Mayor 2
+  mainNodes: ForteNodeRequirement[]; // Array indexed by level (0-8 for levels 1→2, 2→3, ..., 9→10)
+  statBonusLevel1: ForteNodeRequirement; // Stat Bonus Level 1 (for any of the 4 stat bonuses)
+  statBonusLevel2: ForteNodeRequirement; // Stat Bonus Level 2 (for any of the 4 stat bonuses)
+  inherentSkillLevel1: ForteNodeRequirement; // Inherent Skill Level 1 (0->1, for any of the 2 inherent skills)
+  inherentSkillLevel2: ForteNodeRequirement; // Inherent Skill Level 2 (1->2, for any of the 2 inherent skills)
 }
 
 // Forte level requirements PER LEVEL (for one node: Basic, Skill, Liberation, Intro, or Outro)
-// Data from manual: 1→10 for ONE node requires: 5V, 5A, 5M, 9D (common) and 5V, 5A, 8M, 11D (forgery), 4 boss, 280000 shell
+// Each entry represents the materials needed to upgrade from level N to level N+1
 export const forteRequirements: ForteRequirements = {
-  "mainNodes": {
-    "description": "Main Nodes (Lv. 1 → 10) - PER SINGLE NODE",
+  "mainNodes": [
+    // Level 1→2
+    {
+      "level": 2,
+      "description": "Main Node Level 1 → 2",
+      "common": { "T1": 2 },
+      "forgery": { "T1": 2 },
+      "currency": 1500
+    },
+    // Level 2→3
+    {
+      "level": 3,
+      "description": "Main Node Level 2 → 3",
+      "common": { "T1": 3 },
+      "forgery": { "T1": 3 },
+      "currency": 2000
+    },
+    // Level 3→4
+    {
+      "level": 4,
+      "description": "Main Node Level 3 → 4",
+      "common": { "T2": 2 },
+      "forgery": { "T2": 2 },
+      "currency": 4500
+    },
+    // Level 4→5
+    {
+      "level": 5,
+      "description": "Main Node Level 4 → 5",
+      "common": { "T2": 3 },
+      "forgery": { "T2": 3 },
+      "currency": 6000
+    },
+    // Level 5→6
+    {
+      "level": 6,
+      "description": "Main Node Level 5 → 6",
+      "common": { "T3": 2 },
+      "forgery": { "T3": 3 },
+      "currency": 16000
+    },
+    // Level 6→7
+    {
+      "level": 7,
+      "description": "Main Node Level 6 → 7",
+      "common": { "T3": 3 },
+      "forgery": { "T3": 5 },
+      "boss": 1,
+      "currency": 30000
+    },
+    // Level 7→8
+    {
+      "level": 8,
+      "description": "Main Node Level 7 → 8",
+      "common": { "T4": 2 },
+      "forgery": { "T4": 2 },
+      "boss": 1,
+      "currency": 50000
+    },
+    // Level 8→9
+    {
+      "level": 9,
+      "description": "Main Node Level 8 → 9",
+      "common": { "T4": 3 },
+      "forgery": { "T4": 3 },
+      "boss": 1,
+      "currency": 70000
+    },
+    // Level 9→10
+    {
+      "level": 10,
+      "description": "Main Node Level 9 → 10",
+      "common": { "T4": 4 },
+      "forgery": { "T4": 6 },
+      "boss": 1,
+      "currency": 100000
+    }
+  ],
+  "statBonusLevel1": {
+    "description": "Stat Bonus Level 1 (for any of the 4 stat bonuses)",
     "common": {
-      "T1": 5,   // Verde
-      "T2": 5,   // Azul
-      "T3": 5,   // Morado
-      "T4": 9    // Dorado
+      "T3": 3
     },
     "forgery": {
-      "T1": 5,   // Verde
-      "T2": 5,   // Azul
-      "T3": 8,   // Morado
-      "T4": 11   // Dorado
+      "T3": 3
     },
-    "boss": 4,         // Weekly boss material (starts from level 6)
-    "currency": 280000 // Total shell credits for 1→10
+    "currency": 50000
   },
-  "statBonus1": {
-    "description": "Stat Bonus 1 (Inherent Skill 1 - Pasivo Menor)",
+  "statBonusLevel2": {
+    "description": "Stat Bonus Level 2 (for any of the 4 stat bonuses)",
     "common": {
-      "T1": 4
+      "T4": 3
     },
     "forgery": {
-      "T1": 4
+      "T4": 3
     },
-    "currency": 3000
+    "boss": 1,
+    "currency": 100000
   },
-  "statBonus2": {
-    "description": "Stat Bonus 2 (Inherent Skill 2 - Pasivo Menor)",
+  "inherentSkillLevel1": {
+    "description": "Inherent Skill Level 1 (0->1, for any of the 2 inherent skills)",
     "common": {
-      "T1": 4
+      "T2": 3
     },
     "forgery": {
-      "T1": 4
+      "T2": 3
     },
-    "currency": 3000
-  },
-  "inherentSkill1": {
-    "description": "Inherent Skill 1 (Pasivo Mayor 1)",
-    "common": {
-      "T2": 4
-    },
-    "forgery": {
-      "T2": 4
-    },
+    "boss": 1,
     "currency": 10000
   },
-  "inherentSkill2": {
-    "description": "Inherent Skill 2 (Pasivo Mayor 2)",
+  "inherentSkillLevel2": {
+    "description": "Inherent Skill Level 2 (1->2, for any of the 2 inherent skills)",
     "common": {
-      "T3": 4
+      "T3": 3
     },
     "forgery": {
-      "T3": 4
+      "T3": 3
     },
+    "boss": 1,
     "currency": 20000
   }
 };
@@ -91,3 +160,4 @@ export const totalForteRequirements = {
   boss: 20, // Weekly boss materials
   currency: 1436000, // 1400000 (main nodes) + 36000 (passives)
 };
+

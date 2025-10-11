@@ -6,7 +6,7 @@ import { AddToPlannerModal } from '@/components/AddToPlannerModal';
 import { RemoveFromPlannerModal } from '@/components/RemoveFromPlannerModal';
 import { CharacterConfigModal } from '@/components/CharacterConfigModal';
 import { ConfigButton } from '@/components/ConfigButton';
-import { MaterialCard } from '@/components/MaterialCard';
+import { MaterialCard } from '@/components/material';
 import { calculateCharacterTotalMaterials } from '@/utils/material-calculator';
 import { sortMaterialsByCategory } from '@/utils/material-sorter';
 import { getMaterialsOfSameBase } from '@/utils/material-grouping';

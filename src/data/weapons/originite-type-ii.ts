@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const originite_type_ii: Weapon = {
+  id: 'originite-type-ii',
+  name: 'originite-type-ii',
+  slug: 'originite-type-ii',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/455933',
+  rarity: 3,
+  type: 'Sword',
+  baseAtk: 325,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: 'Howler Core',
+    forgery: 'Heterized Metallic Drip',
+    ascension: '',
+  },
+  image: '/weapons/originite-type-ii.png',
+};

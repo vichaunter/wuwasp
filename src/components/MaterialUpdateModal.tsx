@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal } from '@/components/Modal';
-import { MaterialInput } from '@/components/MaterialInput';
+import { MaterialCard } from '@/components/material';
 import { materials, getMaterialById } from '@/data/materials';
 import type { Material } from '@/types';
 
@@ -67,7 +67,7 @@ export function MaterialUpdateModal({ isOpen, onClose, materialId }: MaterialUpd
         <>
           <div className="flex justify-center mb-4">
             <div className="w-[140px]">
-              <MaterialInput materialId={clickedMaterial.id} />
+              <MaterialCard materialId={clickedMaterial.id} mode="input" />
             </div>
           </div>
           <div className="border-t border-gray-700 mb-6"></div>
@@ -84,7 +84,7 @@ export function MaterialUpdateModal({ isOpen, onClose, materialId }: MaterialUpd
         }}
       >
         {gridMaterials.map(material => (
-          <MaterialInput key={material.id} materialId={material.id} />
+          <MaterialCard key={material.id} materialId={material.id} mode="input" />
         ))}
       </div>
     </Modal>

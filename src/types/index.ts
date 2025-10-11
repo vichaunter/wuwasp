@@ -70,19 +70,29 @@ export interface CharacterProgress {
   characterId: string;
   enabled: boolean; // If this character is part of the planning
   order: number; // Position in the planning list
+  level: {
+    current: number; // 1-90
+    target: number;  // 1-90
+  };
   ascension: {
     current: number; // 0-6
     target: number;  // 0-6
   };
   forte: {
+    // Main nodes (1-10 each)
     basic: { current: number; target: number }; // 1-10
     skill: { current: number; target: number }; // 1-10
     liberation: { current: number; target: number }; // 1-10
     intro: { current: number; target: number }; // 1-10
     outro: { current: number; target: number }; // 1-10
-    passive1: { current: number; target: number }; // 0-1 (unlocked or not)
-    passive2: { current: number; target: number }; // 0-1 (unlocked or not)
-    bonusPassive: { current: number; target: number }; // 0-1 (unlocked or not)
+    // Stat bonuses (0-2 each, 4 stat bonuses with 2 levels each = 8 total)
+    statBonus1: { current: number; target: number }; // 0-2
+    statBonus2: { current: number; target: number }; // 0-2
+    statBonus3: { current: number; target: number }; // 0-2
+    statBonus4: { current: number; target: number }; // 0-2
+    // Inherent skills (0-2 each, 2 levels)
+    inherentSkill1: { current: number; target: number }; // 0-2
+    inherentSkill2: { current: number; target: number }; // 0-2
   };
 }
 
@@ -90,9 +100,13 @@ export interface WeaponProgress {
   weaponId: string;
   enabled: boolean; // If this weapon is part of the planning
   order: number; // Position in the planning list
+  level: {
+    current: number; // 1-90
+    target: number;  // 1-90
+  };
   ascension: {
-    current: number; // 0-5 (weapons have 5 ranks)
-    target: number;  // 0-5
+    current: number; // 0-6 (weapons also have 6 ranks)
+    target: number;  // 0-6
   };
 }
 
@@ -106,6 +120,7 @@ export interface UserInventory {
 }
 
 export interface UserData {
+  version?: number; // Storage version for migrations
   inventory: UserInventory;
   priorities: CharacterPriority[];
   characterProgress: Record<string, CharacterProgress>; // characterId -> progress

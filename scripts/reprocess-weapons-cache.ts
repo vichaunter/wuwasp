@@ -174,7 +174,15 @@ function processHtml(html: string, slug: string, weaponImage: string): ScrapedWe
   });
   
   // Get weapon name from h1
-  const name = $('h1.a-header--1').text().trim();
+  let name = $('h1.p-archiveHeader__title').text().trim();
+  // Extract just the weapon name (remove additional text)
+  name = name
+    .split(' Best ')[0]
+    .split(' How to ')[0]
+    .split(' Stats and ')[0]
+    .split(' Effect')[0]
+    .split(' (')[0]  // Remove parenthetical info like "(Shorekeeper Weapon)"
+    .trim();
   
   return {
     id: slug,

@@ -91,70 +91,68 @@ export function calculateCharacterForteMaterials(
   if (currentLevel >= targetLevel) return [];
   
   const materials: Record<string, { name: string; quantity: number }> = {};
-  const req = forteRequirements.mainNodes;
   
-  // Calculate the fraction of materials needed based on levels
-  // Each node goes from 1 to 10, so we need (targetLevel - currentLevel) / 9 of the total
-  const levelDiff = targetLevel - currentLevel;
-  const fraction = levelDiff / 9; // 9 total upgrades (1→2, 2→3, ..., 9→10)
-  
-  // Common materials
-  if (req.common) {
-    Object.entries(req.common).forEach(([quality, totalQuantity]) => {
-      if (!totalQuantity) return;
-      
-      const quantity = Math.ceil(totalQuantity * fraction);
-      const material = getMaterialByNameAndQuality(
-        character.materials.forte.common,
-        quality as MaterialQualityTier
-      );
-      
-      if (material) {
-        if (!materials[material.id]) {
-          materials[material.id] = { name: material.name, quantity: 0 };
+  // Sum materials for each level upgrade
+  for (let level = currentLevel; level < targetLevel; level++) {
+    // Array index is level - 1 (level 1→2 is at index 0)
+    const req = forteRequirements.mainNodes[level - 1];
+    if (!req) continue;
+    
+    // Common materials
+    if (req.common) {
+      Object.entries(req.common).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.common,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
         }
-        materials[material.id].quantity += quantity;
-      }
-    });
-  }
-  
-  // Forgery materials
-  if (req.forgery) {
-    Object.entries(req.forgery).forEach(([quality, totalQuantity]) => {
-      if (!totalQuantity) return;
-      
-      const quantity = Math.ceil(totalQuantity * fraction);
-      const material = getMaterialByNameAndQuality(
-        character.materials.forte.forgery,
-        quality as MaterialQualityTier
-      );
-      
-      if (material) {
-        if (!materials[material.id]) {
-          materials[material.id] = { name: material.name, quantity: 0 };
+      });
+    }
+    
+    // Forgery materials
+    if (req.forgery) {
+      Object.entries(req.forgery).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.forgery,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
         }
-        materials[material.id].quantity += quantity;
+      });
+    }
+    
+    // Boss material
+    if (req.boss) {
+      const bossId = character.materials.forte.boss.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      if (!materials[bossId]) {
+        materials[bossId] = { name: character.materials.forte.boss, quantity: 0 };
       }
-    });
-  }
-  
-  // Boss material
-  if (req.boss) {
-    const quantity = Math.ceil(req.boss * fraction);
-    const bossId = character.materials.forte.boss.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
-    if (!materials[bossId]) {
-      materials[bossId] = { name: character.materials.forte.boss, quantity: 0 };
+      materials[bossId].quantity += req.boss;
     }
-    materials[bossId].quantity += quantity;
-  }
-  
-  // Shell Credits
-  if (req.currency) {
-    const quantity = Math.ceil(req.currency * fraction);
-    if (!materials['shell-credit']) {
-      materials['shell-credit'] = { name: 'Shell Credit', quantity: 0 };
+    
+    // Shell Credits
+    if (req.currency) {
+      const shellCreditId = 'shell-credit';
+      if (!materials[shellCreditId]) {
+        materials[shellCreditId] = { name: 'Shell Credit', quantity: 0 };
+      }
+      materials[shellCreditId].quantity += req.currency;
     }
-    materials['shell-credit'].quantity += quantity;
   }
   
   return Object.entries(materials).map(([id, data]) => ({
@@ -167,81 +165,167 @@ export function calculateCharacterForteMaterials(
 /**
  * Calculate passive unlock materials for a character
  */
-export function calculateCharacterPassiveMaterials(
+/**
+ * Calculate materials for stat bonus levels (0->1, 1->2)
+ */
+export function calculateCharacterStatBonusMaterials(
   character: Character,
-  passiveType: 'passive1' | 'passive2' | 'bonusPassive',
-  unlock: boolean
+  currentLevel: number,
+  targetLevel: number
 ): MaterialRequirement[] {
-  if (!unlock) return [];
+  if (currentLevel >= targetLevel) return [];
   
-  const reqMap: Record<typeof passiveType, keyof typeof forteRequirements> = {
-    passive1: 'inherentSkill1',
-    passive2: 'inherentSkill2',
-    bonusPassive: 'statBonus1', // Assuming stat bonuses for this
-  };
-  
-  const req = forteRequirements[reqMap[passiveType]];
   const materials: Record<string, { name: string; quantity: number }> = {};
   
-  // Common materials
-  if (req.common) {
-    Object.entries(req.common).forEach(([quality, quantity]) => {
-      if (!quantity) return;
-      
-      const material = getMaterialByNameAndQuality(
-        character.materials.forte.common,
-        quality as MaterialQualityTier
-      );
-      
-      if (material) {
-        if (!materials[material.id]) {
-          materials[material.id] = { name: material.name, quantity: 0 };
+  // For each level upgrade, add the materials
+  for (let level = currentLevel; level < targetLevel; level++) {
+    const req = level === 0 
+      ? forteRequirements.statBonusLevel1 
+      : forteRequirements.statBonusLevel2;
+    
+    // Common materials
+    if (req.common) {
+      Object.entries(req.common).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.common,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
         }
-        materials[material.id].quantity += quantity;
-      }
-    });
-  }
-  
-  // Forgery materials
-  if (req.forgery) {
-    Object.entries(req.forgery).forEach(([quality, quantity]) => {
-      if (!quantity) return;
-      
-      const material = getMaterialByNameAndQuality(
-        character.materials.forte.forgery,
-        quality as MaterialQualityTier
-      );
-      
-      if (material) {
-        if (!materials[material.id]) {
-          materials[material.id] = { name: material.name, quantity: 0 };
+      });
+    }
+    
+    // Forgery materials
+    if (req.forgery) {
+      Object.entries(req.forgery).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.forgery,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
         }
-        materials[material.id].quantity += quantity;
+      });
+    }
+    
+    // Boss material
+    if (req.boss) {
+      const bossId = character.materials.forte.boss.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      if (!materials[bossId]) {
+        materials[bossId] = { name: character.materials.forte.boss, quantity: 0 };
       }
-    });
-  }
-  
-  // Boss material
-  if (req.boss) {
-    const bossId = character.materials.forte.boss.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
-    if (!materials[bossId]) {
-      materials[bossId] = { name: character.materials.forte.boss, quantity: 0 };
+      materials[bossId].quantity += req.boss;
     }
-    materials[bossId].quantity += req.boss;
-  }
-  
-  // Shell Credits
-  if (req.currency) {
-    if (!materials['shell-credit']) {
-      materials['shell-credit'] = { name: 'Shell Credit', quantity: 0 };
+    
+    // Shell Credits
+    if (req.currency) {
+      const shellCreditId = 'shell-credit';
+      if (!materials[shellCreditId]) {
+        materials[shellCreditId] = { name: 'Shell Credit', quantity: 0 };
+      }
+      materials[shellCreditId].quantity += req.currency;
     }
-    materials['shell-credit'].quantity += req.currency;
   }
   
-  return Object.entries(materials).map(([id, data]) => ({
+  return Object.entries(materials).map(([id, { name, quantity }]) => ({
     materialId: id,
-    materialName: data.name,
-    quantity: data.quantity,
+    materialName: name,
+    quantity,
+  }));
+}
+
+/**
+ * Calculate materials for inherent skills (2 skills, each with 0->1, 1->2 levels)
+ */
+export function calculateCharacterInherentSkillMaterials(
+  character: Character,
+  currentLevel: number,
+  targetLevel: number
+): MaterialRequirement[] {
+  if (currentLevel >= targetLevel) return [];
+  
+  const materials: Record<string, { name: string; quantity: number }> = {};
+  
+  // For each level upgrade, add the materials
+  for (let level = currentLevel; level < targetLevel; level++) {
+    const req = level === 0 
+      ? forteRequirements.inherentSkillLevel1 
+      : forteRequirements.inherentSkillLevel2;
+    
+    // Common materials
+    if (req.common) {
+      Object.entries(req.common).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.common,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
+        }
+      });
+    }
+    
+    // Forgery materials
+    if (req.forgery) {
+      Object.entries(req.forgery).forEach(([quality, quantity]) => {
+        if (!quantity) return;
+        
+        const material = getMaterialByNameAndQuality(
+          character.materials.forte.forgery,
+          quality as MaterialQualityTier
+        );
+        
+        if (material) {
+          if (!materials[material.id]) {
+            materials[material.id] = { name: material.name, quantity: 0 };
+          }
+          materials[material.id].quantity += quantity;
+        }
+      });
+    }
+    
+    // Boss material
+    if (req.boss) {
+      const bossId = character.materials.forte.boss.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      if (!materials[bossId]) {
+        materials[bossId] = { name: character.materials.forte.boss, quantity: 0 };
+      }
+      materials[bossId].quantity += req.boss;
+    }
+    
+    // Shell Credits
+    if (req.currency) {
+      const shellCreditId = 'shell-credit';
+      if (!materials[shellCreditId]) {
+        materials[shellCreditId] = { name: 'Shell Credit', quantity: 0 };
+      }
+      materials[shellCreditId].quantity += req.currency;
+    }
+  }
+  
+  return Object.entries(materials).map(([id, { name, quantity }]) => ({
+    materialId: id,
+    materialName: name,
+    quantity,
   }));
 }
 
@@ -376,15 +460,37 @@ export function calculateCharacterTotalMaterials(
     }
   }
   
-  // Passive materials
-  if (progress.forte.passive1.target > progress.forte.passive1.current) {
-    allMaterials.push(...calculateCharacterPassiveMaterials(character, 'passive1', true));
+  // Stat Bonus materials (4 bonuses, each with 0-2 levels)
+  const statBonuses: Array<keyof Pick<CharacterProgress['forte'], 'statBonus1' | 'statBonus2' | 'statBonus3' | 'statBonus4'>> = [
+    'statBonus1', 'statBonus2', 'statBonus3', 'statBonus4'
+  ];
+  
+  for (const bonus of statBonuses) {
+    const bonusProgress = progress.forte[bonus];
+    if (bonusProgress.current < bonusProgress.target) {
+      allMaterials.push(...calculateCharacterStatBonusMaterials(
+        character,
+        bonusProgress.current,
+        bonusProgress.target
+      ));
+    }
   }
-  if (progress.forte.passive2.target > progress.forte.passive2.current) {
-    allMaterials.push(...calculateCharacterPassiveMaterials(character, 'passive2', true));
-  }
-  if (progress.forte.bonusPassive.target > progress.forte.bonusPassive.current) {
-    allMaterials.push(...calculateCharacterPassiveMaterials(character, 'bonusPassive', true));
+  
+  // Inherent Skill materials (1 branch with 2 levels: 0->1, 1->2)
+  // Note: We only use inherentSkill1 as inherentSkills is a single branch, not two separate ones
+  const inherentSkills: Array<keyof Pick<CharacterProgress['forte'], 'inherentSkill1'>> = [
+    'inherentSkill1'
+  ];
+  
+  for (const skill of inherentSkills) {
+    const skillProgress = progress.forte[skill];
+    if (skillProgress.current < skillProgress.target) {
+      allMaterials.push(...calculateCharacterInherentSkillMaterials(
+        character,
+        skillProgress.current,
+        skillProgress.target
+      ));
+    }
   }
   
   // EXP materials (Resonance Potions)

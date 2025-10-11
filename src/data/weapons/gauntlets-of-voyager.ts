@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const gauntlets_of_voyager: Weapon = {
+  id: 'gauntlets-of-voyager',
+  name: 'gauntlets-of-voyager',
+  slug: 'gauntlets-of-voyager',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/455909',
+  rarity: 3,
+  type: 'Gauntlet',
+  baseAtk: 325,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
+    ascension: '',
+  },
+  image: '/weapons/gauntlets-of-voyager.png',
+};

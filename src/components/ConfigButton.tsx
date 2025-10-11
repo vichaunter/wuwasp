@@ -10,12 +10,25 @@ interface ConfigButtonProps {
 export function ConfigButton({ onClick, progress, type }: ConfigButtonProps) {
   const [showPopover, setShowPopover] = useState(false);
 
+  const getAscensionLabel = (rank: number): string => {
+    const labels = [
+      'A0 (Max Lv.20)',
+      'A1 (Max Lv.40)',
+      'A2 (Max Lv.50)',
+      'A3 (Max Lv.60)',
+      'A4 (Max Lv.70)',
+      'A5 (Max Lv.80)',
+      'A6 (Max Lv.90)',
+    ];
+    return labels[rank] || `A${rank}`;
+  };
+
   const renderCharacterPreview = (prog: CharacterProgress) => (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <span className="text-xs text-gray-400">Ascensión:</span>
         <span className="text-xs text-purple-300 font-semibold">
-          R{prog.ascension.current} → R{prog.ascension.target}
+          {getAscensionLabel(prog.ascension.current)} → {getAscensionLabel(prog.ascension.target)}
         </span>
       </div>
       <div className="border-t border-gray-600 pt-2">
@@ -44,17 +57,22 @@ export function ConfigButton({ onClick, progress, type }: ConfigButtonProps) {
         </div>
       </div>
       <div className="border-t border-gray-600 pt-2">
-        <div className="text-xs text-gray-400 mb-1">Pasivas:</div>
-        <div className="flex gap-2">
-          <span className={`text-xs ${prog.forte.passive1.target === 1 ? 'text-green-400' : 'text-gray-500'}`}>
-            P1 {prog.forte.passive1.target === 1 ? '✓' : '✗'}
-          </span>
-          <span className={`text-xs ${prog.forte.passive2.target === 1 ? 'text-green-400' : 'text-gray-500'}`}>
-            P2 {prog.forte.passive2.target === 1 ? '✓' : '✗'}
-          </span>
-          <span className={`text-xs ${prog.forte.bonusPassive.target === 1 ? 'text-green-400' : 'text-gray-500'}`}>
-            Bonus {prog.forte.bonusPassive.target === 1 ? '✓' : '✗'}
-          </span>
+        <div className="text-xs text-gray-400 mb-1">Skills and Stats:</div>
+        <div className="space-y-1">
+          <div className="flex justify-between text-[10px]">
+            <span className="text-gray-500">Stat Bonuses:</span>
+            <span className="text-purple-300">
+              {[prog.forte.statBonus1.target, prog.forte.statBonus2.target, prog.forte.statBonus3.target, prog.forte.statBonus4.target]
+                .filter(v => v > 0)
+                .length} / 8 levels
+            </span>
+          </div>
+          <div className="flex justify-between text-[10px]">
+            <span className="text-gray-500">Inherent Skills:</span>
+            <span className="text-purple-300">
+              {prog.forte.inherentSkill1.target} / 2 levels
+            </span>
+          </div>
         </div>
       </div>
     </div>

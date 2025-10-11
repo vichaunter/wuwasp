@@ -43,35 +43,35 @@ export function WeaponConfigModal({ isOpen, onClose, weapon, progress }: WeaponC
         <div className="text-sm font-semibold text-gray-300 mb-3">Ascensión</div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-gray-400 block mb-2">Nivel Actual</label>
+            <label className="text-xs text-gray-400 block mb-2">Rango Actual</label>
             <select
               value={ascensionCurrent}
               onChange={(e) => setAscensionCurrent(Number(e.target.value))}
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <option value={0}>Nivel 1 (A0)</option>
-              <option value={1}>Nivel 20 → 40 (A1)</option>
-              <option value={2}>Nivel 40 → 50 (A2)</option>
-              <option value={3}>Nivel 50 → 60 (A3)</option>
-              <option value={4}>Nivel 60 → 70 (A4)</option>
-              <option value={5}>Nivel 70 → 80 (A5)</option>
-              <option value={6}>Nivel 80 → 90 (A6)</option>
+              <option value={0}>A0 (Max Lv.20)</option>
+              <option value={1}>A1 (Max Lv.40)</option>
+              <option value={2}>A2 (Max Lv.50)</option>
+              <option value={3}>A3 (Max Lv.60)</option>
+              <option value={4}>A4 (Max Lv.70)</option>
+              <option value={5}>A5 (Max Lv.80)</option>
+              <option value={6}>A6 (Max Lv.90)</option>
             </select>
           </div>
           <div>
-            <label className="text-xs text-gray-400 block mb-2">Nivel Objetivo</label>
+            <label className="text-xs text-gray-400 block mb-2">Rango Objetivo</label>
             <select
               value={ascensionTarget}
               onChange={(e) => setAscensionTarget(Number(e.target.value))}
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <option value={0}>Nivel 1 (A0)</option>
-              <option value={1}>Nivel 20 → 40 (A1)</option>
-              <option value={2}>Nivel 40 → 50 (A2)</option>
-              <option value={3}>Nivel 50 → 60 (A3)</option>
-              <option value={4}>Nivel 60 → 70 (A4)</option>
-              <option value={5}>Nivel 70 → 80 (A5)</option>
-              <option value={6}>Nivel 80 → 90 (A6)</option>
+              <option value={0}>A0 (Max Lv.20)</option>
+              <option value={1}>A1 (Max Lv.40)</option>
+              <option value={2}>A2 (Max Lv.50)</option>
+              <option value={3}>A3 (Max Lv.60)</option>
+              <option value={4}>A4 (Max Lv.70)</option>
+              <option value={5}>A5 (Max Lv.80)</option>
+              <option value={6}>A6 (Max Lv.90)</option>
             </select>
           </div>
         </div>

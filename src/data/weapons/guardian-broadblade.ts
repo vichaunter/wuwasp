@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const guardian_broadblade: Weapon = {
+  id: 'guardian-broadblade',
+  name: 'guardian-broadblade',
+  slug: 'guardian-broadblade',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/455944',
+  rarity: 3,
+  type: 'Broadblade',
+  baseAtk: 325,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: 'Whisperin Core',
+    forgery: 'Waveworn Residue',
+    ascension: '',
+  },
+  image: '/weapons/guardian-broadblade.png',
+};

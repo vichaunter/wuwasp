@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const undying_flame: Weapon = {
+  id: 'undying-flame',
+  name: 'undying-flame',
+  slug: 'undying-flame',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/455900',
+  rarity: 4,
+  type: 'Pistol',
+  baseAtk: 412,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: 'Tailored Ring',
+    forgery: 'Flawless Phlogiston',
+    ascension: '',
+  },
+  image: '/weapons/undying-flame.png',
+};

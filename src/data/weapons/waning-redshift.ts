@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const waning_redshift: Weapon = {
+  id: 'waning-redshift',
+  name: 'waning-redshift',
+  slug: 'waning-redshift',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/474514',
+  rarity: 4,
+  type: 'Broadblade',
+  baseAtk: 462,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: '',
+    forgery: '',
+    ascension: '',
+  },
+  image: '/weapons/waning-redshift.png',
+};

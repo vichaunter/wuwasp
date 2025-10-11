@@ -1,0 +1,20 @@
+import type { Weapon } from '@/types';
+
+export const gauntlets_of_night: Weapon = {
+  id: 'gauntlets-of-night',
+  name: 'gauntlets-of-night',
+  slug: 'gauntlets-of-night',
+  url: 'https://game8.co/games/Wuthering-Waves/archives/455910',
+  rarity: 3,
+  type: 'Gauntlet',
+  baseAtk: 325,
+  subStat: '',
+  skill: '',
+  skillDescription: '',
+  materials: {
+    common: 'Howler Core',
+    forgery: 'Cadence Blossom',
+    ascension: '',
+  },
+  image: '/weapons/gauntlets-of-night.png',
+};

@@ -2,8 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import type { CharacterProgress, WeaponProgress } from '@/types';
+import { applyMigrations, CURRENT_STORAGE_VERSION } from '@/utils/storage-migrations';
 
 interface InventoryState {
+  version?: number; // Storage version for migrations
   inventory: Record<string, number>; // materialId -> quantity
   characterProgress: Record<string, CharacterProgress>; // characterId -> progress
   weaponProgress: Record<string, WeaponProgress>; // weaponId -> progress
@@ -18,6 +20,7 @@ interface InventoryState {
   // Character progress methods
   getCharacterProgress: (characterId: string) => CharacterProgress | null;
   setCharacterProgress: (characterId: string, progress: CharacterProgress) => void;
+  updateCharacterLevel: (characterId: string, current: number, target: number) => void;
   updateCharacterAscension: (characterId: string, current: number, target: number, order?: number) => void;
   updateCharacterForte: (characterId: string, node: keyof CharacterProgress['forte'], current: number, target: number) => void;
   toggleCharacterEnabled: (characterId: string, enabled: boolean) => void;
@@ -25,6 +28,7 @@ interface InventoryState {
   // Weapon progress methods
   getWeaponProgress: (weaponId: string) => WeaponProgress | null;
   setWeaponProgress: (weaponId: string, progress: WeaponProgress) => void;
+  updateWeaponLevel: (weaponId: string, current: number, target: number) => void;
   updateWeaponAscension: (weaponId: string, current: number, target: number, order?: number) => void;
   toggleWeaponEnabled: (weaponId: string, enabled: boolean) => void;
   
@@ -36,6 +40,7 @@ interface InventoryState {
 export const useInventoryStore = create<InventoryState>()(
   persist(
     immer((set, get) => ({
+      version: CURRENT_STORAGE_VERSION,
       inventory: {},
       characterProgress: {},
       weaponProgress: {},
@@ -78,6 +83,15 @@ export const useInventoryStore = create<InventoryState>()(
         }));
       },
       
+      updateCharacterLevel: (characterId: string, current: number, target: number) => {
+        set((state) => {
+          const existing = state.characterProgress[characterId];
+          if (!existing) return;
+          
+          existing.level = { current, target };
+        });
+      },
+      
       updateCharacterAscension: (characterId: string, current: number, target: number, order?: number) => {
         set((state) => {
           const existing = state.characterProgress[characterId];
@@ -94,6 +108,7 @@ export const useInventoryStore = create<InventoryState>()(
               characterId,
               enabled: true,
               order: defaultOrder,
+              level: { current: 1, target: 90 },
               ascension: { current, target },
               forte: {
                 basic: { current: 1, target: 10 },
@@ -101,14 +116,21 @@ export const useInventoryStore = create<InventoryState>()(
                 liberation: { current: 1, target: 10 },
                 intro: { current: 1, target: 10 },
                 outro: { current: 1, target: 10 },
-                passive1: { current: 0, target: 1 },
-                passive2: { current: 0, target: 1 },
-                bonusPassive: { current: 0, target: 1 },
+                statBonus1: { current: 0, target: 2 },
+                statBonus2: { current: 0, target: 2 },
+                statBonus3: { current: 0, target: 2 },
+                statBonus4: { current: 0, target: 2 },
+                inherentSkill1: { current: 0, target: 2 },
+                inherentSkill2: { current: 0, target: 2 },
               },
             };
           } else {
             existing.enabled = true;
             existing.ascension = { current, target };
+            // Initialize level if it doesn't exist (migration)
+            if (!existing.level) {
+              existing.level = { current: 1, target: 90 };
+            }
           }
           
           // Handle ordering
@@ -164,6 +186,15 @@ export const useInventoryStore = create<InventoryState>()(
         }));
       },
       
+      updateWeaponLevel: (weaponId: string, current: number, target: number) => {
+        set((state) => {
+          const existing = state.weaponProgress[weaponId];
+          if (!existing) return;
+          
+          existing.level = { current, target };
+        });
+      },
+      
       updateWeaponAscension: (weaponId: string, current: number, target: number, order?: number) => {
         set((state) => {
           const existing = state.weaponProgress[weaponId];
@@ -180,11 +211,16 @@ export const useInventoryStore = create<InventoryState>()(
               weaponId,
               enabled: true,
               order: defaultOrder,
+              level: { current: 1, target: 90 },
               ascension: { current, target },
             };
           } else {
             existing.enabled = true;
             existing.ascension = { current, target };
+            // Initialize level if it doesn't exist (migration)
+            if (!existing.level) {
+              existing.level = { current: 1, target: 90 };
+            }
           }
           
           // Handle ordering
@@ -233,6 +269,15 @@ export const useInventoryStore = create<InventoryState>()(
     })),
     {
       name: 'wuwa-planner-inventory',
+      version: CURRENT_STORAGE_VERSION,
+      migrate: (persistedState: any, version: number) => {
+        console.log(`🔧 Storage migration triggered from version ${version}`);
+        
+        // Apply migrations to bring data to current version
+        const migratedState = applyMigrations(persistedState);
+        
+        return migratedState;
+      },
     }
   )
 );

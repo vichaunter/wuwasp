@@ -1,4 +1,4 @@
-import { MaterialInput } from '@/components/MaterialInput';
+import { MaterialCard } from '@/components/material';
 import { MaterialSection } from '@/components/MaterialSection';
 import { materials } from '@/data/materials';
 
@@ -53,7 +53,7 @@ export default function Inventory() {
           {commonGrouped.flatMap(([, mats]) => 
             mats.map(mat => (
               <div key={mat.id} className="w-[140px]">
-                <MaterialInput materialId={mat.id} />
+                <MaterialCard materialId={mat.id} mode="input" />
               </div>
             ))
           )}
@@ -66,7 +66,7 @@ export default function Inventory() {
           {forgeryGrouped.flatMap(([, mats]) => 
             mats.map(mat => (
               <div key={mat.id} className="w-[140px]">
-                <MaterialInput materialId={mat.id} />
+                <MaterialCard materialId={mat.id} mode="input" />
               </div>
             ))
           )}
