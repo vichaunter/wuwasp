@@ -3,6 +3,7 @@ import { ascensionRequirements } from '@/data/ascension-requirements';
 import { forteRequirements } from '@/data/forte-requirements';
 import { getWeaponAscensionRequirements } from '@/data/weapon-ascension-requirements';
 import { getMaterialByNameAndQuality } from '@/data/materials';
+import { characterExpRequirements, weaponExpRequirements } from '@/data/exp-requirements';
 
 export interface MaterialRequirement {
   materialId: string;
@@ -245,6 +246,104 @@ export function calculateCharacterPassiveMaterials(
 }
 
 /**
+ * Calculate EXP materials (Resonance Potions) for character leveling
+ * 
+ * Returns the TOTAL EXP needed and Shell Credits for leveling,
+ * NOT individual potions. The UI will display these as separate rows
+ * below the config button, showing total EXP and total Shell Credits.
+ */
+export function calculateCharacterExpMaterials(
+  currentRank: number,
+  targetRank: number
+): MaterialRequirement[] {
+  let totalExp = 0;
+  let totalShellCreditsForLeveling = 0;
+  
+  // Sum up EXP for each ascension rank
+  for (let rank = currentRank; rank < targetRank; rank++) {
+    if (rank >= 0 && rank < characterExpRequirements.length) {
+      totalExp += characterExpRequirements[rank].exp;
+      totalShellCreditsForLeveling += characterExpRequirements[rank].shellCredits;
+    }
+  }
+  
+  if (totalExp === 0 && totalShellCreditsForLeveling === 0) {
+    return [];
+  }
+  
+  const requirements: MaterialRequirement[] = [];
+  
+  // Add total EXP requirement (not individual potions)
+  if (totalExp > 0) {
+    requirements.push({
+      materialId: 'character-exp',
+      materialName: 'Character EXP',
+      quantity: totalExp,
+    });
+  }
+  
+  // Add Shell Credits cost for leveling (separate from ascension costs)
+  if (totalShellCreditsForLeveling > 0) {
+    requirements.push({
+      materialId: 'shell-credit-leveling',
+      materialName: 'Shell Credit (Leveling)',
+      quantity: totalShellCreditsForLeveling,
+    });
+  }
+  
+  return requirements;
+}
+
+/**
+ * Calculate EXP materials (Energy Cores) for weapon leveling
+ * 
+ * Returns the TOTAL EXP needed and Shell Credits for leveling,
+ * NOT individual cores. The UI will display these as separate rows
+ * below the config button, showing total EXP and total Shell Credits.
+ */
+export function calculateWeaponExpMaterials(
+  currentRank: number,
+  targetRank: number
+): MaterialRequirement[] {
+  let totalExp = 0;
+  let totalShellCreditsForLeveling = 0;
+  
+  // Sum up EXP for each ascension rank
+  for (let rank = currentRank; rank < targetRank; rank++) {
+    if (rank >= 0 && rank < weaponExpRequirements.length) {
+      totalExp += weaponExpRequirements[rank].exp;
+      totalShellCreditsForLeveling += weaponExpRequirements[rank].shellCredits;
+    }
+  }
+  
+  if (totalExp === 0 && totalShellCreditsForLeveling === 0) {
+    return [];
+  }
+  
+  const requirements: MaterialRequirement[] = [];
+  
+  // Add total EXP requirement (not individual cores)
+  if (totalExp > 0) {
+    requirements.push({
+      materialId: 'weapon-exp',
+      materialName: 'Weapon EXP',
+      quantity: totalExp,
+    });
+  }
+  
+  // Add Shell Credits cost for leveling (separate from ascension costs)
+  if (totalShellCreditsForLeveling > 0) {
+    requirements.push({
+      materialId: 'shell-credit-leveling',
+      materialName: 'Shell Credit (Leveling)',
+      quantity: totalShellCreditsForLeveling,
+    });
+  }
+  
+  return requirements;
+}
+
+/**
  * Calculate total materials needed for a character based on progress
  */
 export function calculateCharacterTotalMaterials(
@@ -286,6 +385,14 @@ export function calculateCharacterTotalMaterials(
   }
   if (progress.forte.bonusPassive.target > progress.forte.bonusPassive.current) {
     allMaterials.push(...calculateCharacterPassiveMaterials(character, 'bonusPassive', true));
+  }
+  
+  // EXP materials (Resonance Potions)
+  if (progress.ascension.current < progress.ascension.target) {
+    allMaterials.push(...calculateCharacterExpMaterials(
+      progress.ascension.current,
+      progress.ascension.target
+    ));
   }
   
   // Merge duplicate materials
@@ -366,11 +473,25 @@ export function calculateWeaponTotalMaterials(
   weapon: Weapon,
   progress: WeaponProgress
 ): MaterialRequirement[] {
-  return calculateWeaponAscensionMaterials(
+  const allMaterials: MaterialRequirement[] = [];
+  
+  // Ascension materials
+  allMaterials.push(...calculateWeaponAscensionMaterials(
     weapon,
     progress.ascension.current,
     progress.ascension.target
-  );
+  ));
+  
+  // EXP materials (Energy Cores)
+  if (progress.ascension.current < progress.ascension.target) {
+    allMaterials.push(...calculateWeaponExpMaterials(
+      progress.ascension.current,
+      progress.ascension.target
+    ));
+  }
+  
+  // Merge duplicate materials
+  return mergeMaterialRequirements(allMaterials);
 }
 
 /**

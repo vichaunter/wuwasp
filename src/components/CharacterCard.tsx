@@ -14,9 +14,10 @@ import { getMaterialsOfSameBase } from '@/utils/material-grouping';
 interface CharacterCardProps {
   character: Character;
   plannerMode?: boolean;
+  effectiveInventory?: Record<string, number>;
 }
 
-export function CharacterCard({ character, plannerMode = false }: CharacterCardProps) {
+export function CharacterCard({ character, plannerMode = false, effectiveInventory }: CharacterCardProps) {
   const progress = useInventoryStore(state => state.getCharacterProgress(character.id));
   const isInPlanner = progress?.enabled ?? false;
   
@@ -133,35 +134,70 @@ export function CharacterCard({ character, plannerMode = false }: CharacterCardP
         </div>
         
         {/* Planner Section - Inside the card */}
-        {plannerMode && isInPlanner && progress && (
-          <div className="px-4 pb-4 border-t border-gray-700 pt-4">
-            {/* Configuration Button */}
-            <div className="mb-4">
-              <ConfigButton 
-                onClick={() => setShowConfigModal(true)}
-                progress={progress}
-                type="character"
-              />
-            </div>
-            
-            {/* Materials Needed */}
-            {requiredMaterials.length > 0 && (
-              <div className="mt-4">
-                <div className="text-sm font-semibold text-gray-300 mb-3">Materiales Necesarios</div>
-                <div className="grid grid-cols-4 gap-2">
-                  {requiredMaterials.map(mat => (
-                    <MaterialCard
-                      key={mat.materialId}
-                      materialId={mat.materialId}
-                      required={mat.quantity}
-                      allMaterialsOfSameBase={getMaterialsOfSameBase(mat.materialId, requiredMaterials)}
-                    />
-                  ))}
-                </div>
+        {plannerMode && isInPlanner && progress && (() => {
+          // Separate special requirements (EXP, all Shell Credits) from normal materials
+          const normalMaterials = requiredMaterials.filter(m => 
+            m.materialId !== 'character-exp' && 
+            m.materialId !== 'shell-credit-leveling' &&
+            m.materialId !== 'shell-credit'
+          );
+          
+          const expRequirement = requiredMaterials.find(m => m.materialId === 'character-exp');
+          const shellLevelingRequirement = requiredMaterials.find(m => m.materialId === 'shell-credit-leveling');
+          const shellOtherRequirement = requiredMaterials.find(m => m.materialId === 'shell-credit');
+          
+          // Total Shell Credits = leveling + ascension/fortes/passives
+          const totalShellCredits = (shellLevelingRequirement?.quantity || 0) + (shellOtherRequirement?.quantity || 0);
+          
+          return (
+            <div className="px-4 pb-4 border-t border-gray-700 pt-4">
+              {/* Configuration Button */}
+              <div className="mb-4">
+                <ConfigButton 
+                  onClick={() => setShowConfigModal(true)}
+                  progress={progress}
+                  type="character"
+                />
               </div>
-            )}
-          </div>
-        )}
+              
+              {/* Special Requirements: EXP and Shell Credits (Total) */}
+              {(expRequirement || totalShellCredits > 0) && (
+                <div className="mb-3 space-y-1.5 text-sm">
+                  {expRequirement && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs">EXP:</span>
+                      <span className="text-gray-300">0 / {expRequirement.quantity.toLocaleString()}</span>
+                    </div>
+                  )}
+                  {totalShellCredits > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs">Credits:</span>
+                      <span className="text-gray-300">0 / {totalShellCredits.toLocaleString()}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Materials Needed */}
+              {normalMaterials.length > 0 && (
+                <div>
+                  <div className="text-sm font-semibold text-gray-300 mb-3">Materiales Necesarios</div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {normalMaterials.map(mat => (
+                      <MaterialCard
+                        key={mat.materialId}
+                        materialId={mat.materialId}
+                        required={mat.quantity}
+                        allMaterialsOfSameBase={getMaterialsOfSameBase(mat.materialId, normalMaterials)}
+                        effectiveInventory={effectiveInventory}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </div>
     </div>
       

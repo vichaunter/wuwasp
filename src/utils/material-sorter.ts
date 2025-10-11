@@ -8,6 +8,7 @@ const categoryOrder = {
   FORGERY: 3,
   BOSS: 4,
   OVERWORLD: 5,
+  EXP: 6,
 };
 
 const qualityOrder = {

@@ -9,9 +9,10 @@ interface MaterialCardProps {
   materialId: string;
   required: number;
   allMaterialsOfSameBase?: MaterialRequirement[]; // All materials with same baseName for synthesis calculation
+  effectiveInventory?: Record<string, number>; // Inventory to use instead of global (for sequential planning)
 }
 
-export function MaterialCard({ materialId, required, allMaterialsOfSameBase }: MaterialCardProps) {
+export function MaterialCard({ materialId, required, allMaterialsOfSameBase, effectiveInventory }: MaterialCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const getMaterialQuantity = useInventoryStore((state) => state.getMaterialQuantity);
@@ -27,7 +28,12 @@ export function MaterialCard({ materialId, required, allMaterialsOfSameBase }: M
   
   // Calculate effective availability considering synthesis
   const { available, hasEnough, progress } = useMemo(() => {
-    const ownedQty = getMaterialQuantity(materialId);
+    // Use effectiveInventory if provided, otherwise use global inventory
+    const getQuantity = (matId: string) => {
+      return effectiveInventory !== undefined ? (effectiveInventory[matId] || 0) : getMaterialQuantity(matId);
+    };
+    
+    const ownedQty = getQuantity(materialId);
     
     // If we have quality tiers and all materials of same base, use synthesis calculation
     if (material.quality && material.baseName && allMaterialsOfSameBase && allMaterialsOfSameBase.length > 1) {
@@ -39,7 +45,7 @@ export function MaterialCard({ materialId, required, allMaterialsOfSameBase }: M
         const m = getMaterialById(mat.materialId);
         if (m && m.quality) {
           requirements[m.quality] = mat.quantity;
-          ownedByQuality[m.quality] = getMaterialQuantity(mat.materialId);
+          ownedByQuality[m.quality] = getQuantity(mat.materialId);
         }
       });
       
@@ -61,7 +67,7 @@ export function MaterialCard({ materialId, required, allMaterialsOfSameBase }: M
       hasEnough: ownedQty >= required,
       progress: Math.min((ownedQty / required) * 100, 100),
     };
-  }, [materialId, required, material.quality, material.baseName, allMaterialsOfSameBase, getMaterialQuantity]);
+  }, [materialId, required, material.quality, material.baseName, allMaterialsOfSameBase, getMaterialQuantity, effectiveInventory]);
   
   // Determinar el color base según calidad o categoría
   let colorKey: 'green' | 'blue' | 'purple' | 'amber' | 'red' | 'gray';

@@ -1,4 +1,5 @@
 import type { MaterialQualityTier } from '@/types';
+import { getMaterialById, materials } from '@/data/materials';
 
 /**
  * Material synthesis system
@@ -27,13 +28,6 @@ export interface SynthesisResult {
 }
 
 /**
- * Calculate how many materials of higher quality can be synthesized from lower quality
- */
-function canSynthesize(lowerQtyAvailable: number): number {
-  return Math.floor(lowerQtyAvailable / SYNTHESIS_RATIO);
-}
-
-/**
  * Get the previous quality tier (for downgrading)
  */
 function getPreviousQuality(quality: MaterialQualityTier): MaterialQualityTier | null {
@@ -43,10 +37,11 @@ function getPreviousQuality(quality: MaterialQualityTier): MaterialQualityTier |
 }
 
 /**
- * Smart material synthesis calculation
+ * Smart material synthesis calculation (RECURSIVE MULTI-LEVEL)
  * 
  * This function calculates if you can fulfill material requirements considering synthesis.
- * It uses existing materials first, then synthesizes from lower tiers only when needed.
+ * It uses existing materials first, then synthesizes from lower tiers RECURSIVELY.
+ * For example, if you need T4 but only have T1, it will synthesize T1->T2->T3->T4.
  * 
  * @param required - Materials needed by quality tier
  * @param owned - Materials owned by quality tier
@@ -63,49 +58,69 @@ export function calculateMaterialSynthesis(
   
   let canFulfill = true;
   
-  // Process from highest to lowest quality (T4 → T1)
-  // This ensures we only synthesize when necessary
-  for (let i = QUALITY_ORDER.length - 1; i >= 0; i--) {
+  // Helper function to recursively synthesize a material
+  const synthesizeMaterial = (targetQuality: MaterialQualityTier, quantity: number): number => {
+    if (quantity <= 0) return 0;
+    
+    // Check if we have enough at this quality
+    const directAvailable = remaining[targetQuality] || 0;
+    if (directAvailable >= quantity) {
+      remaining[targetQuality] = directAvailable - quantity;
+      return quantity;
+    }
+    
+    // Use what we have
+    let fulfilled = directAvailable;
+    remaining[targetQuality] = 0;
+    let stillNeeded = quantity - fulfilled;
+    
+    if (stillNeeded > 0) {
+      // Try to synthesize from lower quality
+      const lowerQuality = getPreviousQuality(targetQuality);
+      if (lowerQuality) {
+        // We need stillNeeded * SYNTHESIS_RATIO of the lower quality
+        const lowerNeeded = stillNeeded * SYNTHESIS_RATIO;
+        
+        // Recursively get the lower quality (which might also need synthesis)
+        const lowerObtained = synthesizeMaterial(lowerQuality, lowerNeeded);
+        
+        // How many of target quality can we make?
+        const canMake = Math.floor(lowerObtained / SYNTHESIS_RATIO);
+        fulfilled += canMake;
+        
+        // Track synthesis
+        if (canMake > 0) {
+          synthesisNeeded.push({
+            from: lowerQuality,
+            to: targetQuality,
+            quantity: canMake,
+          });
+        }
+        
+        // Return excess lower materials back to inventory
+        const excess = lowerObtained % SYNTHESIS_RATIO;
+        if (excess > 0) {
+          remaining[lowerQuality] = (remaining[lowerQuality] || 0) + excess;
+        }
+      }
+    }
+    
+    return fulfilled;
+  };
+  
+  // Process from lowest to highest quality (T1 → T4)
+  // This ensures we fulfill direct requirements first before synthesizing
+  for (let i = 0; i < QUALITY_ORDER.length; i++) {
     const quality = QUALITY_ORDER[i];
     const requiredQty = required[quality] || 0;
-    const ownedQty = remaining[quality] || 0;
     
     if (requiredQty === 0) continue;
     
-    // First, use what we already have at this quality
-    const usedFromOwned = Math.min(ownedQty, requiredQty);
-    remaining[quality] = ownedQty - usedFromOwned;
-    let stillNeeded = requiredQty - usedFromOwned;
+    const fulfilled = synthesizeMaterial(quality, requiredQty);
+    available[quality] = fulfilled;
     
-    // If we still need more, try to synthesize from lower quality
-    if (stillNeeded > 0) {
-      const lowerQuality = getPreviousQuality(quality);
-      
-      if (lowerQuality) {
-        const lowerQtyAvailable = remaining[lowerQuality] || 0;
-        const canSynthesizeQty = canSynthesize(lowerQtyAvailable);
-        const toSynthesize = Math.min(canSynthesizeQty, stillNeeded);
-        
-        if (toSynthesize > 0) {
-          const materialsUsed = toSynthesize * SYNTHESIS_RATIO;
-          remaining[lowerQuality] = lowerQtyAvailable - materialsUsed;
-          remaining[quality] = (remaining[quality] || 0); // Don't add synthesized, we're using them
-          available[quality] = (available[quality] || 0) + toSynthesize;
-          
-          synthesisNeeded.push({
-            from: lowerQuality,
-            to: quality,
-            quantity: toSynthesize,
-          });
-          
-          stillNeeded -= toSynthesize;
-        }
-      }
-      
-      // If still not enough, mark as cannot fulfill
-      if (stillNeeded > 0) {
-        canFulfill = false;
-      }
+    if (fulfilled < requiredQty) {
+      canFulfill = false;
     }
   }
   
@@ -158,7 +173,14 @@ export function calculateEffectiveAvailability(
 /**
  * Format material availability for display
  * 
- * Returns a string like "4/4" or "3/9" showing available vs required
+ * Uses the synthesis system to calculate how much of each tier can be fulfilled
+ * considering all requirements together.
+ * 
+ * @param quality - The quality tier we want to check availability for
+ * @param required - How many of this quality we need
+ * @param owned - How many of each quality we currently own
+ * @param allRequired - All requirements for this base material (all qualities)
+ * @returns Object with available quantity and whether we have enough
  */
 export function formatMaterialAvailability(
   quality: MaterialQualityTier,
@@ -166,13 +188,19 @@ export function formatMaterialAvailability(
   owned: MaterialInventory,
   allRequired: MaterialRequirement
 ): { available: number; required: number; hasEnough: boolean } {
-  const effective = calculateEffectiveAvailability(allRequired, owned);
-  const available = Math.min(effective[quality] || 0, required);
+  // Use the full synthesis calculation to see what can be fulfilled
+  const result = calculateMaterialSynthesis(allRequired, owned);
+  
+  // The 'available' field in the result shows what we effectively have after synthesis
+  const effectiveAvailable = result.available[quality] || 0;
+  
+  // Compare with what we need
+  const canFulfill = Math.min(effectiveAvailable, required);
   
   return {
-    available,
+    available: canFulfill,
     required,
-    hasEnough: available >= required,
+    hasEnough: result.canFulfill && effectiveAvailable >= required,
   };
 }
 
@@ -214,5 +242,95 @@ export function calculateSynthesisPlan(
     canFulfill: result.canFulfill,
     plan,
   };
+}
+
+/**
+ * Consume materials from inventory for a given set of requirements
+ * 
+ * This function takes a full inventory (all materials, not just one base)
+ * and returns the inventory after consuming materials for the requirements.
+ * It handles synthesis automatically.
+ * 
+ * @param currentInventory - Full inventory { materialId: quantity }
+ * @param requirements - Requirements from MaterialCalculator { materialId, materialName, quantity }
+ * @returns New inventory after consuming materials
+ */
+export function consumeMaterialsFromInventory(
+  currentInventory: Record<string, number>,
+  requirements: { materialId: string; quantity: number }[]
+): Record<string, number> {
+  const newInventory = { ...currentInventory };
+  
+  // Group requirements by base material (materials with same baseName but different qualities)
+  const groupedRequirements = new Map<string, Map<MaterialQualityTier, { materialId: string; quantity: number }>>();
+  const simpleRequirements: { materialId: string; quantity: number }[] = [];
+  
+  for (const req of requirements) {
+    const material = getMaterialById(req.materialId);
+    
+    if (!material) {
+      console.warn(`Material not found: ${req.materialId}`);
+      continue;
+    }
+    
+    // Check if this material has qualities
+    if (material.quality && material.baseName) {
+      // Material with quality - group by base name
+      if (!groupedRequirements.has(material.baseName)) {
+        groupedRequirements.set(material.baseName, new Map());
+      }
+      groupedRequirements.get(material.baseName)!.set(material.quality, {
+        materialId: req.materialId,
+        quantity: req.quantity,
+      });
+    } else {
+      // Simple material without qualities (boss, overworld, currency)
+      simpleRequirements.push(req);
+    }
+  }
+  
+  // Process materials with qualities (using synthesis)
+  for (const [baseName, qualityRequirements] of groupedRequirements) {
+    const required: MaterialRequirement = {};
+    const owned: MaterialInventory = {};
+    const materialIdsByQuality = new Map<MaterialQualityTier, string>();
+    
+    // Build required and owned objects for synthesis calculation
+    for (const quality of QUALITY_ORDER) {
+      const reqData = qualityRequirements.get(quality);
+      if (reqData) {
+        required[quality] = reqData.quantity;
+        materialIdsByQuality.set(quality, reqData.materialId);
+        owned[quality] = newInventory[reqData.materialId] || 0;
+      } else {
+        // Still need to check if we have materials of this quality for synthesis
+        // Find the material ID for this quality
+        const mat = materials.find(m => m.baseName === baseName && m.quality === quality);
+        if (mat) {
+          materialIdsByQuality.set(quality, mat.id);
+          owned[quality] = newInventory[mat.id] || 0;
+        }
+      }
+    }
+    
+    // Calculate synthesis and get remaining inventory
+    const result = calculateMaterialSynthesis(required, owned);
+    
+    // Update inventory with remaining materials
+    for (const quality of QUALITY_ORDER) {
+      const materialId = materialIdsByQuality.get(quality);
+      if (materialId) {
+        newInventory[materialId] = result.remainingAfterUse[quality] || 0;
+      }
+    }
+  }
+  
+  // Process simple materials (direct subtraction)
+  for (const req of simpleRequirements) {
+    const owned = newInventory[req.materialId] || 0;
+    newInventory[req.materialId] = Math.max(0, owned - req.quantity);
+  }
+  
+  return newInventory;
 }
 

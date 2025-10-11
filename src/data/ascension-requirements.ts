@@ -17,15 +17,17 @@ export const ascensionRequirements: AscensionRequirement[] = [
     "common": {
       "T1": 4
     },
+    "boss": 3,
+    "overworld": 0,
     "currency": 5000
   },
   {
     "rank": 2,
     "level": "40 → 50",
     "common": {
-      "T2": 3
+      "T2": 4
     },
-    "boss": 3,
+    "boss": 6,
     "overworld": 4,
     "currency": 10000
   },
@@ -33,9 +35,9 @@ export const ascensionRequirements: AscensionRequirement[] = [
     "rank": 3,
     "level": "50 → 60",
     "common": {
-      "T2": 6
+      "T2": 8
     },
-    "boss": 6,
+    "boss": 9,
     "overworld": 8,
     "currency": 15000
   },
@@ -43,9 +45,9 @@ export const ascensionRequirements: AscensionRequirement[] = [
     "rank": 4,
     "level": "60 → 70",
     "common": {
-      "T3": 3
+      "T3": 4
     },
-    "boss": 9,
+    "boss": 12,
     "overworld": 12,
     "currency": 20000
   },
@@ -53,9 +55,9 @@ export const ascensionRequirements: AscensionRequirement[] = [
     "rank": 5,
     "level": "70 → 80",
     "common": {
-      "T3": 6
+      "T3": 8
     },
-    "boss": 12,
+    "boss": 16,
     "overworld": 16,
     "currency": 40000
   },
@@ -65,7 +67,7 @@ export const ascensionRequirements: AscensionRequirement[] = [
     "common": {
       "T4": 4
     },
-    "boss": 16,
+    "boss": 20,
     "overworld": 20,
     "currency": 80000
   }
@@ -73,8 +75,8 @@ export const ascensionRequirements: AscensionRequirement[] = [
 
 // Total materials needed for full ascension (1-90)
 export const totalAscensionRequirements = {
-  common: { T1: 4, T2: 9, T3: 9, T4: 4 },
-  boss: 46,
+  common: { T1: 4, T2: 12, T3: 12, T4: 4 },
+  boss: 66,
   overworld: 60,
   currency: 170000,
 };

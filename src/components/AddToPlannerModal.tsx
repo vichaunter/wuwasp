@@ -59,8 +59,8 @@ export function AddToPlannerModal({ isOpen, onClose, itemType, itemId, itemName 
       // Ascension will default to 0->6, forte to 1->10, passives to 0->1
       updateCharacterAscension(itemId, 0, 6, selectedPosition);
     } else {
-      // Weapon ascension will default to 0->7
-      updateWeaponAscension(itemId, 0, 7, selectedPosition);
+      // Weapon ascension will default to 0->6 (A1-A6 to reach level 90)
+      updateWeaponAscension(itemId, 0, 6, selectedPosition);
     }
     onClose();
   };

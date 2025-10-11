@@ -104,17 +104,19 @@ describe('Material Synthesis System', () => {
       const required = { T1: 4, T2: 9, T3: 9 };
       const owned = { T1: 70, T2: 0, T3: 0 };
       
-      const effective = calculateEffectiveAvailability(required, owned);
+      const result = calculateMaterialSynthesis(required, owned);
       
       // With 70 T1:
-      // - Can provide 4 T1 directly
-      // - Remaining: 66 T1
-      // - Can synthesize 22 T2 (66/3), use 9, leaves 13
-      // - Can synthesize 4 T3 (13/3), but need 9
+      // - T1: needs 4, uses 4 directly → remaining: 66 T1
+      // - T2: needs 9, synthesizes from 27 T1 → remaining: 39 T1
+      // - T3: needs 9, would need 81 T1 (9*3*3), but only have 39 T1
+      //   - Can make 39/3 = 13 T2 from remaining T1
+      //   - Can make 13/3 = 4 T3 from T2
       
-      expect(effective.T1).toBe(4); // Can fulfill T1 requirement
-      expect(effective.T2).toBe(9); // Can fulfill T2 requirement
-      expect(effective.T3).toBeLessThan(9); // Cannot fully fulfill T3
+      expect(result.available.T1).toBe(4); // Can fulfill T1 requirement
+      expect(result.available.T2).toBe(9); // Can fulfill T2 requirement
+      expect(result.available.T3).toBe(4); // Can only make 4 T3, not 9
+      expect(result.canFulfill).toBe(false); // Cannot fulfill all requirements
     });
   });
 

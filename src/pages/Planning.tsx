@@ -4,10 +4,13 @@ import { weapons } from '@/data/weapons';
 import { CharacterCard } from '@/components/CharacterCard';
 import { WeaponCard } from '@/components/WeaponCard';
 import { useInventoryStore } from '@/store/inventory';
+import { consumeMaterialsFromInventory } from '@/utils/material-synthesis';
+import { calculateCharacterTotalMaterials, calculateWeaponTotalMaterials } from '@/utils/material-calculator';
 
 export default function Planning() {
   const characterProgress = useInventoryStore(state => state.characterProgress);
   const weaponProgress = useInventoryStore(state => state.weaponProgress);
+  const globalInventory = useInventoryStore(state => state.inventory);
   
   // Combine all enabled items and sort by global order
   const allEnabledItems = useMemo(() => {
@@ -30,6 +33,39 @@ export default function Planning() {
     return [...enabledChars, ...enabledWeapons].sort((a, b) => a.order - b.order);
   }, [characterProgress, weaponProgress]);
   
+  // Calculate sequential inventory for each item
+  const itemsWithInventory = useMemo(() => {
+    let currentInventory = { ...globalInventory };
+    
+    return allEnabledItems.map(item => {
+      // Store the inventory available for this item
+      const availableInventory = { ...currentInventory };
+      
+      // Calculate what this item needs
+      let requirements: { materialId: string; quantity: number }[] = [];
+      
+      if (item.type === 'character') {
+        const progress = characterProgress[item.data.id];
+        if (progress) {
+          requirements = calculateCharacterTotalMaterials(item.data, progress);
+        }
+      } else {
+        const progress = weaponProgress[item.data.id];
+        if (progress) {
+          requirements = calculateWeaponTotalMaterials(item.data, progress);
+        }
+      }
+      
+      // Consume materials from inventory for next item
+      currentInventory = consumeMaterialsFromInventory(currentInventory, requirements);
+      
+      return {
+        ...item,
+        availableInventory,
+      };
+    });
+  }, [allEnabledItems, characterProgress, weaponProgress, globalInventory]);
+  
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
@@ -43,9 +79,9 @@ export default function Planning() {
       </div>
       
       {/* Content - Responsive Grid */}
-      {allEnabledItems.length > 0 ? (
+      {itemsWithInventory.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
-          {allEnabledItems.map((item, index) => (
+          {itemsWithInventory.map((item, index) => (
             <div key={`${item.type}-${item.data.id}`} className="relative h-full">
               {/* Priority Badge */}
               <div className="absolute -top-2 -left-2 z-20 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-gray-900">
@@ -54,9 +90,17 @@ export default function Planning() {
               
               <div className="h-full">
                 {item.type === 'character' ? (
-                  <CharacterCard character={item.data} plannerMode={true} />
+                  <CharacterCard 
+                    character={item.data} 
+                    plannerMode={true}
+                    effectiveInventory={item.availableInventory}
+                  />
                 ) : (
-                  <WeaponCard weapon={item.data} plannerMode={true} />
+                  <WeaponCard 
+                    weapon={item.data} 
+                    plannerMode={true}
+                    effectiveInventory={item.availableInventory}
+                  />
                 )}
               </div>
             </div>

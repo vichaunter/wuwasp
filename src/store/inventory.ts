@@ -4,7 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 import type { CharacterProgress, WeaponProgress } from '@/types';
 
 interface InventoryState {
-  materials: Record<string, number>; // materialId -> quantity
+  inventory: Record<string, number>; // materialId -> quantity
   characterProgress: Record<string, CharacterProgress>; // characterId -> progress
   weaponProgress: Record<string, WeaponProgress>; // weaponId -> progress
   collapsedSections: Record<string, boolean>; // itemId -> isCollapsed
@@ -36,20 +36,20 @@ interface InventoryState {
 export const useInventoryStore = create<InventoryState>()(
   persist(
     immer((set, get) => ({
-      materials: {},
+      inventory: {},
       characterProgress: {},
       weaponProgress: {},
       collapsedSections: {},
       
       // Material methods
       getMaterialQuantity: (materialId: string) => {
-        return get().materials[materialId] || 0;
+        return get().inventory[materialId] || 0;
       },
       
       setMaterialQuantity: (materialId: string, quantity: number) => {
         set((state) => ({
-          materials: {
-            ...state.materials,
+          inventory: {
+            ...state.inventory,
             [materialId]: Math.max(0, quantity),
           },
         }));
@@ -61,7 +61,7 @@ export const useInventoryStore = create<InventoryState>()(
       },
       
       clearInventory: () => {
-        set({ materials: {} });
+        set({ inventory: {} });
       },
       
       // Character progress methods

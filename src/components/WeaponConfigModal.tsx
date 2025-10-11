@@ -30,11 +30,6 @@ export function WeaponConfigModal({ isOpen, onClose, weapon, progress }: WeaponC
     onClose();
   };
 
-  const getLevelLabel = (rank: number) => {
-    if (rank === 0) return 'Lv. 1';
-    return `Lv. ${rank * 10 + 10}`;
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -54,9 +49,13 @@ export function WeaponConfigModal({ isOpen, onClose, weapon, progress }: WeaponC
               onChange={(e) => setAscensionCurrent(Number(e.target.value))}
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              {[0, 1, 2, 3, 4, 5, 6, 7].map(rank => (
-                <option key={rank} value={rank}>{getLevelLabel(rank)}</option>
-              ))}
+              <option value={0}>Nivel 1 (A0)</option>
+              <option value={1}>Nivel 20 → 40 (A1)</option>
+              <option value={2}>Nivel 40 → 50 (A2)</option>
+              <option value={3}>Nivel 50 → 60 (A3)</option>
+              <option value={4}>Nivel 60 → 70 (A4)</option>
+              <option value={5}>Nivel 70 → 80 (A5)</option>
+              <option value={6}>Nivel 80 → 90 (A6)</option>
             </select>
           </div>
           <div>
@@ -66,9 +65,13 @@ export function WeaponConfigModal({ isOpen, onClose, weapon, progress }: WeaponC
               onChange={(e) => setAscensionTarget(Number(e.target.value))}
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              {[0, 1, 2, 3, 4, 5, 6, 7].map(rank => (
-                <option key={rank} value={rank}>{getLevelLabel(rank)}</option>
-              ))}
+              <option value={0}>Nivel 1 (A0)</option>
+              <option value={1}>Nivel 20 → 40 (A1)</option>
+              <option value={2}>Nivel 40 → 50 (A2)</option>
+              <option value={3}>Nivel 50 → 60 (A3)</option>
+              <option value={4}>Nivel 60 → 70 (A4)</option>
+              <option value={5}>Nivel 70 → 80 (A5)</option>
+              <option value={6}>Nivel 80 → 90 (A6)</option>
             </select>
           </div>
         </div>

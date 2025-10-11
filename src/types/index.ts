@@ -2,7 +2,7 @@
 export type MaterialQualityTier = 'T1' | 'T2' | 'T3' | 'T4';
 
 // Material categories
-export type MaterialCategory = 'COMMON' | 'FORGERY' | 'BOSS' | 'OVERWORLD' | 'CURRENCY';
+export type MaterialCategory = 'COMMON' | 'FORGERY' | 'BOSS' | 'OVERWORLD' | 'CURRENCY' | 'EXP';
 
 export interface Material {
   id: string; // e.g., "lf-tidal-residuum" or "tidal-residuum" (for non-quality materials)
