@@ -9,6 +9,7 @@ export const materials: Material[] = [
     baseName: 'Tidal Residuum',
     category: 'COMMON',
     quality: 'T1',
+    image: 'https://img.game8.co/4075419/ae09228d07475fe53ea6f1df72562f7f.png/show',
   },
   {
     id: 'mf-tidal-residuum',
@@ -16,6 +17,7 @@ export const materials: Material[] = [
     baseName: 'Tidal Residuum',
     category: 'COMMON',
     quality: 'T2',
+    image: 'https://img.game8.co/4075418/cbbc5d40dd4e2ee7999dfcc305b388a1.png/show',
   },
   {
     id: 'hf-tidal-residuum',
@@ -23,6 +25,7 @@ export const materials: Material[] = [
     baseName: 'Tidal Residuum',
     category: 'COMMON',
     quality: 'T3',
+    image: 'https://img.game8.co/4075417/348077c3367c961c8a272cd7005cdf9d.png/show',
   },
   {
     id: 'ff-tidal-residuum',
@@ -30,6 +33,7 @@ export const materials: Material[] = [
     baseName: 'Tidal Residuum',
     category: 'COMMON',
     quality: 'T4',
+    image: 'https://img.game8.co/4075412/e1f29a8585e726a4b678bde7ebb88e38.png/show',
   },
   {
     id: 'lf-crude-ring',
@@ -37,6 +41,7 @@ export const materials: Material[] = [
     baseName: 'Crude Ring',
     category: 'COMMON',
     quality: 'T1',
+    image: '',
   },
   {
     id: 'mf-crude-ring',
@@ -44,6 +49,7 @@ export const materials: Material[] = [
     baseName: 'Crude Ring',
     category: 'COMMON',
     quality: 'T2',
+    image: '',
   },
   {
     id: 'hf-crude-ring',
@@ -51,6 +57,7 @@ export const materials: Material[] = [
     baseName: 'Crude Ring',
     category: 'COMMON',
     quality: 'T3',
+    image: '',
   },
   {
     id: 'ff-crude-ring',
@@ -58,6 +65,7 @@ export const materials: Material[] = [
     baseName: 'Crude Ring',
     category: 'COMMON',
     quality: 'T4',
+    image: '',
   },
   {
     id: 'lf-whisperin-core',
@@ -65,6 +73,7 @@ export const materials: Material[] = [
     baseName: 'Whisperin Core',
     category: 'COMMON',
     quality: 'T1',
+    image: 'https://img.game8.co/3891133/5340799bb91ad638036a01ec35964b1b.png/show',
   },
   {
     id: 'mf-whisperin-core',
@@ -72,6 +81,7 @@ export const materials: Material[] = [
     baseName: 'Whisperin Core',
     category: 'COMMON',
     quality: 'T2',
+    image: 'https://img.game8.co/3892760/4cbd9cd77961708d1ec83972d3986b9d.png/show',
   },
   {
     id: 'hf-whisperin-core',
@@ -79,6 +89,7 @@ export const materials: Material[] = [
     baseName: 'Whisperin Core',
     category: 'COMMON',
     quality: 'T3',
+    image: 'https://img.game8.co/3893207/0761730db032161c1ea07efd7c185713.png/show',
   },
   {
     id: 'ff-whisperin-core',
@@ -86,6 +97,7 @@ export const materials: Material[] = [
     baseName: 'Whisperin Core',
     category: 'COMMON',
     quality: 'T4',
+    image: 'https://img.game8.co/3893206/24b2be1a262828d02d286b4f98c6dba6.png/show',
   },
   {
     id: 'lf-polygon-core',
@@ -93,6 +105,7 @@ export const materials: Material[] = [
     baseName: 'Polygon Core',
     category: 'COMMON',
     quality: 'T1',
+    image: 'https://img.game8.co/4075123/5de2af0fa73a98fd57f32e010342c073.png/show',
   },
   {
     id: 'mf-polygon-core',
@@ -100,6 +113,7 @@ export const materials: Material[] = [
     baseName: 'Polygon Core',
     category: 'COMMON',
     quality: 'T2',
+    image: 'https://img.game8.co/4075120/7125710537fd59afc9564a342387de3e.png/show',
   },
   {
     id: 'hf-polygon-core',
@@ -107,6 +121,7 @@ export const materials: Material[] = [
     baseName: 'Polygon Core',
     category: 'COMMON',
     quality: 'T3',
+    image: 'https://img.game8.co/4075122/d54024440e125776e46cb7a9e5732efb.png/show',
   },
   {
     id: 'ff-polygon-core',
@@ -114,6 +129,7 @@ export const materials: Material[] = [
     baseName: 'Polygon Core',
     category: 'COMMON',
     quality: 'T4',
+    image: 'https://img.game8.co/4075119/d4610b9d7a7e936caaa616f9e0dae879.png/show',
   },
   {
     id: 'lf-howler-core',
@@ -121,6 +137,7 @@ export const materials: Material[] = [
     baseName: 'Howler Core',
     category: 'COMMON',
     quality: 'T1',
+    image: 'https://img.game8.co/3891122/11ea29e41f2534c59a94ffdfc987075c.png/show',
   },
   {
     id: 'mf-howler-core',
@@ -128,6 +145,7 @@ export const materials: Material[] = [
     baseName: 'Howler Core',
     category: 'COMMON',
     quality: 'T2',
+    image: 'https://img.game8.co/3893204/4dc1ebee2f3c157be91d3d7bb2431700.png/show',
   },
   {
     id: 'hf-howler-core',
@@ -135,6 +153,7 @@ export const materials: Material[] = [
     baseName: 'Howler Core',
     category: 'COMMON',
     quality: 'T3',
+    image: 'https://img.game8.co/3893222/c9633a075ca2eb4f07b89976439520af.png/show',
   },
   {
     id: 'ff-howler-core',
@@ -142,6 +161,7 @@ export const materials: Material[] = [
     baseName: 'Howler Core',
     category: 'COMMON',
     quality: 'T4',
+    image: 'https://img.game8.co/3893220/957b614f5d48c07fabd073e5100360c6.png/show',
   },
   {
     id: '210-waveworn-residue',
@@ -149,6 +169,7 @@ export const materials: Material[] = [
     baseName: 'Waveworn Residue',
     category: 'FORGERY',
     quality: 'T1',
+    image: 'https://img.game8.co/3893200/a7ea87363aff7de5643657b77db30f2d.png/show',
   },
   {
     id: '226-waveworn-residue',
@@ -156,6 +177,7 @@ export const materials: Material[] = [
     baseName: 'Waveworn Residue',
     category: 'FORGERY',
     quality: 'T2',
+    image: 'https://img.game8.co/3893201/a4fd50675fa14efd38280e9b969eed60.png/show',
   },
   {
     id: '235-waveworn-residue',
@@ -163,6 +185,7 @@ export const materials: Material[] = [
     baseName: 'Waveworn Residue',
     category: 'FORGERY',
     quality: 'T3',
+    image: 'https://img.game8.co/3893880/59244dddd2a2740e986e4040108ecd76.png/show',
   },
   {
     id: '239-waveworn-residue',
@@ -170,6 +193,7 @@ export const materials: Material[] = [
     baseName: 'Waveworn Residue',
     category: 'FORGERY',
     quality: 'T4',
+    image: 'https://img.game8.co/3903640/04a2727f61229d678330a983826aac56.png/show',
   },
   {
     id: '210-inert-metallic-drip',
@@ -177,6 +201,7 @@ export const materials: Material[] = [
     baseName: 'Inert Metallic Drip',
     category: 'FORGERY',
     quality: 'T1',
+    image: '',
   },
   {
     id: '226-inert-metallic-drip',
@@ -184,6 +209,7 @@ export const materials: Material[] = [
     baseName: 'Inert Metallic Drip',
     category: 'FORGERY',
     quality: 'T2',
+    image: '',
   },
   {
     id: '235-inert-metallic-drip',
@@ -191,6 +217,7 @@ export const materials: Material[] = [
     baseName: 'Inert Metallic Drip',
     category: 'FORGERY',
     quality: 'T3',
+    image: '',
   },
   {
     id: '239-inert-metallic-drip',
@@ -198,6 +225,7 @@ export const materials: Material[] = [
     baseName: 'Inert Metallic Drip',
     category: 'FORGERY',
     quality: 'T4',
+    image: '',
   },
   {
     id: '210-lento-helix',
@@ -205,6 +233,7 @@ export const materials: Material[] = [
     baseName: 'Lento Helix',
     category: 'FORGERY',
     quality: 'T1',
+    image: '',
   },
   {
     id: '226-lento-helix',
@@ -212,6 +241,7 @@ export const materials: Material[] = [
     baseName: 'Lento Helix',
     category: 'FORGERY',
     quality: 'T2',
+    image: '',
   },
   {
     id: '235-lento-helix',
@@ -219,6 +249,7 @@ export const materials: Material[] = [
     baseName: 'Lento Helix',
     category: 'FORGERY',
     quality: 'T3',
+    image: '',
   },
   {
     id: '239-lento-helix',
@@ -226,6 +257,7 @@ export const materials: Material[] = [
     baseName: 'Lento Helix',
     category: 'FORGERY',
     quality: 'T4',
+    image: '',
   },
   {
     id: '210-impure-phlogiston',
@@ -233,6 +265,7 @@ export const materials: Material[] = [
     baseName: 'Impure Phlogiston',
     category: 'FORGERY',
     quality: 'T1',
+    image: '',
   },
   {
     id: '226-impure-phlogiston',
@@ -240,6 +273,7 @@ export const materials: Material[] = [
     baseName: 'Impure Phlogiston',
     category: 'FORGERY',
     quality: 'T2',
+    image: '',
   },
   {
     id: '235-impure-phlogiston',
@@ -247,6 +281,7 @@ export const materials: Material[] = [
     baseName: 'Impure Phlogiston',
     category: 'FORGERY',
     quality: 'T3',
+    image: '',
   },
   {
     id: '239-impure-phlogiston',
@@ -254,6 +289,7 @@ export const materials: Material[] = [
     baseName: 'Impure Phlogiston',
     category: 'FORGERY',
     quality: 'T4',
+    image: '',
   },
   {
     id: '210-cadence-seed',
@@ -261,6 +297,7 @@ export const materials: Material[] = [
     baseName: 'Cadence Seed',
     category: 'FORGERY',
     quality: 'T1',
+    image: '',
   },
   {
     id: '226-cadence-seed',
@@ -268,6 +305,7 @@ export const materials: Material[] = [
     baseName: 'Cadence Seed',
     category: 'FORGERY',
     quality: 'T2',
+    image: '',
   },
   {
     id: '235-cadence-seed',
@@ -275,6 +313,7 @@ export const materials: Material[] = [
     baseName: 'Cadence Seed',
     category: 'FORGERY',
     quality: 'T3',
+    image: '',
   },
   {
     id: '239-cadence-seed',
@@ -282,252 +321,294 @@ export const materials: Material[] = [
     baseName: 'Cadence Seed',
     category: 'FORGERY',
     quality: 'T4',
+    image: '',
   },
   {
     id: 'blighted-crown-of-puppet-king',
     name: 'Blighted Crown of Puppet King',
     baseName: 'Blighted Crown of Puppet King',
     category: 'BOSS',
+    image: 'https://img.game8.co/4250793/1fb4bfc6d549cf6370dd17a1831e9b09.png/show',
   },
   {
     id: 'when-irises-bloom',
     name: 'When Irises Bloom',
     baseName: 'When Irises Bloom',
     category: 'BOSS',
+    image: 'https://img.game8.co/4136165/8e74711291815bbda554e890bcebe403.png/show',
   },
   {
     id: 'blazing-bone',
     name: 'Blazing Bone',
     baseName: 'Blazing Bone',
     category: 'BOSS',
+    image: 'https://img.game8.co/4075413/9bfe66fc251d91244e0c76ad1f939864.png/show',
   },
   {
     id: 'the-netherworld-s-stare',
     name: 'The Netherworld\\\'s Stare',
     baseName: 'The Netherworld\\\'s Stare',
     category: 'BOSS',
+    image: '',
   },
   {
     id: 'thundering-tacet-core',
     name: 'Thundering Tacet Core',
     baseName: 'Thundering Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893288/5aebefffe7218612a579834eac31f4f9.png/show',
   },
   {
     id: 'monument-bell',
     name: 'Monument Bell',
     baseName: 'Monument Bell',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893287/01a2d113cc605c833d4e08ff9cc02473.png/show',
   },
   {
     id: 'topological-confinement',
     name: 'Topological Confinement',
     baseName: 'Topological Confinement',
     category: 'BOSS',
+    image: 'https://img.game8.co/4000984/167c794474a3a6a36a0458382ccceed4.png/show',
   },
   {
     id: 'dreamless-feather',
     name: 'Dreamless Feather',
     baseName: 'Dreamless Feather',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893284/17a8396d49594164e3e8b24ab0b46678.png/show',
   },
   {
     id: 'cleansing-conch',
     name: 'Cleansing Conch',
     baseName: 'Cleansing Conch',
     category: 'BOSS',
+    image: 'https://img.game8.co/4075421/35ee7878e010e0e403065d87369e09ba.png/show',
   },
   {
     id: 'unfading-glory',
     name: 'Unfading Glory',
     baseName: 'Unfading Glory',
     category: 'BOSS',
+    image: 'https://img.game8.co/4183782/839addd01700ee1ebc64cfaf665e0711.png/show',
   },
   {
     id: 'rage-tacet-core',
     name: 'Rage Tacet Core',
     baseName: 'Rage Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893285/ef0f47b34b16eb19c8c115d88e49c8f7.png/show',
   },
   {
     id: 'sentinel-s-dagger',
     name: 'Sentinel\\\'s Dagger',
     baseName: 'Sentinel\\\'s Dagger',
     category: 'BOSS',
+    image: '',
   },
   {
     id: 'unending-destruction',
     name: 'Unending Destruction',
     baseName: 'Unending Destruction',
     category: 'BOSS',
+    image: 'https://img.game8.co/3892738/c29a875e66aa5d1afc306d3b6ac8f5ec.png/show',
   },
   {
     id: 'curse-of-the-abyss',
     name: 'Curse of the Abyss',
     baseName: 'Curse of the Abyss',
     category: 'BOSS',
+    image: 'https://img.game8.co/4290850/811a13f929ca1aaf8d7499c5beb701b1.png/show',
   },
   {
     id: 'abyssal-husk',
     name: 'Abyssal Husk',
     baseName: 'Abyssal Husk',
     category: 'BOSS',
+    image: 'https://img.game8.co/4250791/d14f2d0016125fa745076d568bd637aa.png/show',
   },
   {
     id: 'roaring-rock-fist',
     name: 'Roaring Rock Fist',
     baseName: 'Roaring Rock Fist',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893286/a6af1b537bc98d276ffe81960bdcbae8.png/show',
   },
   {
     id: 'elegy-tacet-core',
     name: 'Elegy Tacet Core',
     baseName: 'Elegy Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893283/ef100d8b7ef495086adfa194a387e7ec.png/show',
   },
   {
     id: 'sound-keeping-tacet-core',
     name: 'Sound-Keeping Tacet Core',
     baseName: 'Sound-Keeping Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893281/1d9f1933b774ad8184434c8ff070b3b0.png/show',
   },
   {
     id: 'truth-in-lies',
     name: 'Truth in Lies',
     baseName: 'Truth in Lies',
     category: 'BOSS',
+    image: 'https://img.game8.co/4222479/c292dd5b35ae7adffb29b7adfe20bfc0.png/show',
   },
   {
     id: 'hidden-thunder-tacet-core',
     name: 'Hidden Thunder Tacet Core',
     baseName: 'Hidden Thunder Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893280/b07e8229af3b63b16b3e981b1099a97c.png/show',
   },
   {
     id: 'group-abomination-tacet-core',
     name: 'Group Abomination Tacet Core',
     baseName: 'Group Abomination Tacet Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/3893279/24a97a5c77994e35f4ae0d538089d8c8.png/show',
   },
   {
     id: 'platinum-core',
     name: 'Platinum Core',
     baseName: 'Platinum Core',
     category: 'BOSS',
+    image: 'https://img.game8.co/4075121/c8b3bd34c49d9891f4fd51a19e70013b.png/show',
   },
   {
     id: 'luminous-calendula',
     name: 'Luminous Calendula',
     baseName: 'Luminous Calendula',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4250792/3f183e6d2db77f28c8f86e5e38f848af.png/show',
   },
   {
     id: 'golden-fleece',
     name: 'Golden Fleece',
     baseName: 'Golden Fleece',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4075415/3e7c29467557d796556a23f6460b6dc0.png/show',
   },
   {
     id: 'iris',
     name: 'Iris',
     baseName: 'Iris',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3891793/2f1e4ba58f519e0d28dae0dc4faa3352.png/show',
   },
   {
     id: 'nova',
     name: 'Nova',
     baseName: 'Nova',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4000985/c7cec11cccb3c3d5930f12572de5dc57.png/show',
   },
   {
     id: 'seaside-cendrelis',
     name: 'Seaside Cendrelis',
     baseName: 'Seaside Cendrelis',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4136166/ef2821a2e742039ec20c76b8f503c081.png/show',
   },
   {
     id: 'bamboo-iris',
     name: 'Bamboo Iris',
     baseName: 'Bamboo Iris',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4183783/5bf32f25feb1b112498743f8bcd28c28.png/show',
   },
   {
     id: 'pavo-plum',
     name: 'Pavo Plum',
     baseName: 'Pavo Plum',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3919371/e14feb3f9960a0da06da703f7ae15a44.png/show',
   },
   {
     id: 'pecok-flower',
     name: 'Pecok Flower',
     baseName: 'Pecok Flower',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3891797/7923824ba2e7be695555b57ef501909a.png/show',
   },
   {
     id: 'stone-rose',
     name: 'Stone Rose',
     baseName: 'Stone Rose',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4268931/a284b34aa7a85beed6a318880a25f9ea.png/show',
   },
   {
     id: 'sliverglow-bloom',
     name: 'Sliverglow Bloom',
     baseName: 'Sliverglow Bloom',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4250790/7bee518eac327953ec9c4ed39dbf4280.png/show',
   },
   {
     id: 'lanternberry',
     name: 'Lanternberry',
     baseName: 'Lanternberry',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3891798/acd06d12bf538b06aa813b6e1ac19a1f.png/show',
   },
   {
     id: 'loong-s-pearl',
     name: 'Loong\\\'s Pearl',
     baseName: 'Loong\\\'s Pearl',
     category: 'OVERWORLD',
+    image: '',
   },
   {
     id: 'coriolus',
     name: 'Coriolus',
     baseName: 'Coriolus',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3891796/29f140d0af7f35f7c81224f0281badb1.png/show',
   },
   {
     id: 'bloodleaf-viburnum',
     name: 'Bloodleaf Viburnum',
     baseName: 'Bloodleaf Viburnum',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4183784/3148eb0477f74d1d89b6583e89194495.png/show',
   },
   {
     id: 'firecracker-jewelweed',
     name: 'Firecracker Jewelweed',
     baseName: 'Firecracker Jewelweed',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4075416/3731000b07114e60744dba0e327420e7.png/show',
   },
   {
     id: 'afterlife',
     name: 'Afterlife',
     baseName: 'Afterlife',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4222480/9394a2fb419ec068004f591e0a0d1147.png/show',
   },
   {
     id: 'belle-poppy',
     name: 'Belle Poppy',
     baseName: 'Belle Poppy',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3891799/b8787c01b54fb866fc180f671b9246d0.png/show',
   },
   {
     id: 'violet-coral',
     name: 'Violet Coral',
     baseName: 'Violet Coral',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/3894822/fb4b29c76d5fff3ee8f585ccf98c1f86.png/show',
   },
   {
     id: 'sword-acorus',
     name: 'Sword Acorus',
     baseName: 'Sword Acorus',
     category: 'OVERWORLD',
+    image: 'https://img.game8.co/4075126/bedb5d23edc87de7800044f2ad34bbbb.png/show',
   },
   {
     id: 'shell-credit',

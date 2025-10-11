@@ -5,17 +5,22 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+interface MaterialWithImage {
+  name: string;
+  images: Map<string, string>; // quality/variant -> image URL
+}
+
 function extractMaterialsFromCharacters(): {
-  common: Set<string>;
-  forgery: Set<string>;
-  boss: Set<string>;
-  overworld: Set<string>;
+  common: Map<string, MaterialWithImage>;
+  forgery: Map<string, MaterialWithImage>;
+  boss: Map<string, MaterialWithImage>;
+  overworld: Map<string, MaterialWithImage>;
 } {
   const materials = {
-    common: new Set<string>(),
-    forgery: new Set<string>(),
-    boss: new Set<string>(),
-    overworld: new Set<string>(),
+    common: new Map<string, MaterialWithImage>(),
+    forgery: new Map<string, MaterialWithImage>(),
+    boss: new Map<string, MaterialWithImage>(),
+    overworld: new Map<string, MaterialWithImage>(),
   };
 
   const charactersDir = path.join(__dirname, '../src/data/characters');
@@ -31,11 +36,82 @@ function extractMaterialsFromCharacters(): {
     const forgeryMatch = content.match(/forte:\s*\{[^}]*forgery:\s*'([^'\\]+(\\.[^'\\]*)*)'/);
     const forteBossMatch = content.match(/forte:\s*\{[^}]*boss:\s*'([^'\\]+(\\.[^'\\]*)*)'/);
 
-    if (commonMatch && commonMatch[1]) materials.common.add(commonMatch[1]);
-    if (bossMatch && bossMatch[1]) materials.boss.add(bossMatch[1]);
-    if (overworldMatch && overworldMatch[1]) materials.overworld.add(overworldMatch[1]);
-    if (forgeryMatch && forgeryMatch[1]) materials.forgery.add(forgeryMatch[1]);
-    if (forteBossMatch && forteBossMatch[1]) materials.boss.add(forteBossMatch[1]);
+    if (commonMatch && commonMatch[1]) {
+      if (!materials.common.has(commonMatch[1])) {
+        materials.common.set(commonMatch[1], { name: commonMatch[1], images: new Map() });
+      }
+    }
+    if (bossMatch && bossMatch[1]) {
+      if (!materials.boss.has(bossMatch[1])) {
+        materials.boss.set(bossMatch[1], { name: bossMatch[1], images: new Map() });
+      }
+    }
+    if (overworldMatch && overworldMatch[1]) {
+      if (!materials.overworld.has(overworldMatch[1])) {
+        materials.overworld.set(overworldMatch[1], { name: overworldMatch[1], images: new Map() });
+      }
+    }
+    if (forgeryMatch && forgeryMatch[1]) {
+      if (!materials.forgery.has(forgeryMatch[1])) {
+        materials.forgery.set(forgeryMatch[1], { name: forgeryMatch[1], images: new Map() });
+      }
+    }
+    if (forteBossMatch && forteBossMatch[1]) {
+      if (!materials.boss.has(forteBossMatch[1])) {
+        materials.boss.set(forteBossMatch[1], { name: forteBossMatch[1], images: new Map() });
+      }
+    }
+  }
+
+  // Extract images from HTML cache
+  const htmlCacheDir = path.join(__dirname, 'html-cache');
+  if (fs.existsSync(htmlCacheDir)) {
+    const htmlFiles = fs.readdirSync(htmlCacheDir).filter(f => f.endsWith('.html'));
+    
+    for (const htmlFile of htmlFiles) {
+      const htmlContent = fs.readFileSync(path.join(htmlCacheDir, htmlFile), 'utf-8');
+      
+      // Extract all material images
+      const imgRegex = /img[^>]*alt="([^"]*)"[^>]*data-src="([^"]*)"/g;
+      let match;
+      
+      while ((match = imgRegex.exec(htmlContent)) !== null) {
+        const altText = match[1];
+        const imgUrl = match[2];
+        
+        // Try to match with our materials
+        for (const [baseName, material] of materials.common.entries()) {
+          if (altText.includes(baseName)) {
+            // Extract quality prefix
+            const qualityMatch = altText.match(/^(LF|MF|HF|FF)\s+/);
+            if (qualityMatch) {
+              material.images.set(qualityMatch[1], imgUrl);
+            }
+          }
+        }
+        
+        for (const [baseName, material] of materials.forgery.entries()) {
+          if (altText.includes(baseName)) {
+            const numberMatch = altText.match(/\s+(210|226|235|239)$/);
+            if (numberMatch) {
+              material.images.set(numberMatch[1], imgUrl);
+            }
+          }
+        }
+        
+        for (const [baseName, material] of materials.boss.entries()) {
+          if (altText === baseName) {
+            material.images.set('default', imgUrl);
+          }
+        }
+        
+        for (const [baseName, material] of materials.overworld.entries()) {
+          if (altText === baseName) {
+            material.images.set('default', imgUrl);
+          }
+        }
+      }
+    }
   }
 
   return materials;
@@ -64,13 +140,14 @@ function generateMaterialsFile(materials: ReturnType<typeof extractMaterialsFrom
     { tier: 'T4', prefix: 'FF' },
   ];
 
-  materials.common.forEach(baseName => {
+  materials.common.forEach((material, baseName) => {
     if (!baseName) return;
     const escapedBaseName = escapeString(baseName);
     
     commonQualities.forEach(({ tier, prefix }) => {
       const id = slugify(`${prefix} ${baseName}`);
       const fullName = `${prefix} ${baseName}`;
+      const image = material.images.get(prefix) || '';
       
       allMaterials.push(`  {
     id: '${id}',
@@ -78,6 +155,7 @@ function generateMaterialsFile(materials: ReturnType<typeof extractMaterialsFrom
     baseName: '${escapedBaseName}',
     category: 'COMMON',
     quality: '${tier}',
+    image: '${escapeString(image)}',
   }`);
     });
   });
@@ -90,13 +168,14 @@ function generateMaterialsFile(materials: ReturnType<typeof extractMaterialsFrom
     { tier: 'T4', prefix: '239' },
   ];
 
-  materials.forgery.forEach(baseName => {
+  materials.forgery.forEach((material, baseName) => {
     if (!baseName) return;
     const escapedBaseName = escapeString(baseName);
     
     forgeryQualities.forEach(({ tier, prefix }) => {
       const id = slugify(`${prefix} ${baseName}`);
       const fullName = `${baseName} ${prefix}`;
+      const image = material.images.get(prefix) || '';
       
       allMaterials.push(`  {
     id: '${id}',
@@ -104,35 +183,40 @@ function generateMaterialsFile(materials: ReturnType<typeof extractMaterialsFrom
     baseName: '${escapedBaseName}',
     category: 'FORGERY',
     quality: '${tier}',
+    image: '${escapeString(image)}',
   }`);
     });
   });
 
   // Boss materials (unique - no qualities)
-  materials.boss.forEach(name => {
+  materials.boss.forEach((material, name) => {
     if (!name) return;
     const id = slugify(name);
     const escapedName = escapeString(name);
+    const image = material.images.get('default') || '';
     
     allMaterials.push(`  {
     id: '${id}',
     name: '${escapedName}',
     baseName: '${escapedName}',
     category: 'BOSS',
+    image: '${escapeString(image)}',
   }`);
   });
 
   // Overworld materials (unique - no qualities)
-  materials.overworld.forEach(name => {
+  materials.overworld.forEach((material, name) => {
     if (!name) return;
     const id = slugify(name);
     const escapedName = escapeString(name);
+    const image = material.images.get('default') || '';
     
     allMaterials.push(`  {
     id: '${id}',
     name: '${escapedName}',
     baseName: '${escapedName}',
     category: 'OVERWORLD',
+    image: '${escapeString(image)}',
   }`);
   });
 
