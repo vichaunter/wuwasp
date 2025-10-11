@@ -61,9 +61,22 @@ function processHtml(html: string, slug: string): ScrapedCharacter | null {
     url = canonical;
   }
   
-  // Find rarity
-  const rarityStars = $('table:contains("Rarity") td img[alt*="star"]').length;
-  if (rarityStars === 4) rarity = 4;
+  // Find rarity (count star characters ★)
+  let rarityText = '';
+  $('table tr').each((_, row) => {
+    const $row = $(row);
+    const thText = $row.find('th').text().trim();
+    if (thText === 'Rarity') {
+      const tdText = $row.find('td').text().trim();
+      if (tdText.includes('★')) {
+        rarityText = tdText;
+        return false; // break the loop
+      }
+    }
+  });
+  const starCount = (rarityText.match(/★/g) || []).length;
+  if (starCount === 4) rarity = 4;
+  else if (starCount === 5) rarity = 5;
   
   // Find element
   const elementCell = $('table:contains("Element") td').last();
