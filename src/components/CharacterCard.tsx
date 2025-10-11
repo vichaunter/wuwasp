@@ -58,8 +58,38 @@ export function CharacterCard({
     );
 
     // Merge with all possible materials
-    return mergeWithAllMaterials(allMaterialIds, normalRequired);
-  }, [plannerMode, isInPlanner, progress, character, requiredMaterials]);
+    const allMaterials = mergeWithAllMaterials(allMaterialIds, normalRequired);
+
+    // Sort: materials you don't have enough of first, then the rest
+    const getMaterialQuantity = (materialId: string) => {
+      return effectiveInventory !== undefined
+        ? effectiveInventory[materialId] || 0
+        : 0;
+    };
+
+    const materialsNeeded: typeof allMaterials = [];
+    const materialsHave: typeof allMaterials = [];
+
+    allMaterials.forEach((mat) => {
+      const available = getMaterialQuantity(mat.materialId);
+      const hasEnough = available >= mat.quantity;
+
+      if (!hasEnough && mat.quantity > 0) {
+        materialsNeeded.push(mat);
+      } else {
+        materialsHave.push(mat);
+      }
+    });
+
+    return [...materialsNeeded, ...materialsHave];
+  }, [
+    plannerMode,
+    isInPlanner,
+    progress,
+    character,
+    requiredMaterials,
+    effectiveInventory,
+  ]);
 
   // Border color based on rarity
   const rarityColors = {

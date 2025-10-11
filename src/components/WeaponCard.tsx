@@ -58,8 +58,38 @@ export function WeaponCard({
     );
 
     // Merge with all possible materials
-    return mergeWithAllMaterials(allMaterialIds, normalRequired);
-  }, [plannerMode, isInPlanner, progress, weapon, requiredMaterials]);
+    const allMaterials = mergeWithAllMaterials(allMaterialIds, normalRequired);
+
+    // Sort: materials you don't have enough of first, then the rest
+    const getMaterialQuantity = (materialId: string) => {
+      return effectiveInventory !== undefined
+        ? effectiveInventory[materialId] || 0
+        : 0;
+    };
+
+    const materialsNeeded: typeof allMaterials = [];
+    const materialsHave: typeof allMaterials = [];
+
+    allMaterials.forEach((mat) => {
+      const available = getMaterialQuantity(mat.materialId);
+      const hasEnough = available >= mat.quantity;
+
+      if (!hasEnough && mat.quantity > 0) {
+        materialsNeeded.push(mat);
+      } else {
+        materialsHave.push(mat);
+      }
+    });
+
+    return [...materialsNeeded, ...materialsHave];
+  }, [
+    plannerMode,
+    isInPlanner,
+    progress,
+    weapon,
+    requiredMaterials,
+    effectiveInventory,
+  ]);
 
   const rarityColors = {
     3: "from-blue-600 to-blue-700",

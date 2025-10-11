@@ -366,11 +366,11 @@ export const materials: Material[] = [
     image: '/materials/blazing-bone.png',
   },
   {
-    id: 'the-netherworld-s-stare',
+    id: 'the-netherworlds-stare',
     name: 'The Netherworld\'s Stare',
     baseName: 'The Netherworld\'s Stare',
     category: 'BOSS',
-    image: '/materials/the-netherworld-s-stare.png',
+    image: '/materials/the-netherworlds-stare.png',
   },
   {
     id: 'thundering-tacet-core',
@@ -415,11 +415,11 @@ export const materials: Material[] = [
     image: '/materials/rage-tacet-core.png',
   },
   {
-    id: 'sentinel-s-dagger',
+    id: 'sentinels-dagger',
     name: 'Sentinel\'s Dagger',
     baseName: 'Sentinel\'s Dagger',
     category: 'BOSS',
-    image: '/materials/sentinel-s-dagger.png',
+    image: '/materials/sentinels-dagger.png',
   },
   {
     id: 'strife-tacet-core',
@@ -583,11 +583,11 @@ export const materials: Material[] = [
     image: '/materials/sliverglow-bloom.png',
   },
   {
-    id: 'loong-s-pearl',
+    id: 'loongs-pearl',
     name: 'Loong\'s Pearl',
     baseName: 'Loong\'s Pearl',
     category: 'OVERWORLD',
-    image: '/materials/loong-s-pearl.png',
+    image: '/materials/loongs-pearl.png',
   },
   {
     id: 'coriolus',
@@ -701,6 +701,21 @@ export const materials: Material[] = [
     id: 'shell-credit',
     name: 'Shell Credit',
     baseName: 'Shell Credit',
+    category: 'CURRENCY',
+    image: '/materials/shell-credits.png',
+  },
+  // Virtual materials (for calculations only, not displayed individually)
+  {
+    id: 'character-exp',
+    name: 'Character EXP',
+    baseName: 'Character EXP',
+    category: 'EXP',
+    image: '/materials/premium-resonance-potion.png', // Use highest tier potion as icon
+  },
+  {
+    id: 'shell-credit-leveling',
+    name: 'Shell Credit (Leveling)',
+    baseName: 'Shell Credit (Leveling)',
     category: 'CURRENCY',
     image: '/materials/shell-credits.png',
   }
