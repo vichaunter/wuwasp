@@ -35,10 +35,6 @@ export function WeaponCard({ weapon, plannerMode = false }: WeaponCardProps) {
     4: 'from-purple-600 to-purple-700',
     5: 'from-amber-600 to-yellow-600',
   };
-
-  const getStars = (rarity: number) => {
-    return '★'.repeat(rarity);
-  };
   
   const handleAddClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -55,7 +51,7 @@ export function WeaponCard({ weapon, plannerMode = false }: WeaponCardProps) {
       return (
         <>
           <div className="h-full flex flex-col">
-            <div className={`group relative bg-gray-800 rounded-xl border ${isInPlanner ? 'border-purple-500 ring-2 ring-purple-500/50' : 'border-gray-700 hover:border-purple-500'} overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20`}>
+            <div className={`relative bg-gray-800 rounded-xl border ${isInPlanner ? 'border-purple-500 ring-2 ring-purple-500/50' : 'border-gray-700 hover:border-purple-500'} transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20`}>
             {/* Add/Remove Button */}
             {isInPlanner ? (
               <RemoveButton onClick={handleRemoveClick} />
@@ -64,9 +60,9 @@ export function WeaponCard({ weapon, plannerMode = false }: WeaponCardProps) {
             )}
             
             {/* Top section: Image and Info side by side */}
-            <div className="flex">
+            <div className="flex gap-4 p-4">
               {/* Weapon Image */}
-              <div className={`relative w-24 h-32 flex-shrink-0 bg-gradient-to-br ${rarityColors[weapon.rarity]} rounded-tl-xl flex items-center justify-center ring-1 ring-gray-700 group-hover:ring-purple-500 transition-all duration-300`}>
+              <div className={`relative w-24 h-32 bg-gradient-to-br ${rarityColors[weapon.rarity]} rounded-lg flex items-center justify-center ring-2 ring-gray-700 flex-shrink-0 overflow-hidden`}>
                 {weapon.image ? (
                   <img 
                     src={weapon.image} 
@@ -81,31 +77,50 @@ export function WeaponCard({ weapon, plannerMode = false }: WeaponCardProps) {
               </div>
 
               {/* Weapon Info */}
-              <div className="flex-1 p-4 flex flex-col justify-between">
-        <div>
-          <h3 className="text-xl font-bold text-gray-100 mb-1">
-            {weaponName}
-          </h3>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-yellow-400 font-bold text-sm">
-              {getStars(weapon.rarity)}
-            </span>
-            <span className="text-gray-400 text-sm">•</span>
-            <span className="text-gray-400 text-sm">{weapon.type}</span>
-          </div>
-        </div>
-        <div className="flex justify-between items-center text-sm">
-          <div className="flex flex-col">
-            <span className="text-gray-500">ATK</span>
-            <span className="text-gray-100 font-semibold">{weapon.baseAtk}</span>
-          </div>
-          <div className="flex flex-col items-end">
-            <span className="text-gray-500">Sub Stat</span>
-            <span className="text-gray-100 font-semibold">{weapon.subStat}</span>
+              <div className="flex-1 flex flex-col gap-2">
+                {/* Name */}
+                <h3 className="text-xl font-bold text-gray-100">
+                  {weaponName}
+                </h3>
+                
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+                  {/* Left Column */}
+                  <div className="space-y-1.5">
+                    {/* Rarity */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs w-12">Stars:</span>
+                      <div className="flex items-center gap-0.5">
+                        {[...Array(weapon.rarity)].map((_, i) => (
+                          <span key={i} className="text-yellow-400 text-sm">★</span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* ATK */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs w-12">ATK:</span>
+                      <span className="text-gray-200 text-sm font-medium">{weapon.baseAtk}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Right Column */}
+                  <div className="space-y-1.5">
+                    {/* Type */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs w-16">Type:</span>
+                      <span className="text-gray-200 text-sm font-medium">{weapon.type}</span>
+                    </div>
+                    
+                    {/* Sub Stat */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-gray-400 text-xs w-16">Sub Stat:</span>
+                      <span className="text-gray-200 text-sm font-medium">{weapon.subStat}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
         
         {/* Planner Section - Inside the card */}
         {plannerMode && isInPlanner && progress && (

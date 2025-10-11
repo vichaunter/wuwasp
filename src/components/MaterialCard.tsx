@@ -10,6 +10,7 @@ interface MaterialCardProps {
 
 export function MaterialCard({ materialId, required }: MaterialCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const owned = useInventoryStore((state) => state.getMaterialQuantity(materialId));
   const material = getMaterialById(materialId);
   
@@ -21,32 +22,40 @@ export function MaterialCard({ materialId, required }: MaterialCardProps) {
     );
   }
   
-  const hasEnough = owned >= required;
   const progress = Math.min((owned / required) * 100, 100);
   
-  // Quality colors: T1=verde, T2=azul, T3=morado, T4=dorado
-  const qualityColors = {
-    T1: 'from-green-600 to-green-700',
-    T2: 'from-blue-600 to-blue-700',
-    T3: 'from-purple-600 to-purple-700',
-    T4: 'from-amber-600 to-yellow-600',
-  };
-  
-  // Boss = rojo, Overworld = gris con borde
+  // Determinar el color base según calidad o categoría
+  let colorKey: 'green' | 'blue' | 'purple' | 'amber' | 'red' | 'gray';
   let bgGradient: string;
-  let ringColor: string;
   
-  if (material.quality) {
-    bgGradient = qualityColors[material.quality];
-    ringColor = 'ring-gray-700 group-hover:ring-purple-500';
+  if (material.quality === 'T1') {
+    colorKey = 'green';
+    bgGradient = 'from-green-600 to-green-700';
+  } else if (material.quality === 'T2') {
+    colorKey = 'blue';
+    bgGradient = 'from-blue-600 to-blue-700';
+  } else if (material.quality === 'T3') {
+    colorKey = 'purple';
+    bgGradient = 'from-purple-600 to-purple-700';
+  } else if (material.quality === 'T4') {
+    colorKey = 'amber';
+    bgGradient = 'from-amber-600 to-yellow-600';
   } else if (material.category === 'BOSS') {
+    colorKey = 'red';
     bgGradient = 'from-red-600 to-red-700';
-    ringColor = 'ring-gray-700 group-hover:ring-purple-500';
   } else {
     // OVERWORLD
+    colorKey = 'gray';
     bgGradient = 'from-gray-700 to-gray-800';
-    ringColor = 'ring-gray-500 group-hover:ring-gray-400';
   }
+  
+  // Clases de hover y progreso basadas en el color
+  const borderHoverClass = `hover:border-${colorKey}-${colorKey === 'gray' ? '400' : '500'}`;
+  const shadowHoverClass = `hover:shadow-${colorKey}-${colorKey === 'gray' ? '400' : '500'}/20`;
+  const ringHoverClass = `hover:ring-${colorKey}-${colorKey === 'gray' ? '400' : '500'}`;
+  
+  // Color de la barra de progreso (siempre brillante)
+  const progressColorClass = `bg-${colorKey}-500`;
   
   return (
     <>
@@ -57,28 +66,30 @@ export function MaterialCard({ materialId, required }: MaterialCardProps) {
       />
       
       <div 
-        className="group relative flex flex-col bg-gray-800 rounded-xl border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 cursor-pointer"
+        className={`group relative flex flex-col bg-gray-800 rounded-xl border border-gray-700 ${borderHoverClass} transition-all duration-300 hover:shadow-lg ${shadowHoverClass} cursor-pointer overflow-hidden`}
         onClick={() => setIsModalOpen(true)}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
       >
       {/* Tooltip - nombre del material */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-950 text-gray-100 text-sm font-medium rounded-lg shadow-xl border border-gray-700 whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-50">
-        {material.name}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-950"></div>
-      </div>
+      {showTooltip && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-950 text-gray-100 text-sm font-medium rounded-lg shadow-xl border border-gray-700 whitespace-nowrap pointer-events-none z-50">
+          {material.name}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-950"></div>
+        </div>
+      )}
       
       {/* Progress bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gray-700">
         <div 
-          className={`h-full transition-all duration-500 ${
-            hasEnough ? 'bg-green-500' : 'bg-purple-500'
-          }`}
+          className={`h-full transition-all duration-500 ${progressColorClass}`}
           style={{ width: `${progress}%` }}
         />
       </div>
       
       <div className="flex flex-col items-center gap-3 p-4 pt-5">
         {/* Material Icon */}
-        <div className={`relative w-20 h-20 bg-gradient-to-br ${bgGradient} rounded-xl flex items-center justify-center ring-1 ${ringColor} transition-all duration-300 group-hover:scale-110`}>
+        <div className={`relative w-20 h-20 bg-gradient-to-br ${bgGradient} rounded-xl flex items-center justify-center ring-1 ring-gray-700 ${ringHoverClass} transition-all duration-300 ${showTooltip ? 'scale-110' : ''}`}>
           {material.image ? (
             <img 
               src={material.image} 
