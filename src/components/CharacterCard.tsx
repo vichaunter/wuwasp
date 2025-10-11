@@ -10,6 +10,10 @@ import { MaterialCard } from "@/components/material";
 import { calculateCharacterTotalMaterials } from "@/utils/material-calculator";
 import { sortMaterialsByCategory } from "@/utils/material-sorter";
 import { getMaterialsOfSameBase } from "@/utils/material-grouping";
+import {
+  getAllCharacterMaterialIds,
+  mergeWithAllMaterials,
+} from "@/utils/all-materials-generator";
 
 interface CharacterCardProps {
   character: Character;
@@ -37,6 +41,25 @@ export function CharacterCard({
     const materials = calculateCharacterTotalMaterials(character, progress);
     return sortMaterialsByCategory(materials);
   }, [plannerMode, isInPlanner, progress, character]);
+
+  // Get all possible materials with empty markers
+  const allMaterialsDisplay = useMemo(() => {
+    if (!plannerMode || !isInPlanner || !progress) return [];
+
+    // Get all possible material IDs for this character
+    const allMaterialIds = getAllCharacterMaterialIds(character);
+
+    // Filter to get only normal materials (not EXP or Shell Credits)
+    const normalRequired = requiredMaterials.filter(
+      (m) =>
+        m.materialId !== "character-exp" &&
+        m.materialId !== "shell-credit-leveling" &&
+        m.materialId !== "shell-credit"
+    );
+
+    // Merge with all possible materials
+    return mergeWithAllMaterials(allMaterialIds, normalRequired);
+  }, [plannerMode, isInPlanner, progress, character, requiredMaterials]);
 
   // Border color based on rarity
   const rarityColors = {
@@ -163,14 +186,7 @@ export function CharacterCard({
             isInPlanner &&
             progress &&
             (() => {
-              // Separate special requirements (EXP, all Shell Credits) from normal materials
-              const normalMaterials = requiredMaterials.filter(
-                (m) =>
-                  m.materialId !== "character-exp" &&
-                  m.materialId !== "shell-credit-leveling" &&
-                  m.materialId !== "shell-credit"
-              );
-
+              // Get special requirements (EXP, all Shell Credits)
               const expRequirement = requiredMaterials.find(
                 (m) => m.materialId === "character-exp"
               );
@@ -222,20 +238,21 @@ export function CharacterCard({
                   )}
 
                   {/* Materials Needed */}
-                  {normalMaterials.length > 0 && (
+                  {allMaterialsDisplay.length > 0 && (
                     <div>
                       <div className="text-sm font-semibold text-gray-300 mb-3">
                         Materiales Necesarios
                       </div>
                       <div className="grid grid-cols-4 gap-2">
-                        {normalMaterials.map((mat) => (
+                        {allMaterialsDisplay.map((mat) => (
                           <MaterialCard
                             key={mat.materialId}
                             materialId={mat.materialId}
                             required={mat.quantity}
+                            isEmpty={mat.isEmpty}
                             allMaterialsOfSameBase={getMaterialsOfSameBase(
                               mat.materialId,
-                              normalMaterials
+                              allMaterialsDisplay
                             )}
                             effectiveInventory={effectiveInventory}
                           />

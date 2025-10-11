@@ -19,6 +19,7 @@ interface MaterialCardProps {
   allMaterialsOfSameBase?: MaterialRequirement[];
   effectiveInventory?: Record<string, number>;
   mode?: "card" | "input"; // card = muestra progreso, input = muestra controles
+  isEmpty?: boolean; // If true, shows 0/0 with reduced opacity
 }
 
 export function MaterialCard({
@@ -27,6 +28,7 @@ export function MaterialCard({
   allMaterialsOfSameBase,
   effectiveInventory,
   mode = "card",
+  isEmpty = false,
 }: MaterialCardProps) {
   const getMaterialQuantity = useInventoryStore(
     (state) => state.getMaterialQuantity
@@ -142,7 +144,9 @@ export function MaterialCard({
       )}
 
       <div
-        className="relative flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer overflow-hidden"
+        className={`relative flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer overflow-hidden ${
+          isEmpty ? "opacity-50" : ""
+        }`}
         onClick={handleCardClick}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
@@ -174,4 +178,3 @@ export function MaterialCard({
     </>
   );
 }
-
