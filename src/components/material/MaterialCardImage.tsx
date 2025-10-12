@@ -25,7 +25,7 @@ export function MaterialCardImage({
         <img
           src={`/materials/${material.id}.webp`}
           alt={material.name}
-          className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+          className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-transform duration-300 group-hover:scale-[1.15] group-hover:rotate-[6deg]"
         />
       </div>
     </div>

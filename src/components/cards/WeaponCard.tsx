@@ -78,7 +78,7 @@ export function WeaponCard({
     <>
       <div className="h-full flex flex-col">
         <div
-          className={`relative bg-gray-800 rounded-xl border ${
+          className={`h-full flex flex-col relative bg-gray-800 rounded-xl border ${
             isInPlanner
               ? "border-purple-500 ring-2 ring-purple-500/50"
               : "border-gray-700 hover:border-purple-500"
@@ -118,15 +118,20 @@ export function WeaponCard({
               <h3 className="text-xl font-bold text-gray-100">{weaponName}</h3>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+              <div className="grid grid-cols-2 gap-x-2 xl:gap-x-4 gap-y-1.5 text-sm">
                 {/* Left Column */}
                 <div className="space-y-1.5">
                   {/* Rarity */}
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-gray-400 text-xs w-12">Stars:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
+                      Stars:
+                    </span>
                     <div className="flex items-center gap-0.5">
                       {[...Array(weapon.rarity)].map((_, i) => (
-                        <span key={i} className="text-yellow-400 text-sm">
+                        <span
+                          key={i}
+                          className="text-yellow-400 text-xs xl:text-sm"
+                        >
                           ★
                         </span>
                       ))}
@@ -134,9 +139,11 @@ export function WeaponCard({
                   </div>
 
                   {/* ATK */}
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-gray-400 text-xs w-12">ATK:</span>
-                    <span className="text-gray-200 text-sm font-medium">
+                  <div className="flex items-center gap-1">
+                    <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
+                      ATK:
+                    </span>
+                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
                       {weapon.baseAtk}
                     </span>
                   </div>
@@ -145,19 +152,21 @@ export function WeaponCard({
                 {/* Right Column */}
                 <div className="space-y-1.5">
                   {/* Type */}
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-gray-400 text-xs w-16">Type:</span>
-                    <span className="text-gray-200 text-sm font-medium">
+                  <div className="flex items-center gap-1">
+                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
+                      Type:
+                    </span>
+                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
                       {weapon.type}
                     </span>
                   </div>
 
                   {/* Sub Stat */}
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-gray-400 text-xs w-16">
+                  <div className="flex items-center gap-1">
+                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
                       Sub Stat:
                     </span>
-                    <span className="text-gray-200 text-sm font-medium">
+                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
                       {weapon.subStat}
                     </span>
                   </div>

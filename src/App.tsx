@@ -4,7 +4,6 @@ import Home from '@/pages/Home';
 import CharacterList from '@/pages/CharacterList';
 import WeaponList from '@/pages/WeaponList';
 import Planning from '@/pages/Planning';
-import Inventory from '@/pages/Inventory';
 import { Materials } from '@/pages/Materials';
 
 function App() {
@@ -17,8 +16,9 @@ function App() {
           <Route path="/characters" element={<CharacterList />} />
           <Route path="/weapons" element={<WeaponList />} />
           <Route path="/planning" element={<Planning />} />
-          <Route path="/inventory" element={<Inventory />} />
           <Route path="/materials" element={<Materials />} />
+          {/* Redirect old inventory route to materials */}
+          <Route path="/inventory" element={<Materials />} />
         </Routes>
       </div>
     </Router>
