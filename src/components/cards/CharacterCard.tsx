@@ -117,71 +117,60 @@ export function CharacterCard({
                 {character.name}
               </h3>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-x-2 xl:gap-x-4 gap-y-1.5 text-sm">
-                {/* Left Column */}
-                <div className="space-y-1.5">
-                  {/* Rarity */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
-                      Stars:
-                    </span>
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(character.rarity)].map((_, i) => (
-                        <span
-                          key={i}
-                          className="text-yellow-400 text-xs xl:text-sm"
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
+              {/* Stats - Flex wrap */}
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+                {/* Rarity */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">Stars:</span>
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(character.rarity)].map((_, i) => (
+                      <span key={i} className="text-yellow-400 text-xs">
+                        ★
+                      </span>
+                    ))}
                   </div>
-
-                  {/* Tier */}
-                  {character.tier && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
-                        Tier:
-                      </span>
-                      <span
-                        className={`font-bold text-xs xl:text-sm px-1.5 xl:px-2 py-0.5 rounded ${
-                          character.tier === "S"
-                            ? "bg-red-500/20 text-red-400"
-                            : character.tier === "A"
-                            ? "bg-orange-500/20 text-orange-400"
-                            : character.tier === "B"
-                            ? "bg-blue-500/20 text-blue-400"
-                            : "bg-gray-600/20 text-gray-400"
-                        }`}
-                      >
-                        {character.tier}
-                      </span>
-                    </div>
-                  )}
                 </div>
 
-                {/* Right Column */}
-                <div className="space-y-1.5">
-                  {/* Element */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
-                      Element:
-                    </span>
-                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
-                      {character.element}
-                    </span>
-                  </div>
+                {/* Element */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">
+                    Element:
+                  </span>
+                  <span className="text-gray-200 text-xs font-medium truncate">
+                    {character.element}
+                  </span>
+                </div>
 
-                  {/* Weapon */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
-                      Weapon:
+                {/* Tier */}
+                {character.tier && (
+                  <div className="flex items-center gap-1 min-w-[120px]">
+                    <span className="text-gray-400 text-xs shrink-0">
+                      Tier:
                     </span>
-                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
-                      {character.weapon}
+                    <span
+                      className={`font-bold text-xs px-1.5 py-0.5 rounded ${
+                        character.tier === "S"
+                          ? "bg-red-500/20 text-red-400"
+                          : character.tier === "A"
+                          ? "bg-orange-500/20 text-orange-400"
+                          : character.tier === "B"
+                          ? "bg-blue-500/20 text-blue-400"
+                          : "bg-gray-600/20 text-gray-400"
+                      }`}
+                    >
+                      {character.tier}
                     </span>
                   </div>
+                )}
+
+                {/* Weapon */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">
+                    Weapon:
+                  </span>
+                  <span className="text-gray-200 text-xs font-medium truncate">
+                    {character.weapon}
+                  </span>
                 </div>
               </div>
             </div>

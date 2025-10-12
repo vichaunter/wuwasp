@@ -117,59 +117,44 @@ export function WeaponCard({
               {/* Name */}
               <h3 className="text-xl font-bold text-gray-100">{weaponName}</h3>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-x-2 xl:gap-x-4 gap-y-1.5 text-sm">
-                {/* Left Column */}
-                <div className="space-y-1.5">
-                  {/* Rarity */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
-                      Stars:
-                    </span>
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(weapon.rarity)].map((_, i) => (
-                        <span
-                          key={i}
-                          className="text-yellow-400 text-xs xl:text-sm"
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* ATK */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-10 xl:min-w-12 shrink-0">
-                      ATK:
-                    </span>
-                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
-                      {weapon.baseAtk}
-                    </span>
+              {/* Stats - Flex wrap */}
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+                {/* Rarity */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">Stars:</span>
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(weapon.rarity)].map((_, i) => (
+                      <span key={i} className="text-yellow-400 text-xs">
+                        ★
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="space-y-1.5">
-                  {/* Type */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
-                      Type:
-                    </span>
-                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
-                      {weapon.type}
-                    </span>
-                  </div>
+                {/* Type */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">Type:</span>
+                  <span className="text-gray-200 text-xs font-medium truncate">
+                    {weapon.type}
+                  </span>
+                </div>
 
-                  {/* Sub Stat */}
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-400 text-xs min-w-12 xl:min-w-16 shrink-0">
-                      Sub Stat:
-                    </span>
-                    <span className="text-gray-200 text-xs xl:text-sm font-medium truncate">
-                      {weapon.subStat}
-                    </span>
-                  </div>
+                {/* ATK */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">ATK:</span>
+                  <span className="text-gray-200 text-xs font-medium">
+                    {weapon.baseAtk}
+                  </span>
+                </div>
+
+                {/* Sub Stat */}
+                <div className="flex items-center gap-1 min-w-[120px]">
+                  <span className="text-gray-400 text-xs shrink-0">
+                    Sub Stat:
+                  </span>
+                  <span className="text-gray-200 text-xs font-medium truncate">
+                    {weapon.subStat}
+                  </span>
                 </div>
               </div>
             </div>
