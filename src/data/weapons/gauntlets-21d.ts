@@ -13,7 +13,7 @@ export const gauntlets_21d: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/gauntlets-21d.png',

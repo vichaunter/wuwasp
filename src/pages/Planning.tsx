@@ -1,14 +1,13 @@
 import { useMemo, useState } from "react";
 import { characters } from "@/data/characters";
 import { weapons } from "@/data/weapons";
-import { CharacterCard } from "@/components/CharacterCard";
-import { WeaponCard } from "@/components/WeaponCard";
+import { CharacterCard, WeaponCard } from "@/components/cards";
 import { useInventoryStore } from "@/store/inventory";
-import { consumeMaterialsFromInventory } from "@/utils/material-synthesis";
+import { consumeMaterialsFromInventory } from "@/utils/materialSynthesis";
 import {
   calculateCharacterTotalMaterials,
   calculateWeaponTotalMaterials,
-} from "@/utils/material-calculator";
+} from "@/utils/materialCalculator";
 import {
   DndContext,
   closestCenter,

@@ -12,8 +12,8 @@ export const cosmic_ripples: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: 'Crude Ring',
+    forgery: 'Lento Helix',
     ascension: '',
   },
   image: '/weapons/cosmic-ripples.png',

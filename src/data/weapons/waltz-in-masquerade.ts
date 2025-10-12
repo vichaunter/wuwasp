@@ -12,8 +12,8 @@ export const waltz_in_masquerade: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Crude Ring',
+    forgery: 'Lento Helix',
     ascension: '',
   },
   image: '/weapons/waltz-in-masquerade.png',

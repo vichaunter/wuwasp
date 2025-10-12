@@ -13,7 +13,7 @@ export const sword_of_night: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/sword-of-night.png',

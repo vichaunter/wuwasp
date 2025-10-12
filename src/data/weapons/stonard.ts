@@ -13,7 +13,7 @@ export const stonard: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/stonard.png',

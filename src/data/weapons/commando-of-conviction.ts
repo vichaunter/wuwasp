@@ -13,7 +13,7 @@ export const commando_of_conviction: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/commando-of-conviction.png',

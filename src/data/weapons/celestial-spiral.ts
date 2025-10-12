@@ -12,8 +12,8 @@ export const celestial_spiral: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/celestial-spiral.png',

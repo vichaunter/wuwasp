@@ -13,7 +13,7 @@ export const originite_type_iv: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/originite-type-iv.png',

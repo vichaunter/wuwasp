@@ -12,8 +12,8 @@ export const romance_in_farewell: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Crude Ring',
+    forgery: 'Impure Phlogiston',
     ascension: '',
   },
   image: '/weapons/romance-in-farewell.png',

@@ -5,62 +5,63 @@
 export interface WeaponAscensionRequirement {
   level: string; // e.g., "1 → 40" (after A1 ascension)
   materials: {
-    common: { quality: 'T1' | 'T2' | 'T3' | 'T4'; quantity: number }; // MAT_BASE (enemy drops)
-    forgery: { quality: 'T1' | 'T2' | 'T3' | 'T4'; quantity: number }; // MAT_ARMA (domain materials)
+    common: { quality: "T1" | "T2" | "T3" | "T4"; quantity: number }; // MAT_BASE (enemy drops)
+    forgery: { quality: "T1" | "T2" | "T3" | "T4"; quantity: number }; // MAT_ARMA (domain materials)
     ascension?: { quantity: number }; // Weapon-specific material (only for 4★ and 5★)
     shellCredits: number;
   };
 }
 
 // 5-Star Weapons Ascension Requirements
-// Total: 6V, 16A, 18M, 6D (common) + 3V, 15A, 15M, 4D (forgery) = 170,000 Shell
+// Based on docs/levels.md - Requisitos de Ascensión de Arma
+// Total: 6 T1, 6 T2, 10 T3, 12 T4 (common) + 0 T1, 6 T2, 8 T3, 20 T4 (forgery) = 360,000 Shell
 export const fiveStarWeaponAscension: WeaponAscensionRequirement[] = [
   {
-    level: '1 → 40', // A1
+    level: "1 → 40", // A1
     materials: {
-      common: { quality: 'T1', quantity: 6 },
-      forgery: { quality: 'T1', quantity: 3 },
-      shellCredits: 5000,
-    },
-  },
-  {
-    level: '40 → 50', // A2
-    materials: {
-      common: { quality: 'T2', quantity: 6 },
-      forgery: { quality: 'T2', quantity: 6 },
+      common: { quality: "T1", quantity: 6 },
+      forgery: { quality: "T1", quantity: 0 },
       shellCredits: 10000,
     },
   },
   {
-    level: '50 → 60', // A3
+    level: "40 → 50", // A2
     materials: {
-      common: { quality: 'T2', quantity: 10 },
-      forgery: { quality: 'T2', quantity: 9 },
-      shellCredits: 15000,
-    },
-  },
-  {
-    level: '60 → 70', // A4
-    materials: {
-      common: { quality: 'T3', quantity: 6 },
-      forgery: { quality: 'T3', quantity: 6 },
+      common: { quality: "T2", quantity: 6 },
+      forgery: { quality: "T2", quantity: 6 },
       shellCredits: 20000,
     },
   },
   {
-    level: '70 → 80', // A5
+    level: "50 → 60", // A3
     materials: {
-      common: { quality: 'T3', quantity: 12 },
-      forgery: { quality: 'T3', quantity: 9 },
+      common: { quality: "T3", quantity: 4 },
+      forgery: { quality: "T2", quantity: 8 },
       shellCredits: 40000,
     },
   },
   {
-    level: '80 → 90', // A6
+    level: "60 → 70", // A4
     materials: {
-      common: { quality: 'T4', quantity: 6 },
-      forgery: { quality: 'T4', quantity: 4 },
+      common: { quality: "T3", quantity: 6 },
+      forgery: { quality: "T3", quantity: 6 },
+      shellCredits: 60000,
+    },
+  },
+  {
+    level: "70 → 80", // A5
+    materials: {
+      common: { quality: "T4", quantity: 4 },
+      forgery: { quality: "T3", quantity: 9 },
       shellCredits: 80000,
+    },
+  },
+  {
+    level: "80 → 90", // A6
+    materials: {
+      common: { quality: "T4", quantity: 8 },
+      forgery: { quality: "T4", quantity: 12 },
+      shellCredits: 150000,
     },
   },
 ];
@@ -68,51 +69,51 @@ export const fiveStarWeaponAscension: WeaponAscensionRequirement[] = [
 // 4-Star Weapons Ascension Requirements (same materials as 5★, just different EXP requirements)
 export const fourStarWeaponAscension: WeaponAscensionRequirement[] = [
   {
-    level: '1 → 40', // A1
+    level: "1 → 40", // A1
     materials: {
-      common: { quality: 'T1', quantity: 6 },
-      forgery: { quality: 'T1', quantity: 3 },
-      shellCredits: 5000,
-    },
-  },
-  {
-    level: '40 → 50', // A2
-    materials: {
-      common: { quality: 'T2', quantity: 6 },
-      forgery: { quality: 'T2', quantity: 6 },
+      common: { quality: "T1", quantity: 6 },
+      forgery: { quality: "T1", quantity: 0 },
       shellCredits: 10000,
     },
   },
   {
-    level: '50 → 60', // A3
+    level: "40 → 50", // A2
     materials: {
-      common: { quality: 'T2', quantity: 10 },
-      forgery: { quality: 'T2', quantity: 9 },
-      shellCredits: 15000,
-    },
-  },
-  {
-    level: '60 → 70', // A4
-    materials: {
-      common: { quality: 'T3', quantity: 6 },
-      forgery: { quality: 'T3', quantity: 6 },
+      common: { quality: "T2", quantity: 6 },
+      forgery: { quality: "T2", quantity: 6 },
       shellCredits: 20000,
     },
   },
   {
-    level: '70 → 80', // A5
+    level: "50 → 60", // A3
     materials: {
-      common: { quality: 'T3', quantity: 12 },
-      forgery: { quality: 'T3', quantity: 9 },
+      common: { quality: "T3", quantity: 4 },
+      forgery: { quality: "T2", quantity: 8 },
       shellCredits: 40000,
     },
   },
   {
-    level: '80 → 90', // A6
+    level: "60 → 70", // A4
     materials: {
-      common: { quality: 'T4', quantity: 6 },
-      forgery: { quality: 'T4', quantity: 4 },
+      common: { quality: "T3", quantity: 6 },
+      forgery: { quality: "T3", quantity: 6 },
+      shellCredits: 60000,
+    },
+  },
+  {
+    level: "70 → 80", // A5
+    materials: {
+      common: { quality: "T4", quantity: 4 },
+      forgery: { quality: "T3", quantity: 9 },
       shellCredits: 80000,
+    },
+  },
+  {
+    level: "80 → 90", // A6
+    materials: {
+      common: { quality: "T4", quantity: 8 },
+      forgery: { quality: "T4", quantity: 12 },
+      shellCredits: 150000,
     },
   },
 ];
@@ -121,57 +122,59 @@ export const fourStarWeaponAscension: WeaponAscensionRequirement[] = [
 // Estimated at approximately 70% of 4★/5★ requirements
 export const threeStarWeaponAscension: WeaponAscensionRequirement[] = [
   {
-    level: '1 → 40', // A1
+    level: "1 → 40", // A1
     materials: {
-      common: { quality: 'T1', quantity: 4 },
-      forgery: { quality: 'T1', quantity: 2 },
-      shellCredits: 3500,
-    },
-  },
-  {
-    level: '40 → 50', // A2
-    materials: {
-      common: { quality: 'T2', quantity: 4 },
-      forgery: { quality: 'T2', quantity: 4 },
+      common: { quality: "T1", quantity: 4 },
+      forgery: { quality: "T1", quantity: 0 },
       shellCredits: 7000,
     },
   },
   {
-    level: '50 → 60', // A3
+    level: "40 → 50", // A2
     materials: {
-      common: { quality: 'T2', quantity: 7 },
-      forgery: { quality: 'T2', quantity: 6 },
-      shellCredits: 10500,
-    },
-  },
-  {
-    level: '60 → 70', // A4
-    materials: {
-      common: { quality: 'T3', quantity: 4 },
-      forgery: { quality: 'T3', quantity: 4 },
+      common: { quality: "T2", quantity: 4 },
+      forgery: { quality: "T2", quantity: 4 },
       shellCredits: 14000,
     },
   },
   {
-    level: '70 → 80', // A5
+    level: "50 → 60", // A3
     materials: {
-      common: { quality: 'T3', quantity: 8 },
-      forgery: { quality: 'T3', quantity: 6 },
+      common: { quality: "T3", quantity: 3 },
+      forgery: { quality: "T2", quantity: 6 },
       shellCredits: 28000,
     },
   },
   {
-    level: '80 → 90', // A6
+    level: "60 → 70", // A4
     materials: {
-      common: { quality: 'T4', quantity: 4 },
-      forgery: { quality: 'T4', quantity: 3 },
+      common: { quality: "T3", quantity: 4 },
+      forgery: { quality: "T3", quantity: 4 },
+      shellCredits: 42000,
+    },
+  },
+  {
+    level: "70 → 80", // A5
+    materials: {
+      common: { quality: "T4", quantity: 3 },
+      forgery: { quality: "T3", quantity: 6 },
       shellCredits: 56000,
+    },
+  },
+  {
+    level: "80 → 90", // A6
+    materials: {
+      common: { quality: "T4", quantity: 6 },
+      forgery: { quality: "T4", quantity: 8 },
+      shellCredits: 105000,
     },
   },
 ];
 
 // Helper to get requirements by rarity
-export function getWeaponAscensionRequirements(rarity: 3 | 4 | 5): WeaponAscensionRequirement[] {
+export function getWeaponAscensionRequirements(
+  rarity: 3 | 4 | 5
+): WeaponAscensionRequirement[] {
   switch (rarity) {
     case 5:
       return fiveStarWeaponAscension;

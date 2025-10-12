@@ -12,8 +12,8 @@ export const waning_redshift: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Waveworn Residue',
+    forgery: 'Whisperin Core',
     ascension: '',
   },
   image: '/weapons/waning-redshift.png',

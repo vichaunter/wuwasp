@@ -13,7 +13,7 @@ export const blazing_justice: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/blazing-justice.png',

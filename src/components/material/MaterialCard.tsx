@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useInventoryStore } from "@/store/inventory";
 import { getMaterialById } from "@/data/materials";
 import { MaterialUpdateModal } from "@/components/MaterialUpdateModal";
-import { formatMaterialAvailability } from "@/utils/material-synthesis";
+import { formatMaterialAvailability } from "@/utils/materialSynthesis";
 import { MaterialCardImage } from "./MaterialCardImage";
 import { MaterialCardProgress } from "./MaterialCardProgress";
 import { MaterialCardInput } from "./MaterialCardInput";

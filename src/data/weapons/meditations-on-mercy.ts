@@ -12,8 +12,8 @@ export const meditations_on_mercy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Waveworn Residue',
+    forgery: 'Whisperin Core',
     ascension: '',
   },
   image: '/weapons/meditations-on-mercy.png',

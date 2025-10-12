@@ -12,8 +12,8 @@ export const feather_edge: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/feather-edge.png',

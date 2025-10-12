@@ -5,15 +5,13 @@ import { AddButton, RemoveButton } from "@/components/buttons";
 import { AddToPlannerModal } from "@/components/AddToPlannerModal";
 import { RemoveFromPlannerModal } from "@/components/RemoveFromPlannerModal";
 import { WeaponConfigModal } from "@/components/WeaponConfigModal";
-import { ConfigButton } from "@/components/ConfigButton";
-import { MaterialCard } from "@/components/material";
-import { calculateWeaponTotalMaterials } from "@/utils/material-calculator";
-import { sortMaterialsByCategory } from "@/utils/material-sorter";
-import { getMaterialsOfSameBase } from "@/utils/material-grouping";
+import { PlannerSection } from "@/components/PlannerSection";
+import { calculateWeaponTotalMaterials } from "@/utils/materialCalculator";
+import { sortMaterialsByCategory } from "@/utils/materialSorter";
 import {
   getAllWeaponMaterialIds,
   mergeWithAllMaterials,
-} from "@/utils/all-materials-generator";
+} from "@/utils/allMaterialsGenerator";
 
 interface WeaponCardProps {
   weapon: Weapon;
@@ -205,91 +203,16 @@ export function WeaponCard({
           </div>
 
           {/* Planner Section - Inside the card */}
-          {plannerMode &&
-            isInPlanner &&
-            progress &&
-            (() => {
-              // Get special requirements (EXP, all Shell Credits)
-              const expRequirement = requiredMaterials.find(
-                (m) => m.materialId === "weapon-exp"
-              );
-              const shellLevelingRequirement = requiredMaterials.find(
-                (m) => m.materialId === "shell-credit-leveling"
-              );
-              const shellOtherRequirement = requiredMaterials.find(
-                (m) => m.materialId === "shell-credit"
-              );
-
-              // Total Shell Credits = leveling + ascension
-              const totalShellCredits =
-                (shellLevelingRequirement?.quantity || 0) +
-                (shellOtherRequirement?.quantity || 0);
-
-              return (
-                <div className="px-4 pb-4 border-t border-gray-700 pt-4">
-                  {/* Configuration Button */}
-                  <div className="mb-4">
-                    <ConfigButton
-                      onClick={() => setShowConfigModal(true)}
-                      progress={progress}
-                      type="weapon"
-                    />
-                  </div>
-
-                  {/* Special Requirements: EXP and Shell Credits (Total) */}
-                  <div className="mb-3 space-y-1.5 text-sm">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-gray-400 text-xs">EXP:</span>
-                      <span
-                        className={`text-gray-300 ${
-                          !expRequirement ? "opacity-50" : ""
-                        }`}
-                      >
-                        {expRequirement
-                          ? `0 / ${expRequirement.quantity.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-gray-400 text-xs">Credits:</span>
-                      <span
-                        className={`text-gray-300 ${
-                          totalShellCredits === 0 ? "opacity-50" : ""
-                        }`}
-                      >
-                        {totalShellCredits > 0
-                          ? `0 / ${totalShellCredits.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Materials Needed */}
-                  {allMaterialsDisplay.length > 0 && (
-                    <div>
-                      <div className="text-sm font-semibold text-gray-300 mb-3">
-                        Materiales Necesarios
-                      </div>
-                      <div className="grid grid-cols-4 gap-2">
-                        {allMaterialsDisplay.map((mat) => (
-                          <MaterialCard
-                            key={mat.materialId}
-                            materialId={mat.materialId}
-                            required={mat.quantity}
-                            isEmpty={mat.isEmpty}
-                            allMaterialsOfSameBase={getMaterialsOfSameBase(
-                              mat.materialId,
-                              allMaterialsDisplay
-                            )}
-                            effectiveInventory={effectiveInventory}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+          {plannerMode && isInPlanner && progress && (
+            <PlannerSection
+              progress={progress}
+              type="weapon"
+              onConfigClick={() => setShowConfigModal(true)}
+              requiredMaterials={requiredMaterials}
+              allMaterialsDisplay={allMaterialsDisplay}
+              effectiveInventory={effectiveInventory}
+            />
+          )}
         </div>
       </div>
 

@@ -12,8 +12,8 @@ export const cadenza: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: 'Crude Ring',
+    forgery: 'Impure Phlogiston',
     ascension: '',
   },
   image: '/weapons/cadenza.png',

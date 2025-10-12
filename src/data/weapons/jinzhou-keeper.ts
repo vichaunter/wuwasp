@@ -12,8 +12,8 @@ export const jinzhou_keeper: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Presto Helix',
+    common: 'Crude Ring',
+    forgery: 'Lento Helix',
     ascension: '',
   },
   image: '/weapons/jinzhou-keeper.png',

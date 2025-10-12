@@ -12,8 +12,8 @@ export const somnoire_anchor: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/somnoire-anchor.png',

@@ -12,8 +12,8 @@ export const relativistic_jet: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Crude Ring',
+    forgery: 'Impure Phlogiston',
     ascension: '',
   },
   image: '/weapons/relativistic-jet.png',

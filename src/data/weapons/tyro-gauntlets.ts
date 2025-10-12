@@ -13,7 +13,7 @@ export const tyro_gauntlets: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/tyro-gauntlets.png',

@@ -12,8 +12,8 @@ export const pistols_26: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: 'Crude Ring',
+    forgery: 'Impure Phlogiston',
     ascension: '',
   },
   image: '/weapons/pistols-26.png',

@@ -13,7 +13,7 @@ export const defier_s_thorn: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/defier-s-thorn.png',

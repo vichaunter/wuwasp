@@ -12,8 +12,8 @@ export const thunderflare_dominion: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Whisperin Core',
-    forgery: 'Waveworn Residue',
+    common: 'Waveworn Residue',
+    forgery: 'Whisperin Core',
     ascension: '',
   },
   image: '/weapons/thunderflare-dominion.png',

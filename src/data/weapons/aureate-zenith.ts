@@ -12,8 +12,8 @@ export const aureate_zenith: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Waveworn Residue',
+    forgery: 'Whisperin Core',
     ascension: '',
   },
   image: '/weapons/aureate-zenith.png',

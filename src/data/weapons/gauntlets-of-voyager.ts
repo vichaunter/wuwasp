@@ -13,7 +13,7 @@ export const gauntlets_of_voyager: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Cadence Blossom',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/gauntlets-of-voyager.png',

@@ -12,8 +12,8 @@ export const discord: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Whisperin Core',
-    forgery: 'Waveworn Residue',
+    common: 'Waveworn Residue',
+    forgery: 'Whisperin Core',
     ascension: '',
   },
   image: '/weapons/discord.png',

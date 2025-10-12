@@ -13,7 +13,7 @@ export const sword_18: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/sword-18.png',

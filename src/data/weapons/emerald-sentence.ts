@@ -12,8 +12,8 @@ export const emerald_sentence: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/emerald-sentence.png',

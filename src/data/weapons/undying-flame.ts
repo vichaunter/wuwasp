@@ -12,8 +12,8 @@ export const undying_flame: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Tailored Ring',
-    forgery: 'Flawless Phlogiston',
+    common: 'Crude Ring',
+    forgery: 'Impure Phlogiston',
     ascension: '',
   },
   image: '/weapons/undying-flame.png',

@@ -13,7 +13,7 @@ export const unflickering_valor: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/unflickering-valor.png',

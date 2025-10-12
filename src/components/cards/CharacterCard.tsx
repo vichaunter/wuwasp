@@ -5,15 +5,13 @@ import { AddButton, RemoveButton } from "@/components/buttons";
 import { AddToPlannerModal } from "@/components/AddToPlannerModal";
 import { RemoveFromPlannerModal } from "@/components/RemoveFromPlannerModal";
 import { CharacterConfigModal } from "@/components/CharacterConfigModal";
-import { ConfigButton } from "@/components/ConfigButton";
-import { MaterialCard } from "@/components/material";
-import { calculateCharacterTotalMaterials } from "@/utils/material-calculator";
-import { sortMaterialsByCategory } from "@/utils/material-sorter";
-import { getMaterialsOfSameBase } from "@/utils/material-grouping";
+import { PlannerSection } from "./PlannerSection";
+import { calculateCharacterTotalMaterials } from "@/utils/materialCalculator";
 import {
   getAllCharacterMaterialIds,
   mergeWithAllMaterials,
-} from "@/utils/all-materials-generator";
+} from "@/utils/allMaterialsGenerator";
+import { filterSpecialMaterials } from "@/utils/plannerHelpers";
 
 interface CharacterCardProps {
   character: Character;
@@ -35,11 +33,10 @@ export function CharacterCard({
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
 
-  // Calculate required materials
+  // Calculate required materials (no sorting, PlannerSection handles it)
   const requiredMaterials = useMemo(() => {
     if (!plannerMode || !isInPlanner || !progress) return [];
-    const materials = calculateCharacterTotalMaterials(character, progress);
-    return sortMaterialsByCategory(materials);
+    return calculateCharacterTotalMaterials(character, progress);
   }, [plannerMode, isInPlanner, progress, character]);
 
   // Get all possible materials with empty markers
@@ -50,46 +47,14 @@ export function CharacterCard({
     const allMaterialIds = getAllCharacterMaterialIds(character);
 
     // Filter to get only normal materials (not EXP or Shell Credits)
-    const normalRequired = requiredMaterials.filter(
-      (m) =>
-        m.materialId !== "character-exp" &&
-        m.materialId !== "shell-credit-leveling" &&
-        m.materialId !== "shell-credit"
+    const normalRequired = filterSpecialMaterials(
+      requiredMaterials,
+      "character"
     );
 
-    // Merge with all possible materials
-    const allMaterials = mergeWithAllMaterials(allMaterialIds, normalRequired);
-
-    // Sort: materials you don't have enough of first, then the rest
-    const getMaterialQuantity = (materialId: string) => {
-      return effectiveInventory !== undefined
-        ? effectiveInventory[materialId] || 0
-        : 0;
-    };
-
-    const materialsNeeded: typeof allMaterials = [];
-    const materialsHave: typeof allMaterials = [];
-
-    allMaterials.forEach((mat) => {
-      const available = getMaterialQuantity(mat.materialId);
-      const hasEnough = available >= mat.quantity;
-
-      if (!hasEnough && mat.quantity > 0) {
-        materialsNeeded.push(mat);
-      } else {
-        materialsHave.push(mat);
-      }
-    });
-
-    return [...materialsNeeded, ...materialsHave];
-  }, [
-    plannerMode,
-    isInPlanner,
-    progress,
-    character,
-    requiredMaterials,
-    effectiveInventory,
-  ]);
+    // Merge with all possible materials (PlannerSection will handle sorting)
+    return mergeWithAllMaterials(allMaterialIds, normalRequired);
+  }, [plannerMode, isInPlanner, progress, character, requiredMaterials]);
 
   // Border color based on rarity
   const rarityColors = {
@@ -212,91 +177,16 @@ export function CharacterCard({
           </div>
 
           {/* Planner Section - Inside the card */}
-          {plannerMode &&
-            isInPlanner &&
-            progress &&
-            (() => {
-              // Get special requirements (EXP, all Shell Credits)
-              const expRequirement = requiredMaterials.find(
-                (m) => m.materialId === "character-exp"
-              );
-              const shellLevelingRequirement = requiredMaterials.find(
-                (m) => m.materialId === "shell-credit-leveling"
-              );
-              const shellOtherRequirement = requiredMaterials.find(
-                (m) => m.materialId === "shell-credit"
-              );
-
-              // Total Shell Credits = leveling + ascension/fortes/passives
-              const totalShellCredits =
-                (shellLevelingRequirement?.quantity || 0) +
-                (shellOtherRequirement?.quantity || 0);
-
-              return (
-                <div className="px-4 pb-4 border-t border-gray-700 pt-4">
-                  {/* Configuration Button */}
-                  <div className="mb-4">
-                    <ConfigButton
-                      onClick={() => setShowConfigModal(true)}
-                      progress={progress}
-                      type="character"
-                    />
-                  </div>
-
-                  {/* Special Requirements: EXP and Shell Credits (Total) */}
-                  <div className="mb-3 space-y-1.5 text-sm">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-gray-400 text-xs">EXP:</span>
-                      <span
-                        className={`text-gray-300 ${
-                          !expRequirement ? "opacity-50" : ""
-                        }`}
-                      >
-                        {expRequirement
-                          ? `0 / ${expRequirement.quantity.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-gray-400 text-xs">Credits:</span>
-                      <span
-                        className={`text-gray-300 ${
-                          totalShellCredits === 0 ? "opacity-50" : ""
-                        }`}
-                      >
-                        {totalShellCredits > 0
-                          ? `0 / ${totalShellCredits.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Materials Needed */}
-                  {allMaterialsDisplay.length > 0 && (
-                    <div>
-                      <div className="text-sm font-semibold text-gray-300 mb-3">
-                        Materiales Necesarios
-                      </div>
-                      <div className="grid grid-cols-4 gap-2">
-                        {allMaterialsDisplay.map((mat) => (
-                          <MaterialCard
-                            key={mat.materialId}
-                            materialId={mat.materialId}
-                            required={mat.quantity}
-                            isEmpty={mat.isEmpty}
-                            allMaterialsOfSameBase={getMaterialsOfSameBase(
-                              mat.materialId,
-                              allMaterialsDisplay
-                            )}
-                            effectiveInventory={effectiveInventory}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+          {plannerMode && isInPlanner && progress && (
+            <PlannerSection
+              progress={progress}
+              type="character"
+              onConfigClick={() => setShowConfigModal(true)}
+              requiredMaterials={requiredMaterials}
+              allMaterialsDisplay={allMaterialsDisplay}
+              effectiveInventory={effectiveInventory}
+            />
+          )}
         </div>
       </div>
 

@@ -12,8 +12,8 @@ export const aether_strike: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/aether-strike.png',

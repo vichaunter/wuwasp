@@ -1,11 +1,11 @@
-import { WeaponCard } from '@/components/WeaponCard';
-import { weapons } from '@/data/weapons';
+import { WeaponCard } from "@/components/cards";
+import { weapons } from "@/data/weapons";
 
 export default function WeaponList() {
   // Group weapons by rarity
-  const fiveStarWeapons = weapons.filter(w => w.rarity === 5);
-  const fourStarWeapons = weapons.filter(w => w.rarity === 4);
-  const threeStarWeapons = weapons.filter(w => w.rarity === 3);
+  const fiveStarWeapons = weapons.filter((w) => w.rarity === 5);
+  const fourStarWeapons = weapons.filter((w) => w.rarity === 4);
+  const threeStarWeapons = weapons.filter((w) => w.rarity === 3);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -17,7 +17,7 @@ export default function WeaponList() {
           Lista completa de armas disponibles
         </p>
       </div>
-      
+
       {/* 5-Star Weapons */}
       {fiveStarWeapons.length > 0 && (
         <section className="mb-12">
@@ -30,7 +30,7 @@ export default function WeaponList() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {fiveStarWeapons.map(weapon => (
+            {fiveStarWeapons.map((weapon) => (
               <WeaponCard key={weapon.id} weapon={weapon} />
             ))}
           </div>
@@ -49,7 +49,7 @@ export default function WeaponList() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {fourStarWeapons.map(weapon => (
+            {fourStarWeapons.map((weapon) => (
               <WeaponCard key={weapon.id} weapon={weapon} />
             ))}
           </div>
@@ -68,7 +68,7 @@ export default function WeaponList() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {threeStarWeapons.map(weapon => (
+            {threeStarWeapons.map((weapon) => (
               <WeaponCard key={weapon.id} weapon={weapon} />
             ))}
           </div>
@@ -77,4 +77,3 @@ export default function WeaponList() {
     </div>
   );
 }
-

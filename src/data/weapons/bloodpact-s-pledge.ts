@@ -13,7 +13,7 @@ export const bloodpact_s_pledge: Weapon = {
   skillDescription: '',
   materials: {
     common: 'Howler Core',
-    forgery: 'Heterized Metallic Drip',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/bloodpact-s-pledge.png',

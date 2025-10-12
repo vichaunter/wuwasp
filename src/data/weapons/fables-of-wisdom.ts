@@ -12,8 +12,8 @@ export const fables_of_wisdom: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/fables-of-wisdom.png',

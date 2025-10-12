@@ -12,8 +12,8 @@ export const legend_of_drunken_hero: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Cadence Seed',
     ascension: '',
   },
   image: '/weapons/legend-of-drunken-hero.png',

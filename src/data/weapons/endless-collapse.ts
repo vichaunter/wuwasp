@@ -12,8 +12,8 @@ export const endless_collapse: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: '',
-    forgery: '',
+    common: 'Howler Core',
+    forgery: 'Inert Metallic Drip',
     ascension: '',
   },
   image: '/weapons/endless-collapse.png',
