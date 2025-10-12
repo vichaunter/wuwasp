@@ -1,4 +1,4 @@
-import type { Material } from '@/types';
+import type { Material } from "@/types";
 
 interface MaterialCardImageProps {
   material: Material;
@@ -6,7 +6,11 @@ interface MaterialCardImageProps {
   bgGradient: string;
 }
 
-export function MaterialCardImage({ material, showTooltip, bgGradient }: MaterialCardImageProps) {
+export function MaterialCardImage({
+  material,
+  showTooltip,
+  bgGradient,
+}: MaterialCardImageProps) {
   return (
     <div className="relative w-full aspect-square bg-gradient-to-b from-gray-900 to-gray-950">
       {/* Gradient glow behind image - intensifies on hover */}
@@ -18,19 +22,12 @@ export function MaterialCardImage({ material, showTooltip, bgGradient }: Materia
 
       {/* Image container */}
       <div className="relative w-full h-full flex items-center justify-center p-3">
-        {material.image ? (
-          <img
-            src={material.image}
-            alt={material.name}
-            className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-          />
-        ) : (
-          <span className="text-4xl font-bold text-white drop-shadow-2xl">
-            {material.name.charAt(0)}
-          </span>
-        )}
+        <img
+          src={`/materials/${material.id}.webp`}
+          alt={material.name}
+          className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+        />
       </div>
     </div>
   );
 }
-

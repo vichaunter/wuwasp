@@ -74,6 +74,17 @@ export function Navbar() {
             >
               Inventario
             </Link>
+            
+            <Link
+              to="/materials"
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive('/materials')
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              Materiales
+            </Link>
           </div>
         </div>
       </div>

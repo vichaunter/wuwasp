@@ -3,7 +3,10 @@ interface MaterialCardProgressProps {
   required: number;
 }
 
-export function MaterialCardProgress({ available, required }: MaterialCardProgressProps) {
+export function MaterialCardProgress({
+  available,
+  required,
+}: MaterialCardProgressProps) {
   // Format number with 'k' suffix for thousands
   const formatNumber = (num: number) => {
     if (num >= 1000) {
@@ -13,7 +16,7 @@ export function MaterialCardProgress({ available, required }: MaterialCardProgre
   };
 
   return (
-    <div className="text-center py-3 bg-gray-900">
+    <div className="text-center py-1 bg-gray-900">
       <div className="text-sm">
         <span className="text-white">{formatNumber(available)}</span>
         <span className="text-gray-600">/</span>
@@ -22,4 +25,3 @@ export function MaterialCardProgress({ available, required }: MaterialCardProgre
     </div>
   );
 }
-

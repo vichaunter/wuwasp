@@ -5,6 +5,7 @@ import CharacterList from '@/pages/CharacterList';
 import WeaponList from '@/pages/WeaponList';
 import Planning from '@/pages/Planning';
 import Inventory from '@/pages/Inventory';
+import { Materials } from '@/pages/Materials';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/weapons" element={<WeaponList />} />
           <Route path="/planning" element={<Planning />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/materials" element={<Materials />} />
         </Routes>
       </div>
     </Router>

@@ -5,7 +5,7 @@ import { AddButton, RemoveButton } from "@/components/buttons";
 import { AddToPlannerModal } from "@/components/AddToPlannerModal";
 import { RemoveFromPlannerModal } from "@/components/RemoveFromPlannerModal";
 import { WeaponConfigModal } from "@/components/WeaponConfigModal";
-import { PlannerSection } from "@/components/PlannerSection";
+import { PlannerSection } from "@/components/cards/PlannerSection";
 import { calculateWeaponTotalMaterials } from "@/utils/materialCalculator";
 import { sortMaterialsByCategory } from "@/utils/materialSorter";
 import {

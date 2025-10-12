@@ -6,6 +6,7 @@ import { formatMaterialAvailability } from "@/utils/materialSynthesis";
 import { MaterialCardImage } from "./MaterialCardImage";
 import { MaterialCardProgress } from "./MaterialCardProgress";
 import { MaterialCardInput } from "./MaterialCardInput";
+import { MaterialCardTitle } from "./MaterialCardTitle";
 
 interface MaterialRequirement {
   materialId: string;
@@ -18,7 +19,7 @@ interface MaterialCardProps {
   required?: number;
   allMaterialsOfSameBase?: MaterialRequirement[];
   effectiveInventory?: Record<string, number>;
-  mode?: "card" | "input"; // card = muestra progreso, input = muestra controles
+  mode?: "card" | "input" | "title"; // card = muestra progreso, input = muestra controles, title = muestra nombre
   isEmpty?: boolean; // If true, shows 0/0 with reduced opacity
 }
 
@@ -171,6 +172,8 @@ export function MaterialCard({
         {/* Bottom section - changes based on mode */}
         {mode === "card" ? (
           <MaterialCardProgress available={available} required={required} />
+        ) : mode === "title" ? (
+          <MaterialCardTitle name={material.name} category={material.category} />
         ) : (
           <MaterialCardInput materialId={materialId} />
         )}
