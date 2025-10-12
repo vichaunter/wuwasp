@@ -1,7 +1,7 @@
 {
-  "name": "wuwa-planner",
+  "name": "wuwasp",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "lsof -ti:5173 | xargs -r kill -9 && vite --port 5173 --strictPort",
