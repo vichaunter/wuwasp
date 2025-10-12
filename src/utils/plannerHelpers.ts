@@ -1,4 +1,5 @@
 import type { MaterialRequirement } from "./materialCalculator";
+import { EXP_VALUES } from "@/data/exp-requirements";
 
 /**
  * Extended material requirement with isEmpty flag
@@ -52,6 +53,52 @@ export function getExpRequirement(
 ): MaterialRequirement | undefined {
   const expMaterialId = type === "character" ? "character-exp" : "weapon-exp";
   return materials.find((m) => m.materialId === expMaterialId);
+}
+
+// Use canonical EXP values from data/exp-requirements (single source of truth)
+
+/**
+ * Compute total available EXP from an inventory map for character or weapon.
+ * inventory: Record<materialId, quantity>
+ */
+export function getAvailableExpFromInventory(
+  inventory: Record<string, number> | undefined,
+  type: "character" | "weapon"
+): number {
+  if (!inventory) return 0;
+
+  if (type === "character") {
+    return (
+      (inventory["basic-resonance-potion"] || 0) *
+        (EXP_VALUES["basic-resonance-potion"] || 0) +
+      (inventory["medium-resonance-potion"] || 0) *
+        (EXP_VALUES["medium-resonance-potion"] || 0) +
+      (inventory["advanced-resonance-potion"] || 0) *
+        (EXP_VALUES["advanced-resonance-potion"] || 0) +
+      (inventory["premium-resonance-potion"] || 0) *
+        (EXP_VALUES["premium-resonance-potion"] || 0)
+    );
+  }
+
+  // weapon
+  return (
+    (inventory["basic-energy-core"] || 0) *
+      (EXP_VALUES["basic-energy-core"] || 0) +
+    (inventory["advanced-energy-core"] || 0) *
+      (EXP_VALUES["advanced-energy-core"] || 0) +
+    (inventory["premium-energy-core"] || 0) *
+      (EXP_VALUES["premium-energy-core"] || 0)
+  );
+}
+
+/**
+ * Compute available shell credits from inventory map.
+ */
+export function getAvailableShellCredits(
+  inventory: Record<string, number> | undefined
+): number {
+  if (!inventory) return 0;
+  return inventory["shell-credit"] || 0;
 }
 
 /**

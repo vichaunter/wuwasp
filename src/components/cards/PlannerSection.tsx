@@ -6,6 +6,8 @@ import {
   sortMaterialsByRequirement,
   getExpRequirement,
   getShellCreditRequirements,
+  getAvailableExpFromInventory,
+  getAvailableShellCredits,
   type MaterialRequirementWithEmpty,
 } from "@/utils/plannerHelpers";
 import type { MaterialRequirement } from "@/utils/materialCalculator";
@@ -33,6 +35,34 @@ export function PlannerSection({
   const { total: totalShellCredits } =
     getShellCreditRequirements(requiredMaterials);
 
+  // Compute available EXP and Shell Credits from effectiveInventory if provided.
+  // Parents may attach per-item metadata (__availableExp / __consumedExp) so prefer
+  // that for display (shows X used / required). Otherwise fall back to aggregate totals.
+  const availableExpFromMeta = effectiveInventory?.__availableExp ?? undefined;
+  const consumedExpFromMeta = effectiveInventory?.__consumedExp ?? undefined;
+  const availableShellFromMeta =
+    effectiveInventory?.__availableShellCredits ?? undefined;
+  const consumedShellFromMeta =
+    effectiveInventory?.__consumedShellCredits ?? undefined;
+
+  // Show the amount that was available to this item (pre-consumption) if present,
+  // otherwise show the aggregate computed available EXP/credits.
+  const availableExp =
+    availableExpFromMeta !== undefined
+      ? Math.min(
+          availableExpFromMeta,
+          consumedExpFromMeta ?? Number.POSITIVE_INFINITY
+        )
+      : getAvailableExpFromInventory(effectiveInventory, type);
+
+  const availableShellCredits =
+    availableShellFromMeta !== undefined
+      ? Math.min(
+          availableShellFromMeta,
+          consumedShellFromMeta ?? Number.POSITIVE_INFINITY
+        )
+      : getAvailableShellCredits(effectiveInventory);
+
   // Sort materials: needed materials first (quantity > 0), preserve original order
   const sortedMaterials = useMemo(
     () => sortMaterialsByRequirement(allMaterialsDisplay),
@@ -54,7 +84,7 @@ export function PlannerSection({
             className={`text-gray-300 ${!expRequirement ? "opacity-50" : ""}`}
           >
             {expRequirement
-              ? `0 / ${expRequirement.quantity.toLocaleString()}`
+              ? `${availableExp.toLocaleString()} / ${expRequirement.quantity.toLocaleString()}`
               : "N/A"}
           </span>
         </div>
@@ -66,7 +96,7 @@ export function PlannerSection({
             }`}
           >
             {totalShellCredits > 0
-              ? `0 / ${totalShellCredits.toLocaleString()}`
+              ? `${availableShellCredits.toLocaleString()} / ${totalShellCredits.toLocaleString()}`
               : "N/A"}
           </span>
         </div>

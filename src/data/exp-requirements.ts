@@ -11,9 +11,9 @@ export interface ExpRequirement {
 export const EXP_VALUES = {
   // Resonance Potions (Character EXP) - 4 levels
   "basic-resonance-potion": 1000, // T1 Verde
-  "advanced-resonance-potion": 4000, // T2 Azul
-  "premium-resonance-potion": 10000, // T3 Morada
-  "supreme-resonance-potion": 20000, // T4 Dorada
+  "medium-resonance-potion": 4000, // T2 Azul
+  "advanced-resonance-potion": 10000, // T3 Morada
+  "premium-resonance-potion": 20000, // T4 Dorada
 
   // Energy Cores (Weapon EXP) - 3 levels
   "basic-energy-core": 1000, // T1 Verde
@@ -121,23 +121,23 @@ export function calculateExpMaterials(
     // Character EXP - 4 levels (Verde, Azul, Morada, Dorada)
 
     // 1. Dorada/Supreme (20,000 EXP)
-    const supreme = Math.floor(remaining / 20000);
-    if (supreme > 0) {
-      materials["supreme-resonance-potion"] = supreme;
+    const premium = Math.floor(remaining / 20000);
+    if (premium > 0) {
+      materials["premium-resonance-potion"] = premium;
       remaining = remaining % 20000;
     }
 
     // 2. Morada/Premium (10,000 EXP)
-    const premium = Math.floor(remaining / 10000);
-    if (premium > 0) {
-      materials["premium-resonance-potion"] = premium;
+    const advanced = Math.floor(remaining / 10000);
+    if (advanced > 0) {
+      materials["advanced-resonance-potion"] = advanced;
       remaining = remaining % 10000;
     }
 
     // 3. Azul/Advanced (4,000 EXP)
-    const advanced = Math.floor(remaining / 4000);
-    if (advanced > 0) {
-      materials["advanced-resonance-potion"] = advanced;
+    const medium = Math.floor(remaining / 4000);
+    if (medium > 0) {
+      materials["medium-resonance-potion"] = medium;
       remaining = remaining % 4000;
     }
 

@@ -628,7 +628,7 @@ export const materials: Material[] = [
     name: "Advanced Resonance Potion",
     baseName: "Resonance Potion",
     category: "EXP",
-    quality: "T2",
+    quality: "T3",
     image: "/materials/advanced-resonance-potion.webp",
   },
   {
@@ -636,7 +636,7 @@ export const materials: Material[] = [
     name: "Premium Resonance Potion",
     baseName: "Resonance Potion",
     category: "EXP",
-    quality: "T3",
+    quality: "T4",
     image: "/materials/premium-resonance-potion.webp",
   },
   // EXP Materials - Energy Cores (Weapon EXP) - 3 levels
@@ -753,6 +753,7 @@ export const materials: Material[] = [
     name: "Medium Resonance Potion",
     baseName: "Resonance Potion",
     category: "EXP",
+    // medium is the second-lowest (T2)
     quality: "T2",
     image: "/materials/medium-resonance-potion.webp",
   },

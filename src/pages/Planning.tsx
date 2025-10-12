@@ -5,9 +5,15 @@ import { CharacterCard, WeaponCard } from "@/components/cards";
 import { useInventoryStore } from "@/store/inventory";
 import { consumeMaterialsFromInventory } from "@/utils/materialSynthesis";
 import {
+  getAvailableExpFromInventory,
+  getAvailableShellCredits,
+} from "@/utils/plannerHelpers";
+import {
   calculateCharacterTotalMaterials,
   calculateWeaponTotalMaterials,
 } from "@/utils/materialCalculator";
+import { calculateExpMaterials } from "@/data/exp-requirements";
+import { useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -143,13 +149,136 @@ export default function Planning() {
     completedCharacters,
   ]);
 
+  // Dev helper: attach a function to window to dump the planner state and
+  // inventory with per-item consumption. Call `__dumpPlanner()` in the browser
+  // console to get a JSON you can paste here. Only in non-production.
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+
+    (window as any).__dumpPlanner = () => {
+      const state = useInventoryStore.getState();
+      const globalInv = { ...state.inventory };
+
+      // Build enabled items (same logic as above)
+      const enabledChars = characters
+        .filter((c) => state.characterProgress[c.id]?.enabled)
+        .map((c) => ({
+          type: "character" as const,
+          data: c,
+          order: state.characterProgress[c.id]?.order ?? 999,
+          progress: state.characterProgress[c.id],
+        }));
+
+      const enabledWeapons = weapons
+        .filter((w) => state.weaponProgress[w.id]?.enabled)
+        .map((w) => ({
+          type: "weapon" as const,
+          data: w,
+          order: state.weaponProgress[w.id]?.order ?? 999,
+          progress: state.weaponProgress[w.id],
+        }));
+
+      const items = [...enabledChars, ...enabledWeapons].sort(
+        (a, b) => a.order - b.order
+      );
+
+      const result: any[] = [];
+      let currentInventory = { ...globalInv };
+
+      for (const item of items) {
+        // compute requirements
+        let requirements: { materialId: string; quantity: number }[] = [];
+        if (item.type === "character") {
+          if (item.progress) {
+            requirements = calculateCharacterTotalMaterials(
+              item.data,
+              item.progress
+            );
+          }
+        } else {
+          if (item.progress) {
+            requirements = calculateWeaponTotalMaterials(
+              item.data,
+              item.progress
+            );
+          }
+        }
+
+        // capture before
+        const beforeExp = getAvailableExpFromInventory(
+          currentInventory,
+          item.type
+        );
+        const beforeShell = getAvailableShellCredits(currentInventory);
+
+        // Expand EXP requirement for logging (if present)
+        const expReq = requirements.find(
+          (r) =>
+            r.materialId ===
+            (item.type === "character" ? "character-exp" : "weapon-exp")
+        );
+        const expandedExp = expReq
+          ? calculateExpMaterials(
+              expReq.quantity,
+              item.type === "character" ? "resonance-potion" : "energy-core"
+            )
+          : {};
+
+        // Consume for this item
+        const afterInventory = consumeMaterialsFromInventory(
+          currentInventory,
+          requirements,
+          item.type
+        );
+
+        const afterExp = getAvailableExpFromInventory(
+          afterInventory,
+          item.type
+        );
+        const afterShell = getAvailableShellCredits(afterInventory);
+
+        result.push({
+          id: item.data.id,
+          type: item.type,
+          order: item.order,
+          beforeExp,
+          afterExp,
+          consumedExp: Math.max(0, beforeExp - afterExp),
+          beforeShell,
+          afterShell,
+          consumedShell: Math.max(0, beforeShell - afterShell),
+          expandedExp,
+          requirements,
+        });
+
+        currentInventory = afterInventory;
+      }
+
+      const out = {
+        globalInventory: globalInv,
+        items: result,
+        remainingInventory: currentInventory,
+      };
+      console.log("__dumpPlanner ->", out);
+      return out;
+    };
+
+    return () => {
+      try {
+        delete (window as any).__dumpPlanner;
+      } catch (e) {
+        (window as any).__dumpPlanner = undefined;
+      }
+    };
+  }, []);
+
   // Calculate sequential inventory for each item
   const itemsWithInventory = useMemo(() => {
     let currentInventory = { ...globalInventory };
 
     return allEnabledItems.map((item) => {
       // Store the inventory available for this item
-      const availableInventory = { ...currentInventory };
+      const availableInventory: Record<string, any> = { ...currentInventory };
 
       // Calculate what this item needs
       let requirements: { materialId: string; quantity: number }[] = [];
@@ -166,11 +295,42 @@ export default function Planning() {
         }
       }
 
-      // Consume materials from inventory for next item
-      currentInventory = consumeMaterialsFromInventory(
+      // Simulate consuming materials for this item to compute what will be used
+      const afterThisItemInventory = consumeMaterialsFromInventory(
         currentInventory,
-        requirements
+        requirements,
+        item.type
       );
+
+      // Compute EXP consumed for this item (difference between before/after)
+      const availableExpBefore = getAvailableExpFromInventory(
+        availableInventory,
+        item.type
+      );
+      const availableExpAfter = getAvailableExpFromInventory(
+        afterThisItemInventory,
+        item.type
+      );
+      const consumedExp = Math.max(0, availableExpBefore - availableExpAfter);
+
+      // Compute Shell Credits consumed for this item
+      const availableShellBefore = getAvailableShellCredits(availableInventory);
+      const availableShellAfter = getAvailableShellCredits(
+        afterThisItemInventory
+      );
+      const consumedShell = Math.max(
+        0,
+        availableShellBefore - availableShellAfter
+      );
+
+      // Attach metadata so UI can show consumed/required (not raw totals)
+      availableInventory.__availableExp = availableExpBefore;
+      availableInventory.__consumedExp = consumedExp;
+      availableInventory.__availableShellCredits = availableShellBefore;
+      availableInventory.__consumedShellCredits = consumedShell;
+
+      // Now update current inventory to after consuming this item
+      currentInventory = afterThisItemInventory;
 
       return {
         ...item,
