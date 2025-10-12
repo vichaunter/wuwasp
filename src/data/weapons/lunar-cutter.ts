@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const lunar_cutter: Weapon = {
   id: 'lunar-cutter',
-  name: 'lunar-cutter',
+  name: "Lunar Cutter",
   slug: 'lunar-cutter',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455936',
   rarity: 4,

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const jinzhou_keeper: Weapon = {
   id: 'jinzhou-keeper',
-  name: 'jinzhou-keeper',
+  name: "Jinzhou Keeper",
   slug: 'jinzhou-keeper',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455924',
   rarity: 4,

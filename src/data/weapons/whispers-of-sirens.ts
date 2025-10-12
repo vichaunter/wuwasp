@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const whispers_of_sirens: Weapon = {
   id: 'whispers-of-sirens',
-  name: 'whispers-of-sirens',
+  name: "Whispers Of Sirens",
   slug: 'whispers-of-sirens',
   url: 'https://game8.co/games/Wuthering-Waves/archives/506482',
   rarity: 5,

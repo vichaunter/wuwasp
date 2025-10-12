@@ -13,6 +13,8 @@ interface InventoryState {
   characterProgress: Record<string, CharacterProgress>; // characterId -> progress
   weaponProgress: Record<string, WeaponProgress>; // weaponId -> progress
   collapsedSections: Record<string, boolean>; // itemId -> isCollapsed
+  completedWeapons: Record<string, boolean>; // weaponId -> isCompleted
+  completedCharacters: Record<string, boolean>; // characterId -> isCompleted
 
   // Material methods
   getMaterialQuantity: (materialId: string) => number;
@@ -44,6 +46,7 @@ interface InventoryState {
     target: number
   ) => void;
   toggleCharacterEnabled: (characterId: string, enabled: boolean) => void;
+  removeCharacter: (characterId: string) => void;
 
   // Weapon progress methods
   getWeaponProgress: (weaponId: string) => WeaponProgress | null;
@@ -60,6 +63,7 @@ interface InventoryState {
     order?: number
   ) => void;
   toggleWeaponEnabled: (weaponId: string, enabled: boolean) => void;
+  removeWeapon: (weaponId: string) => void;
 
   // Reordering methods
   reorderPlannerItems: (
@@ -71,6 +75,14 @@ interface InventoryState {
   // UI state methods
   isCollapsed: (itemId: string) => boolean;
   toggleCollapsed: (itemId: string) => void;
+
+  // Completed weapons methods
+  isWeaponCompleted: (weaponId: string) => boolean;
+  toggleWeaponCompleted: (weaponId: string) => void;
+
+  // Completed characters methods
+  isCharacterCompleted: (characterId: string) => boolean;
+  toggleCharacterCompleted: (characterId: string) => void;
 }
 
 export const useInventoryStore = create<InventoryState>()(
@@ -81,6 +93,8 @@ export const useInventoryStore = create<InventoryState>()(
       characterProgress: {},
       weaponProgress: {},
       collapsedSections: {},
+      completedWeapons: {},
+      completedCharacters: {},
 
       // Material methods
       getMaterialQuantity: (materialId: string) => {
@@ -231,6 +245,13 @@ export const useInventoryStore = create<InventoryState>()(
         });
       },
 
+      removeCharacter: (characterId: string) => {
+        set((state) => {
+          delete state.characterProgress[characterId];
+          delete state.collapsedSections[characterId];
+        });
+      },
+
       // Weapon progress methods
       getWeaponProgress: (weaponId: string) => {
         return get().weaponProgress[weaponId] || null;
@@ -323,6 +344,13 @@ export const useInventoryStore = create<InventoryState>()(
         });
       },
 
+      removeWeapon: (weaponId: string) => {
+        set((state) => {
+          delete state.weaponProgress[weaponId];
+          delete state.collapsedSections[weaponId];
+        });
+      },
+
       // Reordering methods
       reorderPlannerItems: (
         itemId: string,
@@ -381,6 +409,34 @@ export const useInventoryStore = create<InventoryState>()(
           collapsedSections: {
             ...state.collapsedSections,
             [itemId]: !state.collapsedSections[itemId],
+          },
+        }));
+      },
+
+      // Completed weapons methods
+      isWeaponCompleted: (weaponId: string) => {
+        return get().completedWeapons[weaponId] ?? false;
+      },
+
+      toggleWeaponCompleted: (weaponId: string) => {
+        set((state) => ({
+          completedWeapons: {
+            ...state.completedWeapons,
+            [weaponId]: !state.completedWeapons[weaponId],
+          },
+        }));
+      },
+
+      // Completed characters methods
+      isCharacterCompleted: (characterId: string) => {
+        return get().completedCharacters[characterId] ?? false;
+      },
+
+      toggleCharacterCompleted: (characterId: string) => {
+        set((state) => ({
+          completedCharacters: {
+            ...state.completedCharacters,
+            [characterId]: !state.completedCharacters[characterId],
           },
         }));
       },

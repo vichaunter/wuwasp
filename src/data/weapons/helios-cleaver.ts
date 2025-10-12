@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const helios_cleaver: Weapon = {
   id: 'helios-cleaver',
-  name: 'helios-cleaver',
+  name: "Helios Cleaver",
   slug: 'helios-cleaver',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455947',
   rarity: 4,

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const dauntless_evernight: Weapon = {
   id: 'dauntless-evernight',
-  name: 'dauntless-evernight',
+  name: "Dauntless Evernight",
   slug: 'dauntless-evernight',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455949',
   rarity: 4,

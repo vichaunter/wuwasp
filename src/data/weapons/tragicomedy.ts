@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const tragicomedy: Weapon = {
   id: 'tragicomedy',
-  name: 'tragicomedy',
+  name: "Tragicomedy",
   slug: 'tragicomedy',
   url: 'https://game8.co/games/Wuthering-Waves/archives/491971',
   rarity: 5,

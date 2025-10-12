@@ -28,6 +28,12 @@ export function WeaponCard({
     state.getWeaponProgress(weapon.id)
   );
   const isInPlanner = progress?.enabled ?? false;
+  const isCompleted = useInventoryStore((state) =>
+    state.isWeaponCompleted(weapon.id)
+  );
+  const toggleWeaponCompleted = useInventoryStore(
+    (state) => state.toggleWeaponCompleted
+  );
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -69,14 +75,20 @@ export function WeaponCard({
     setShowRemoveModal(true);
   };
 
-  const weaponName = weapon.name
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const weaponName = weapon.name;
+
+  const handleCompletedClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleWeaponCompleted(weapon.id);
+  };
 
   return (
     <>
-      <div className="h-full flex flex-col">
+      <div
+        className={`h-full flex flex-col ${
+          plannerMode && isCompleted ? "opacity-50" : ""
+        }`}
+      >
         <div
           className={`h-full flex flex-col relative bg-gray-800 rounded-xl border ${
             isInPlanner
@@ -89,6 +101,41 @@ export function WeaponCard({
             <RemoveButton onClick={handleRemoveClick} />
           ) : (
             <AddButton onClick={handleAddClick} />
+          )}
+
+          {/* Completed Check Button - Only in weapon list, not in planner */}
+          {!plannerMode && (
+            <button
+              onClick={handleCompletedClick}
+              className={`group absolute bottom-2 right-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all cursor-pointer z-10 ${
+                isCompleted
+                  ? "bg-green-500 border-green-400"
+                  : "bg-transparent border-gray-500 hover:border-gray-400"
+              }`}
+              title={
+                isCompleted
+                  ? "Arma completamente subida"
+                  : "Marcar como completamente subida"
+              }
+            >
+              <svg
+                className={`w-4 h-4 transition-opacity ${
+                  isCompleted
+                    ? "text-white opacity-100"
+                    : "text-gray-400 opacity-0 group-hover:opacity-100"
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </button>
           )}
 
           {/* Top section: Image and Info side by side */}

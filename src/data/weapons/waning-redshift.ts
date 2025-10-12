@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const waning_redshift: Weapon = {
   id: 'waning-redshift',
-  name: 'waning-redshift',
+  name: "Waning Redshift",
   slug: 'waning-redshift',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474514',
   rarity: 4,

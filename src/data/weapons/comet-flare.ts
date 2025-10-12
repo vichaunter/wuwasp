@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const comet_flare: Weapon = {
   id: 'comet-flare',
-  name: 'comet-flare',
+  name: "Comet Flare",
   slug: 'comet-flare',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455925',
   rarity: 4,

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const rime_draped_sprouts: Weapon = {
   id: 'rime-draped-sprouts',
-  name: 'rime-draped-sprouts',
+  name: "Rime Draped Sprouts",
   slug: 'rime-draped-sprouts',
   url: 'https://game8.co/games/Wuthering-Waves/archives/464109',
   rarity: 5,

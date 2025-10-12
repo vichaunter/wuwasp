@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const solar_flame: Weapon = {
   id: 'solar-flame',
-  name: 'solar-flame',
+  name: "Solar Flame",
   slug: 'solar-flame',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544594',
   rarity: 4,

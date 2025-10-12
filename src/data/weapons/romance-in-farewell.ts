@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const romance_in_farewell: Weapon = {
   id: 'romance-in-farewell',
-  name: 'romance-in-farewell',
+  name: "Romance In Farewell",
   slug: 'romance-in-farewell',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492571',
   rarity: 4,

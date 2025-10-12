@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const tyro_pistols: Weapon = {
   id: 'tyro-pistols',
-  name: 'tyro-pistols',
+  name: "Tyro Pistols",
   slug: 'tyro-pistols',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455895',
   rarity: 5,

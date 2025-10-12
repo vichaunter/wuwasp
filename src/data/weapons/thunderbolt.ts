@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const thunderbolt: Weapon = {
   id: 'thunderbolt',
-  name: 'thunderbolt',
+  name: "Thunderbolt",
   slug: 'thunderbolt',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455901',
   rarity: 4,

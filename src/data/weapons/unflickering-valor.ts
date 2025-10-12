@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const unflickering_valor: Weapon = {
   id: 'unflickering-valor',
-  name: 'unflickering-valor',
+  name: "Unflickering Valor",
   slug: 'unflickering-valor',
   url: 'https://game8.co/games/Wuthering-Waves/archives/498528',
   rarity: 5,

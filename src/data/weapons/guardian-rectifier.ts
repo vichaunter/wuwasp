@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const guardian_rectifier: Weapon = {
   id: 'guardian-rectifier',
-  name: 'guardian-rectifier',
+  name: "Guardian Rectifier",
   slug: 'guardian-rectifier',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455922',
   rarity: 3,

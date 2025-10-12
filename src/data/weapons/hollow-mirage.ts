@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const hollow_mirage: Weapon = {
   id: 'hollow-mirage',
-  name: 'hollow-mirage',
+  name: "Hollow Mirage",
   slug: 'hollow-mirage',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455913',
   rarity: 4,

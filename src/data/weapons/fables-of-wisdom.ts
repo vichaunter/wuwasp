@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const fables_of_wisdom: Weapon = {
   id: 'fables-of-wisdom',
-  name: 'fables-of-wisdom',
+  name: "Fables Of Wisdom",
   slug: 'fables-of-wisdom',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492569',
   rarity: 4,

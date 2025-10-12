@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const lustrous_razor: Weapon = {
   id: 'lustrous-razor',
-  name: 'lustrous-razor',
+  name: "Lustrous Razor",
   slug: 'lustrous-razor',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455952',
   rarity: 5,

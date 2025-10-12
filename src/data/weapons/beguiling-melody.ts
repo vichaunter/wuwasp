@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const beguiling_melody: Weapon = {
   id: 'beguiling-melody',
-  name: 'beguiling-melody',
+  name: "Beguiling Melody",
   slug: 'beguiling-melody',
   url: 'https://game8.co/games/Wuthering-Waves/archives/458986',
   rarity: 3,

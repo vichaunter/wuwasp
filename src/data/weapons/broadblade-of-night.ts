@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const broadblade_of_night: Weapon = {
   id: 'broadblade-of-night',
-  name: 'broadblade-of-night',
+  name: "Broadblade Of Night",
   slug: 'broadblade-of-night',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455946',
   rarity: 3,

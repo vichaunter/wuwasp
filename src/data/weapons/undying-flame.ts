@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const undying_flame: Weapon = {
   id: 'undying-flame',
-  name: 'undying-flame',
+  name: "Undying Flame",
   slug: 'undying-flame',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455900',
   rarity: 4,

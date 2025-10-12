@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const training_rectifier: Weapon = {
   id: 'training-rectifier',
-  name: 'training-rectifier',
+  name: "Training Rectifier",
   slug: 'training-rectifier',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455917',
   rarity: 5,

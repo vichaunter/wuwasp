@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const bloodpact_s_pledge: Weapon = {
   id: 'bloodpact-s-pledge',
-  name: 'bloodpact-s-pledge',
+  name: "Bloodpact S Pledge",
   slug: 'bloodpact-s-pledge',
   url: 'https://game8.co/games/Wuthering-Waves/archives/506483',
   rarity: 5,

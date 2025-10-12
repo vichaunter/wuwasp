@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const rectifier_of_voyager: Weapon = {
   id: 'rectifier-of-voyager',
-  name: 'rectifier-of-voyager',
+  name: "Rectifier Of Voyager",
   slug: 'rectifier-of-voyager',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455919',
   rarity: 3,

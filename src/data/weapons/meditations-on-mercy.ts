@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const meditations_on_mercy: Weapon = {
   id: 'meditations-on-mercy',
-  name: 'meditations-on-mercy',
+  name: "Meditations On Mercy",
   slug: 'meditations-on-mercy',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492570',
   rarity: 4,

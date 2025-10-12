@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const stringmaster: Weapon = {
   id: 'stringmaster',
-  name: 'stringmaster',
+  name: "Stringmaster",
   slug: 'stringmaster',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455927',
   rarity: 5,

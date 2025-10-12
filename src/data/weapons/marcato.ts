@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const marcato: Weapon = {
   id: 'marcato',
-  name: 'marcato',
+  name: "Marcato",
   slug: 'marcato',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455912',
   rarity: 4,

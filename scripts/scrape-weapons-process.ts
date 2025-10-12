@@ -80,6 +80,15 @@ function normalizeMaterialName(name: string): string {
     .trim();
 }
 
+function formatWeaponName(name: string): string {
+  // Remove hyphens and capitalize each word
+  return name
+    .replace(/-/g, ' ')
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 async function getWeaponsListImages(): Promise<Map<string, string>> {
   console.log('📋 Fetching weapons list for images...');
   
@@ -255,12 +264,13 @@ function processHtml(html: string, slug: string, weaponImage: string): ScrapedWe
     }
   }
   
-  // Get weapon name from h1
-  const name = $('h1.a-header--1').text().trim();
+  // Get weapon name from h1 and format it properly
+  const rawName = $('h1.a-header--1').text().trim();
+  const name = formatWeaponName(rawName || slug);
   
   return {
     id: slug,
-    name: name || slug,
+    name,
     slug,
     url,
     rarity,

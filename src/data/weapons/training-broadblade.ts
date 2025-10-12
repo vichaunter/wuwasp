@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const training_broadblade: Weapon = {
   id: 'training-broadblade',
-  name: 'training-broadblade',
+  name: "Training Broadblade",
   slug: 'training-broadblade',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455941',
   rarity: 5,

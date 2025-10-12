@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const discord: Weapon = {
   id: 'discord',
-  name: 'discord',
+  name: "Discord",
   slug: 'discord',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455948',
   rarity: 4,

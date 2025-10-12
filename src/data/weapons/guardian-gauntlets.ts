@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const guardian_gauntlets: Weapon = {
   id: 'guardian-gauntlets',
-  name: 'guardian-gauntlets',
+  name: "Guardian Gauntlets",
   slug: 'guardian-gauntlets',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455908',
   rarity: 3,

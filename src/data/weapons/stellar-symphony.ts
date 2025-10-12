@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const stellar_symphony: Weapon = {
   id: 'stellar-symphony',
-  name: 'stellar-symphony',
+  name: "Stellar Symphony",
   slug: 'stellar-symphony',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474386',
   rarity: 5,

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const relativistic_jet: Weapon = {
   id: 'relativistic-jet',
-  name: 'relativistic-jet',
+  name: "Relativistic Jet",
   slug: 'relativistic-jet',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474513',
   rarity: 4,

@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const feather_edge: Weapon = {
   id: 'feather-edge',
-  name: 'feather-edge',
+  name: "Feather Edge",
   slug: 'feather-edge',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544590',
   rarity: 4,

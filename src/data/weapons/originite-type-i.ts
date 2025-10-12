@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const originite_type_i: Weapon = {
   id: 'originite-type-i',
-  name: 'originite-type-i',
+  name: "Originite Type I",
   slug: 'originite-type-i',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455943',
   rarity: 3,

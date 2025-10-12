@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const aether_strike: Weapon = {
   id: 'aether-strike',
-  name: 'aether-strike',
+  name: "Aether Strike",
   slug: 'aether-strike',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544845',
   rarity: 4,

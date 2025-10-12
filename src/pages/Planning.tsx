@@ -84,6 +84,10 @@ export default function Planning() {
   );
   const weaponProgress = useInventoryStore((state) => state.weaponProgress);
   const globalInventory = useInventoryStore((state) => state.inventory);
+  const completedWeapons = useInventoryStore((state) => state.completedWeapons);
+  const completedCharacters = useInventoryStore(
+    (state) => state.completedCharacters
+  );
   const reorderPlannerItems = useInventoryStore(
     (state) => state.reorderPlannerItems
   );
@@ -104,6 +108,7 @@ export default function Planning() {
   );
 
   // Combine all enabled items and sort by global order
+  // Completed items go to the end
   const allEnabledItems = useMemo(() => {
     const enabledChars = characters
       .filter((c) => characterProgress[c.id]?.enabled)
@@ -111,6 +116,7 @@ export default function Planning() {
         type: "character" as const,
         data: c,
         order: characterProgress[c.id]?.order ?? 999,
+        isCompleted: completedCharacters[c.id] ?? false,
       }));
 
     const enabledWeapons = weapons
@@ -119,12 +125,23 @@ export default function Planning() {
         type: "weapon" as const,
         data: w,
         order: weaponProgress[w.id]?.order ?? 999,
+        isCompleted: completedWeapons[w.id] ?? false,
       }));
 
-    return [...enabledChars, ...enabledWeapons].sort(
-      (a, b) => a.order - b.order
-    );
-  }, [characterProgress, weaponProgress]);
+    return [...enabledChars, ...enabledWeapons].sort((a, b) => {
+      // Completed items always go last
+      if (a.isCompleted !== b.isCompleted) {
+        return a.isCompleted ? 1 : -1;
+      }
+      // Otherwise sort by order
+      return a.order - b.order;
+    });
+  }, [
+    characterProgress,
+    weaponProgress,
+    completedWeapons,
+    completedCharacters,
+  ]);
 
   // Calculate sequential inventory for each item
   const itemsWithInventory = useMemo(() => {

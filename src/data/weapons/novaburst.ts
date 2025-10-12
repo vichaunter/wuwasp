@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const novaburst: Weapon = {
   id: 'novaburst',
-  name: 'novaburst',
+  name: "Novaburst",
   slug: 'novaburst',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455902',
   rarity: 4,

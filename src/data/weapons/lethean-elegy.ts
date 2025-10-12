@@ -2,7 +2,7 @@ import type { Weapon } from '@/types';
 
 export const lethean_elegy: Weapon = {
   id: 'lethean-elegy',
-  name: 'lethean-elegy',
+  name: "Lethean Elegy",
   slug: 'lethean-elegy',
   url: 'https://game8.co/games/Wuthering-Waves/archives/537943',
   rarity: 5,
