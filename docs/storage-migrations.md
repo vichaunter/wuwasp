@@ -65,6 +65,7 @@ Proceso:
 ### Versión 1 → 2 (Actualización del Circuito Forte)
 
 **Cambios:**
+
 - Se eliminaron campos antiguos: `passive1`, `passive2`, `bonusPassive`
 - Se agregaron nuevos campos:
   - `statBonus1`, `statBonus2`, `statBonus3`, `statBonus4` (0-2 cada uno)
@@ -75,17 +76,17 @@ Proceso:
 ```typescript
 function migrateV1toV2(data: any): any {
   if (data.characterProgress) {
-    Object.keys(data.characterProgress).forEach(characterId => {
+    Object.keys(data.characterProgress).forEach((characterId) => {
       const progress = data.characterProgress[characterId];
-      
+
       if (progress.forte) {
         const oldForte = progress.forte;
-        
+
         // Eliminar campos antiguos
         delete oldForte.passive1;
         delete oldForte.passive2;
         delete oldForte.bonusPassive;
-        
+
         // Agregar nuevos campos con valores por defecto
         progress.forte.statBonus1 = { current: 0, target: 2 };
         progress.forte.statBonus2 = { current: 0, target: 2 };
@@ -96,7 +97,7 @@ function migrateV1toV2(data: any): any {
       }
     });
   }
-  
+
   return data;
 }
 ```
@@ -116,19 +117,19 @@ export const CURRENT_STORAGE_VERSION = 3; // Incrementar
 // En src/utils/storage-migrations.ts
 
 function migrateV2toV3(data: any): any {
-  console.log('🔄 Migrating storage from v2 to v3...');
-  
+  console.log("🔄 Migrating storage from v2 to v3...");
+
   // Tu lógica de migración aquí
   // Por ejemplo, agregar un nuevo campo:
   if (data.weaponProgress) {
-    Object.keys(data.weaponProgress).forEach(weaponId => {
+    Object.keys(data.weaponProgress).forEach((weaponId) => {
       const progress = data.weaponProgress[weaponId];
-      
+
       // Agregar nuevo campo
       progress.newField = defaultValue;
     });
   }
-  
+
   return data;
 }
 ```
@@ -172,25 +173,29 @@ El sistema de migraciones debe ser probado:
 
 ```typescript
 // Ejemplo de test
-it('should migrate from v1 to v2', () => {
+it("should migrate from v1 to v2", () => {
   const oldData = {
     version: 1,
     characterProgress: {
-      'test-char': {
+      "test-char": {
         forte: {
           passive1: { current: 0, target: 1 },
           passive2: { current: 0, target: 1 },
           bonusPassive: { current: 0, target: 1 },
-        }
-      }
-    }
+        },
+      },
+    },
   };
-  
+
   const migrated = applyMigrations(oldData);
-  
+
   expect(migrated.version).toBe(2);
-  expect(migrated.characterProgress['test-char'].forte.statBonus1).toBeDefined();
-  expect(migrated.characterProgress['test-char'].forte.passive1).toBeUndefined();
+  expect(
+    migrated.characterProgress["test-char"].forte.statBonus1
+  ).toBeDefined();
+  expect(
+    migrated.characterProgress["test-char"].forte.passive1
+  ).toBeUndefined();
 });
 ```
 
@@ -200,7 +205,7 @@ Si algo sale mal con las migraciones, el usuario puede resetear manualmente desd
 
 ```javascript
 // Resetear todo el storage
-localStorage.removeItem('wuwa-planner-inventory');
+localStorage.removeItem("wuwa-planner-inventory");
 location.reload();
 ```
 
@@ -240,3 +245,6 @@ location.reload();
 - [ ] Validación de esquema después de migraciones
 - [ ] Rollback automático si una migración falla
 
+📊 Soy Beecthor y hoy te traigo el análisis de Bitcoin (BTC) más completo y actualizado. Hoy revisamos el precio de Bitcoin, las noticias cripto más importantes y el análisis de Bitcoin al día para entender si caerá Bitcoin hoy o si el BTC subirá con fuerza. Exploramos las ondas Elliott en Bitcoin, la situación del ETF de Bitcoin, las recientes liquidaciones de Bitcoin y lo que podría significar para la próxima proyección del precio de Bitcoin. Todo esto con una mirada profesional, técnica y enfocada en el análisis del precio de Bitcoin hoy, para que no te pierdas ni un solo movimiento del mercado.
+
+🚀 En este video descubrirás si Bitcoin explota al alza o si se avecina una nueva corrección. Analizamos las noticias de Bitcoin más relevantes, el comportamiento del BTC hoy, y el pronóstico de Bitcoin a corto y mediano plazo. Este análisis de Bitcoin combina datos, técnica y contexto para ayudarte a entender hacia dónde podría dirigirse el precio de Bitcoin. Si te apasiona el análisis BTC, las noticias Bitcoin y todo lo relacionado con las criptomonedas, este es tu lugar: bienvenido a Beecthor, donde cada día te traigo el Bitcoin análisis más claro y actualizado.

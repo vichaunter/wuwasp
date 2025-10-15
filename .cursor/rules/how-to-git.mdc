@@ -2,6 +2,7 @@
 alwaysApply: true
 ---
 
+- No me preguntes sobre hacer commit.
 - No hagas commit nunca a no ser que yo te lo indique.
 - Los commits que yo te pida deben ser descriptivos y simples de entender.
 - utiliza el formato fix|feat|chore(componente): descripción del cambio.
