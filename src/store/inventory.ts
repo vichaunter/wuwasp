@@ -16,6 +16,10 @@ interface InventoryState {
   completedWeapons: Record<string, boolean>; // weaponId -> isCompleted
   completedCharacters: Record<string, boolean>; // characterId -> isCompleted
 
+  // Completion methods
+  markCharacterAsCompleted: (characterId: string) => void;
+  markWeaponAsCompleted: (weaponId: string) => void;
+
   // Material methods
   getMaterialQuantity: (materialId: string) => number;
   setMaterialQuantity: (materialId: string, quantity: number) => void;
@@ -95,6 +99,19 @@ export const useInventoryStore = create<InventoryState>()(
       collapsedSections: {},
       completedWeapons: {},
       completedCharacters: {},
+
+      // Completion methods
+      markCharacterAsCompleted: (characterId: string) => {
+        set((state) => {
+          state.completedCharacters[characterId] = true;
+        });
+      },
+
+      markWeaponAsCompleted: (weaponId: string) => {
+        set((state) => {
+          state.completedWeapons[weaponId] = true;
+        });
+      },
 
       // Material methods
       getMaterialQuantity: (materialId: string) => {

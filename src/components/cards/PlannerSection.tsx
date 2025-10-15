@@ -12,6 +12,9 @@ import {
 } from "@/utils/plannerHelpers";
 import type { MaterialRequirement } from "@/utils/materialCalculator";
 import type { CharacterProgress, WeaponProgress } from "@/types";
+import { useState } from "react";
+import { Modal } from "@/components/Modal";
+import { materials } from "@/data/materials";
 
 interface PlannerSectionProps {
   progress: CharacterProgress | WeaponProgress;
@@ -20,6 +23,8 @@ interface PlannerSectionProps {
   requiredMaterials: MaterialRequirement[];
   allMaterialsDisplay: MaterialRequirementWithEmpty[];
   effectiveInventory?: Record<string, number>;
+  onComplete: (itemId: string, materialsToSubtract: MaterialRequirement[]) => void;
+  isCompleted: boolean;
 }
 
 export function PlannerSection({
@@ -29,7 +34,12 @@ export function PlannerSection({
   requiredMaterials,
   allMaterialsDisplay,
   effectiveInventory,
+  onComplete,
+  isCompleted,
 }: PlannerSectionProps) {
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [completionError, setCompletionError] = useState<string | null>(null);
+
   // Get special requirements (EXP and Shell Credits)
   const expRequirement = getExpRequirement(requiredMaterials, type);
   const { total: totalShellCredits } =
@@ -69,6 +79,20 @@ export function PlannerSection({
     [allMaterialsDisplay]
   );
 
+  const handleComplete = () => {
+    try {
+      const filteredRequiredMaterials = requiredMaterials.filter((req) => {
+        const material = materials.find((m) => m.id === req.materialId);
+        return material && material.quality && (material.category === 'COMMON' || material.category === 'FORGERY');
+      });
+      console.log("Materials to subtract for item ", type === "character" ? (progress as CharacterProgress).characterId : (progress as WeaponProgress).weaponId, ": ", filteredRequiredMaterials);
+      onComplete(type === "character" ? (progress as CharacterProgress).characterId : (progress as WeaponProgress).weaponId, filteredRequiredMaterials);
+      setShowCompleteModal(false);
+    } catch (error) {
+      setCompletionError(error instanceof Error ? error.message : "Error desconocido");
+    }
+  };
+
   return (
     <div className="px-4 pb-4 border-t border-gray-700 pt-4">
       {/* Configuration Button */}
@@ -105,8 +129,21 @@ export function PlannerSection({
       {/* Materials Needed */}
       {sortedMaterials.length > 0 && (
         <div>
-          <div className="text-sm font-semibold text-gray-300 mb-3">
-            Materiales Necesarios
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-sm font-semibold text-gray-300">
+              Materiales Necesarios
+            </div>
+            {!isCompleted && (
+              <button
+                onClick={() => {
+                  setCompletionError(null);
+                  setShowCompleteModal(true);
+                }}
+                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-md"
+              >
+                Completar
+              </button>
+            )}
           </div>
           <div className="grid grid-cols-4 gap-2">
             {sortedMaterials.map((mat) => (
@@ -125,6 +162,39 @@ export function PlannerSection({
           </div>
         </div>
       )}
+
+      {/* Completion Modal */}
+      <Modal
+        isOpen={showCompleteModal}
+        onClose={() => setShowCompleteModal(false)}
+        title="Confirmar Completado"
+      >
+        <div className="p-4">
+          <p className="text-gray-300 mb-4">
+            ¿Estás seguro de que quieres completar este elemento del planificador?
+            Se restarán los materiales de tu inventario.
+          </p>
+          {completionError && (
+            <div className="bg-red-900 text-red-300 p-3 rounded-md mb-4 text-sm">
+              Error: {completionError}
+            </div>
+          )}
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={() => setShowCompleteModal(false)}
+              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleComplete}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
+            >
+              Aceptar
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
