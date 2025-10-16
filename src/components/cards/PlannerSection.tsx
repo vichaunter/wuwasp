@@ -96,10 +96,14 @@ export function PlannerSection({
       // Filter required materials to only include those with quality and categories 'COMMON' or 'FORGERY'
       const filteredRequiredMaterials = requiredMaterials.filter((req) => {
         const material = materials.find((m) => m.id === req.materialId);
+        // Include materials that have quality (common/forgery) or are boss/overworld materials
         return (
           material &&
-          material.quality &&
-          (material.category === "COMMON" || material.category === "FORGERY")
+          ((material.quality &&
+            (material.category === "COMMON" ||
+              material.category === "FORGERY")) ||
+            material.category === "BOSS" ||
+            material.category === "OVERWORLD")
         );
       });
 
