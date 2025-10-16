@@ -34,6 +34,7 @@ export function CharacterCard({
   const toggleCharacterCompleted = useInventoryStore(
     (state) => state.toggleCharacterCompleted
   );
+  const setInventory = useInventoryStore((state) => state.setInventory);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -83,6 +84,14 @@ export function CharacterCard({
   const handleCompletedClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     toggleCharacterCompleted(character.id);
+  };
+
+  const handlePlannerComplete = (
+    itemId: string,
+    newInventory: Record<string, number>
+  ) => {
+    setInventory(newInventory);
+    toggleCharacterCompleted(itemId);
   };
 
   return (
@@ -235,6 +244,8 @@ export function CharacterCard({
               requiredMaterials={requiredMaterials}
               allMaterialsDisplay={allMaterialsDisplay}
               effectiveInventory={effectiveInventory}
+              onComplete={handlePlannerComplete}
+              isCompleted={isCompleted}
             />
           )}
         </div>

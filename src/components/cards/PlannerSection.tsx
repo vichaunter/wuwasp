@@ -15,6 +15,7 @@ import type { CharacterProgress, WeaponProgress } from "@/types";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
 import { materials } from "@/data/materials";
+import { consumeMaterialsFromInventory } from "@/utils/materialSynthesis";
 
 interface PlannerSectionProps {
   progress: CharacterProgress | WeaponProgress;
@@ -23,7 +24,7 @@ interface PlannerSectionProps {
   requiredMaterials: MaterialRequirement[];
   allMaterialsDisplay: MaterialRequirementWithEmpty[];
   effectiveInventory?: Record<string, number>;
-  onComplete: (itemId: string, materialsToSubtract: MaterialRequirement[]) => void;
+  onComplete: (itemId: string, newInventory: Record<string, number>) => void;
   isCompleted: boolean;
 }
 
@@ -81,15 +82,45 @@ export function PlannerSection({
 
   const handleComplete = () => {
     try {
+      const itemId =
+        type === "character"
+          ? (progress as CharacterProgress).characterId
+          : (progress as WeaponProgress).weaponId;
+
+      // Assume effectiveInventory is the current inventory
+      // In a real application, you might fetch the actual current inventory here
+      if (!effectiveInventory) {
+        throw new Error("Current inventory not available.");
+      }
+
+      // Filter required materials to only include those with quality and categories 'COMMON' or 'FORGERY'
       const filteredRequiredMaterials = requiredMaterials.filter((req) => {
         const material = materials.find((m) => m.id === req.materialId);
-        return material && material.quality && (material.category === 'COMMON' || material.category === 'FORGERY');
+        return (
+          material &&
+          material.quality &&
+          (material.category === "COMMON" || material.category === "FORGERY")
+        );
       });
-      console.log("Materials to subtract for item ", type === "character" ? (progress as CharacterProgress).characterId : (progress as WeaponProgress).weaponId, ": ", filteredRequiredMaterials);
-      onComplete(type === "character" ? (progress as CharacterProgress).characterId : (progress as WeaponProgress).weaponId, filteredRequiredMaterials);
+
+      // Convert MaterialRequirement[] to the format expected by consumeMaterialsFromInventory
+      const materialsToConsume = filteredRequiredMaterials.map((req) => ({
+        materialId: req.materialId,
+        quantity: req.quantity,
+      }));
+
+      const newInventory = consumeMaterialsFromInventory(
+        effectiveInventory,
+        materialsToConsume,
+        type
+      );
+
+      onComplete(itemId, newInventory);
       setShowCompleteModal(false);
     } catch (error) {
-      setCompletionError(error instanceof Error ? error.message : "Error desconocido");
+      setCompletionError(
+        error instanceof Error ? error.message : "Error desconocido"
+      );
     }
   };
 
@@ -171,8 +202,8 @@ export function PlannerSection({
       >
         <div className="p-4">
           <p className="text-gray-300 mb-4">
-            ¿Estás seguro de que quieres completar este elemento del planificador?
-            Se restarán los materiales de tu inventario.
+            ¿Estás seguro de que quieres completar este elemento del
+            planificador? Se restarán los materiales de tu inventario.
           </p>
           {completionError && (
             <div className="bg-red-900 text-red-300 p-3 rounded-md mb-4 text-sm">

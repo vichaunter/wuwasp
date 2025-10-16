@@ -25,6 +25,7 @@ interface InventoryState {
   setMaterialQuantity: (materialId: string, quantity: number) => void;
   updateMaterialQuantity: (materialId: string, delta: number) => void;
   clearInventory: () => void;
+  setInventory: (newInventory: Record<string, number>) => void;
 
   // Character progress methods
   getCharacterProgress: (characterId: string) => CharacterProgress | null;
@@ -134,6 +135,12 @@ export const useInventoryStore = create<InventoryState>()(
 
       clearInventory: () => {
         set({ inventory: {} });
+      },
+
+      setInventory: (newInventory: Record<string, number>) => {
+        set(() => ({
+          inventory: newInventory,
+        }));
       },
 
       // Character progress methods
