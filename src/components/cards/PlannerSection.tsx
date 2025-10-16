@@ -16,6 +16,7 @@ import { useState } from "react";
 import { Modal } from "@/components/Modal";
 import { materials } from "@/data/materials";
 import { consumeMaterialsFromInventory } from "@/utils/materialSynthesis";
+import { SpecialMaterialUpdateModal } from "@/components/SpecialMaterialUpdateModal";
 
 interface PlannerSectionProps {
   progress: CharacterProgress | WeaponProgress;
@@ -40,6 +41,8 @@ export function PlannerSection({
 }: PlannerSectionProps) {
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [completionError, setCompletionError] = useState<string | null>(null);
+  const [showSpecialMaterialsModal, setShowSpecialMaterialsModal] =
+    useState(false);
 
   // Get special requirements (EXP and Shell Credits)
   const expRequirement = getExpRequirement(requiredMaterials, type);
@@ -137,28 +140,38 @@ export function PlannerSection({
 
       {/* Special Requirements: EXP and Shell Credits (Total) */}
       <div className="mb-3 space-y-1.5 text-sm">
-        <div className="flex items-center gap-1.5">
-          <span className="text-gray-400 text-xs">EXP:</span>
-          <span
-            className={`text-gray-300 ${!expRequirement ? "opacity-50" : ""}`}
-          >
-            {expRequirement
-              ? `${availableExp.toLocaleString()} / ${expRequirement.quantity.toLocaleString()}`
-              : "N/A"}
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="text-gray-400 text-xs">Credits:</span>
-          <span
-            className={`text-gray-300 ${
-              totalShellCredits === 0 ? "opacity-50" : ""
-            }`}
-          >
-            {totalShellCredits > 0
-              ? `${availableShellCredits.toLocaleString()} / ${totalShellCredits.toLocaleString()}`
-              : "N/A"}
-          </span>
-        </div>
+        <button
+          onClick={() => setShowSpecialMaterialsModal(true)}
+          className="block w-full text-left rounded-md hover:font-bold transition-colors cursor-pointer"
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400 text-xs">EXP:</span>
+            <span
+              className={`text-gray-300 ${!expRequirement ? "opacity-50" : ""}`}
+            >
+              {expRequirement
+                ? `${availableExp.toLocaleString()} / ${expRequirement.quantity.toLocaleString()}`
+                : "N/A"}
+            </span>
+          </div>
+        </button>
+        <button
+          onClick={() => setShowSpecialMaterialsModal(true)}
+          className="block w-full text-left rounded-md hover:font-bold transition-colors cursor-pointer"
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400 text-xs">Credits:</span>
+            <span
+              className={`text-gray-300 ${
+                totalShellCredits === 0 ? "opacity-50" : ""
+              }`}
+            >
+              {totalShellCredits > 0
+                ? `${availableShellCredits.toLocaleString()} / ${totalShellCredits.toLocaleString()}`
+                : "N/A"}
+            </span>
+          </div>
+        </button>
       </div>
 
       {/* Materials Needed */}
@@ -230,6 +243,12 @@ export function PlannerSection({
           </div>
         </div>
       </Modal>
+
+      {/* Special Materials Update Modal */}
+      <SpecialMaterialUpdateModal
+        isOpen={showSpecialMaterialsModal}
+        onClose={() => setShowSpecialMaterialsModal(false)}
+      />
     </div>
   );
 }
