@@ -44,8 +44,8 @@ export function SpecialMaterialUpdateModal({
             <h3 className="text-lg font-semibold text-gray-200 mb-2">
               Créditos de Concha
             </h3>
-            <div className="flex items-center ">
-              <div className="w-full h-12">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="w-full">
                 <MaterialCard
                   key={shellCreditMaterial.id}
                   materialId={shellCreditMaterial.id}

@@ -12,7 +12,7 @@ export function MaterialCardInput({ materialId }: MaterialCardInputProps) {
   const setMaterialQuantity = useInventoryStore(
     (state) => state.setMaterialQuantity
   );
- 
+
   const [localValue, setLocalValue] = useState("");
 
   // Sync local value with store value
@@ -64,7 +64,7 @@ export function MaterialCardInput({ materialId }: MaterialCardInputProps) {
         inputMode="numeric"
         value={localValue}
         onChange={handleInputChange}
-        className="w-14 px-1 py-1 text-center text-sm bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-100 transition-all tabular-nums"
+        className="w-14 px-1 py-1 text-center text-sm bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-100 transition-all tabular-nums flex-grow"
       />
 
       <button
