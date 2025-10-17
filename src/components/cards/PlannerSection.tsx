@@ -11,6 +11,7 @@ import {
   type MaterialRequirementWithEmpty,
 } from "@/utils/plannerHelpers";
 import type { MaterialRequirement } from "@/utils/materialCalculator";
+import { processExpMaterials } from "@/utils/materialCalculator";
 import type { CharacterProgress, WeaponProgress } from "@/types";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
@@ -116,11 +117,43 @@ export function PlannerSection({
         quantity: req.quantity,
       }));
 
-      const newInventory = consumeMaterialsFromInventory(
+      // --- Process EXP materials ---
+      const expMaterialsResult = processExpMaterials(
+        expRequirement?.quantity || 0,
+        effectiveInventory,
+        "energy-core"
+      );
+
+      // Merge exp materials to subtract with other materials to consume
+      for (const matId in expMaterialsResult.materialsToSubtract) {
+        const quantity = expMaterialsResult.materialsToSubtract[matId];
+        const existing = materialsToConsume.find((m) => m.materialId === matId);
+        if (existing) {
+          existing.quantity += quantity;
+        } else {
+          materialsToConsume.push({
+            materialId: matId,
+            materialName: materials.find((m) => m.id === matId)?.name || matId,
+            quantity: quantity,
+          });
+        }
+      }
+
+      let newInventory = consumeMaterialsFromInventory(
         effectiveInventory,
         materialsToConsume,
         type
       );
+
+      // Add overflow exp materials back to inventory
+      for (const matId in expMaterialsResult.materialsToAdd) {
+        newInventory = {
+          ...newInventory,
+          [matId]:
+            (newInventory[matId] || 0) +
+            expMaterialsResult.materialsToAdd[matId],
+        };
+      }
 
       onComplete(itemId, newInventory);
       setShowCompleteModal(false);

@@ -757,14 +757,6 @@ export const materials: Material[] = [
     quality: "T2",
     image: "/materials/medium-resonance-potion.webp",
   },
-  {
-    id: "medium-energy-core",
-    name: "Medium Energy Core",
-    baseName: "Energy Core",
-    category: "EXP",
-    quality: "T2",
-    image: "/materials/medium-energy-core.webp",
-  },
 ];
 
 // Helper functions

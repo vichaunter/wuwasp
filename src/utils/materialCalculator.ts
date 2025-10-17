@@ -11,6 +11,7 @@ import { getWeaponAscensionRequirements } from "@/data/weapon-ascension-requirem
 import { getMaterialByNameAndQuality } from "@/data/materials";
 import {
   characterExpRequirements,
+  EXP_VALUES,
   weaponExpRequirements,
 } from "@/data/exp-requirements";
 
@@ -567,6 +568,74 @@ export function calculateCharacterTotalMaterials(
 
   // Merge duplicate materials
   return mergeMaterialRequirements(allMaterials);
+}
+
+/**
+ * Process experience materials from inventory, handling subtraction and overflow conversion.
+ * It returns materials to subtract and materials to add (from overflow conversion).
+ */
+export function processExpMaterials(
+  expNeeded: number,
+  currentInventory: Record<string, number>,
+  materialType: "energy-core"
+): {
+  materialsToSubtract: Record<string, number>;
+  materialsToAdd: Record<string, number>;
+} {
+  const materialsToSubtract: Record<string, number> = {};
+  const materialsToAdd: Record<string, number> = {};
+  let remainingExp = expNeeded;
+
+  // Get EXP values for the specific material type, sorted by EXP value (lowest to highest)
+  const expMaterialKeys = Object.keys(EXP_VALUES).filter((key) =>
+    key.includes(materialType)
+  );
+  const sortedExpMaterials = expMaterialKeys
+    .map((materialId) => ({
+      materialId,
+      expValue: EXP_VALUES[materialId as keyof typeof EXP_VALUES],
+    }))
+    .sort((a, b) => a.expValue - b.expValue);
+
+  // Iterate from smallest EXP material to largest (to use smallest possible for overflow)
+  // This is for calculating materialsToAdd
+  const sortedExpMaterialsDescending = [...sortedExpMaterials].reverse();
+
+  // First pass: Iterate from largest EXP material to smallest to consume from inventory
+  for (const mat of sortedExpMaterialsDescending) {
+    if (remainingExp <= 0) break;
+
+    const available = currentInventory[mat.materialId] || 0;
+    if (available > 0) {
+      const neededToFill = Math.ceil(remainingExp / mat.expValue);
+      const toUse = Math.min(available, neededToFill);
+
+      if (toUse > 0) {
+        materialsToSubtract[mat.materialId] = toUse;
+        remainingExp -= toUse * mat.expValue;
+      }
+    }
+  }
+
+  // Handle potential remaining positive exp (shouldn't happen if enough materials)
+  // Or negative exp (overflow) that needs to be converted back
+  if (remainingExp < 0) {
+    let overflowExp = Math.abs(remainingExp);
+
+    // Convert overflow back to lower-tier materials
+    for (const mat of sortedExpMaterialsDescending) {
+      if (overflowExp <= 0) break;
+
+      const numMaterials = Math.floor(overflowExp / mat.expValue);
+      if (numMaterials > 0) {
+        materialsToAdd[mat.materialId] =
+          (materialsToAdd[mat.materialId] || 0) + numMaterials;
+        overflowExp -= numMaterials * mat.expValue;
+      }
+    }
+  }
+
+  return { materialsToSubtract, materialsToAdd };
 }
 
 /**
