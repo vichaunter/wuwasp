@@ -134,20 +134,30 @@ export default function Planning() {
         isCompleted: completedWeapons[w.id] ?? false,
       }));
 
-    return [...enabledChars, ...enabledWeapons].sort((a, b) => {
-      // Completed items always go last
-      if (a.isCompleted !== b.isCompleted) {
-        return a.isCompleted ? 1 : -1;
-      }
-      // Otherwise sort by order
-      return a.order - b.order;
-    });
+    return [...enabledChars, ...enabledWeapons]
+      .filter((item) => !item.isCompleted) // Exclude completed items from the main list
+      .sort((a, b) => {
+        // Completed items always go last
+        // if (a.isCompleted !== b.isCompleted) {
+        //   return a.isCompleted ? 1 : -1;
+        // }
+        // Otherwise sort by order
+        return a.order - b.order;
+      });
   }, [
     characterProgress,
     weaponProgress,
     completedWeapons,
     completedCharacters,
   ]);
+
+  const completedCharactersList = useMemo(() => {
+    return characters.filter((c) => completedCharacters[c.id]);
+  }, [completedCharacters]);
+
+  const completedWeaponsList = useMemo(() => {
+    return weapons.filter((w) => completedWeapons[w.id]);
+  }, [completedWeapons]);
 
   // Dev helper: attach a function to window to dump the planner state and
   // inventory with per-item consumption. Call `__dumpPlanner()` in the browser
@@ -454,6 +464,33 @@ export default function Planning() {
           <p className="text-sm">
             Añade personajes o armas desde sus páginas respectivas
           </p>
+        </div>
+      )}
+      {/* Completed Characters List */}
+      {completedCharactersList.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">
+            Personajes Completados
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {completedCharactersList.map((character) => (
+              <CharacterCard key={character.id} character={character} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Completed Weapons List */}
+      {completedWeaponsList.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">
+            Armas Completadas
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {completedWeaponsList.map((weapon) => (
+              <WeaponCard key={weapon.id} weapon={weapon} />
+            ))}
+          </div>
         </div>
       )}
     </div>
