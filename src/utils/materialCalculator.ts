@@ -577,7 +577,7 @@ export function calculateCharacterTotalMaterials(
 export function processExpMaterials(
   expNeeded: number,
   currentInventory: Record<string, number>,
-  materialType: "energy-core"
+  materialType: "energy-core" | "resonance-potion"
 ): {
   materialsToSubtract: Record<string, number>;
   materialsToAdd: Record<string, number>;
@@ -590,6 +590,7 @@ export function processExpMaterials(
   const expMaterialKeys = Object.keys(EXP_VALUES).filter((key) =>
     key.includes(materialType)
   );
+
   const sortedExpMaterials = expMaterialKeys
     .map((materialId) => ({
       materialId,
@@ -597,8 +598,6 @@ export function processExpMaterials(
     }))
     .sort((a, b) => a.expValue - b.expValue);
 
-  // Iterate from smallest EXP material to largest (to use smallest possible for overflow)
-  // This is for calculating materialsToAdd
   const sortedExpMaterialsDescending = [...sortedExpMaterials].reverse();
 
   // First pass: Iterate from largest EXP material to smallest to consume from inventory

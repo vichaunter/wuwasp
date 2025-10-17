@@ -118,10 +118,12 @@ export function PlannerSection({
       }));
 
       // --- Process EXP materials ---
+      const expMaterialType =
+        type === "character" ? "resonance-potion" : "energy-core";
       const expMaterialsResult = processExpMaterials(
         expRequirement?.quantity || 0,
         effectiveInventory,
-        "energy-core"
+        expMaterialType
       );
 
       // Merge exp materials to subtract with other materials to consume
