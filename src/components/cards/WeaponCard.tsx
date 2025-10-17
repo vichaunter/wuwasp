@@ -34,6 +34,15 @@ export function WeaponCard({
   const toggleWeaponCompleted = useInventoryStore(
     (state) => state.toggleWeaponCompleted
   );
+  const setInventory = useInventoryStore((state) => state.setInventory);
+
+  const handlePlannerComplete = (
+    itemId: string,
+    newInventory: Record<string, number>
+  ) => {
+    setInventory(newInventory);
+    toggleWeaponCompleted(itemId);
+  };
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -216,6 +225,7 @@ export function WeaponCard({
               requiredMaterials={requiredMaterials}
               allMaterialsDisplay={allMaterialsDisplay}
               effectiveInventory={effectiveInventory}
+              onComplete={handlePlannerComplete}
             />
           )}
         </div>
