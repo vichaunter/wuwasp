@@ -67,28 +67,19 @@ export function getAvailableExpFromInventory(
 ): number {
   if (!inventory) return 0;
 
-  if (type === "character") {
-    return (
-      (inventory["basic-resonance-potion"] || 0) *
-        (EXP_VALUES["basic-resonance-potion"] || 0) +
-      (inventory["medium-resonance-potion"] || 0) *
-        (EXP_VALUES["medium-resonance-potion"] || 0) +
-      (inventory["advanced-resonance-potion"] || 0) *
-        (EXP_VALUES["advanced-resonance-potion"] || 0) +
-      (inventory["premium-resonance-potion"] || 0) *
-        (EXP_VALUES["premium-resonance-potion"] || 0)
-    );
+  let totalExp = 0;
+  const expMaterialPrefix =
+    type === "character" ? "resonance-potion" : "energy-core";
+
+  for (const materialId in EXP_VALUES) {
+    if (materialId.includes(expMaterialPrefix)) {
+      totalExp +=
+        (inventory[materialId] || 0) *
+        EXP_VALUES[materialId as keyof typeof EXP_VALUES];
+    }
   }
 
-  // weapon
-  return (
-    (inventory["basic-energy-core"] || 0) *
-      (EXP_VALUES["basic-energy-core"] || 0) +
-    (inventory["advanced-energy-core"] || 0) *
-      (EXP_VALUES["advanced-energy-core"] || 0) +
-    (inventory["premium-energy-core"] || 0) *
-      (EXP_VALUES["premium-energy-core"] || 0)
-  );
+  return totalExp;
 }
 
 /**

@@ -1,6 +1,6 @@
 import type { MaterialQualityTier } from "@/types";
 import { getMaterialById, materials } from "@/data/materials";
-import { calculateExpMaterials } from "@/data/exp-requirements";
+import { calculateExpMaterials, EXP_VALUES } from "@/data/exp-requirements";
 
 /**
  * Material synthesis system
@@ -294,18 +294,63 @@ export function consumeMaterialsFromInventory(
 
   for (const req of requirements) {
     if (req.materialId === "character-exp" && contextType === "character") {
-      const map = calculateExpMaterials(req.quantity, "resonance-potion");
-      for (const id of Object.keys(map)) {
-        expandedRequirements.push({ materialId: id, quantity: map[id] });
+      const expMaterialType: "resonance-potion" = "resonance-potion";
+      // Calculate total available EXP for characters in current inventory
+      let totalAvailableExp = 0;
+      for (const materialId in EXP_VALUES) {
+        if (materialId.includes(expMaterialType)) {
+          totalAvailableExp +=
+            (newInventory[materialId] || 0) *
+            EXP_VALUES[materialId as keyof typeof EXP_VALUES];
+        }
       }
-      // Also ensure any shell-credit-leveling handled separately by its own req
+
+      // Deduct the required EXP
+      let remainingExp = Math.max(0, totalAvailableExp - req.quantity);
+
+      // Convert remaining EXP back into optimal material quantities
+      const remainingMaterials = calculateExpMaterials(
+        remainingExp,
+        expMaterialType
+      );
+
+      // Update newInventory for all character EXP material types
+      const characterExpMaterialIds = Object.keys(EXP_VALUES).filter((id) =>
+        id.includes(expMaterialType)
+      );
+      for (const id of characterExpMaterialIds) {
+        newInventory[id] = remainingMaterials[id] || 0;
+      }
       continue;
     }
 
     if (req.materialId === "weapon-exp" && contextType === "weapon") {
-      const map = calculateExpMaterials(req.quantity, "energy-core");
-      for (const id of Object.keys(map)) {
-        expandedRequirements.push({ materialId: id, quantity: map[id] });
+      const expMaterialType: "energy-core" = "energy-core";
+      // Calculate total available EXP for weapons in current inventory
+      let totalAvailableExp = 0;
+      for (const materialId in EXP_VALUES) {
+        if (materialId.includes(expMaterialType)) {
+          totalAvailableExp +=
+            (newInventory[materialId] || 0) *
+            EXP_VALUES[materialId as keyof typeof EXP_VALUES];
+        }
+      }
+
+      // Deduct the required EXP
+      let remainingExp = Math.max(0, totalAvailableExp - req.quantity);
+
+      // Convert remaining EXP back into optimal material quantities
+      const remainingMaterials = calculateExpMaterials(
+        remainingExp,
+        expMaterialType
+      );
+
+      // Update newInventory for all weapon EXP material types
+      const weaponExpMaterialIds = Object.keys(EXP_VALUES).filter((id) =>
+        id.includes(expMaterialType)
+      );
+      for (const id of weaponExpMaterialIds) {
+        newInventory[id] = remainingMaterials[id] || 0;
       }
       continue;
     }

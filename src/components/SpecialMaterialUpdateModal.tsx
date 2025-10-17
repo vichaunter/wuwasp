@@ -44,12 +44,14 @@ export function SpecialMaterialUpdateModal({
             <h3 className="text-lg font-semibold text-gray-200 mb-2">
               Créditos de Concha
             </h3>
-            <div className="grid grid-cols-4 gap-2">
-              <MaterialCard
-                key={shellCreditMaterial.id}
-                materialId={shellCreditMaterial.id}
-                mode="input"
-              />
+            <div className="flex items-center ">
+              <div className="w-full h-12">
+                <MaterialCard
+                  key={shellCreditMaterial.id}
+                  materialId={shellCreditMaterial.id}
+                  mode="input"
+                />
+              </div>
             </div>
           </div>
         )}
