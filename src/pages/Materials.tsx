@@ -145,6 +145,7 @@ export function Materials() {
               key={material.id}
               materialId={material.id}
               mode={editMode ? "input" : "title"}
+              titleMode="visible"
             />
           ))}
         </div>

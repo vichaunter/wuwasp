@@ -21,6 +21,7 @@ interface MaterialCardProps {
   effectiveInventory?: Record<string, number>;
   mode?: "card" | "input" | "title"; // card = muestra progreso, input = muestra controles, title = muestra nombre
   isEmpty?: boolean; // If true, shows 0/0 with reduced opacity
+  titleMode?: "popover" | "visible" | undefined; // popover = muestra popover al hover, visible = muestra título arriba siempre, undefined = oculto
 }
 
 export function MaterialCard({
@@ -30,6 +31,7 @@ export function MaterialCard({
   effectiveInventory,
   mode = "card",
   isEmpty = false,
+  titleMode,
 }: MaterialCardProps) {
   const getMaterialQuantity = useInventoryStore(
     (state) => state.getMaterialQuantity
@@ -145,38 +147,54 @@ export function MaterialCard({
       )}
 
       <div
-        className={`group relative flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer overflow-hidden ${
-          isEmpty ? "opacity-50" : ""
-        }`}
+        className={`group relative flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer ${
+          titleMode === "popover" ? "" : "overflow-hidden"
+        } ${isEmpty ? "opacity-50" : ""}`}
         onClick={handleCardClick}
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
+        onMouseEnter={() => {
+          if (titleMode === "popover") {
+            setShowTooltip(true);
+          }
+        }}
+        onMouseLeave={() => {
+          if (titleMode === "popover") {
+            setShowTooltip(false);
+          }
+        }}
       >
-        {/* Tooltip - nombre del material */}
-        {showTooltip && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-950 text-gray-100 text-xs font-medium rounded shadow-xl border border-gray-700 whitespace-nowrap pointer-events-none z-50">
+        {/* Popover - nombre del material (solo cuando titleMode="popover") */}
+        {titleMode === "popover" && showTooltip && (
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-950 text-gray-100 text-xs font-medium rounded shadow-xl border border-gray-700 whitespace-nowrap pointer-events-none z-[100]">
             {material.name}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-950"></div>
           </div>
         )}
 
-        {/* Material Icon with gradient glow */}
-        <MaterialCardImage
-          material={material}
-          showTooltip={showTooltip}
-          bgGradient={bgGradient}
-        />
+        {/* Wrapper con overflow-hidden solo para el contenido interno */}
+        <div className="overflow-hidden">
+          {/* Material Icon with gradient glow */}
+          <MaterialCardImage
+            material={material}
+            showTooltip={titleMode === "popover" ? showTooltip : false}
+            bgGradient={bgGradient}
+            showTitle={titleMode === "visible"}
+          />
 
-        {/* Color separator */}
-        <div className={`w-full h-1 ${separatorColor}`}></div>
+          {/* Color separator */}
+          <div className={`w-full h-1 ${separatorColor}`}></div>
 
-        {/* Bottom section - changes based on mode */}
-        {mode === "card" ? (
-          <MaterialCardProgress available={available} required={required} />
-        ) : mode === "title" ? (
-          <MaterialCardTitle name={material.name} category={material.category} />
-        ) : (
-          <MaterialCardInput materialId={materialId} />
-        )}
+          {/* Bottom section - changes based on mode */}
+          {mode === "card" ? (
+            <MaterialCardProgress available={available} required={required} />
+          ) : mode === "title" ? (
+            <MaterialCardTitle
+              name={material.name}
+              category={material.category}
+            />
+          ) : (
+            <MaterialCardInput materialId={materialId} />
+          )}
+        </div>
       </div>
     </>
   );

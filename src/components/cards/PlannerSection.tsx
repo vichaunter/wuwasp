@@ -342,6 +342,7 @@ export function PlannerSection({
                   sortedMaterials
                 )}
                 effectiveInventory={effectiveInventory}
+                titleMode="popover"
               />
             ))}
           </div>
