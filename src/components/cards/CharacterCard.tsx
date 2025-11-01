@@ -44,7 +44,16 @@ export function CharacterCard({
   const requiredMaterials = useMemo(() => {
     if (!plannerMode || !isInPlanner || !progress) return [];
     return calculateCharacterTotalMaterials(character, progress);
-  }, [plannerMode, isInPlanner, progress, character]);
+  }, [
+    plannerMode,
+    isInPlanner,
+    progress?.ascension.current,
+    progress?.ascension.target,
+    progress?.level.current,
+    progress?.level.target,
+    progress?.forte,
+    character,
+  ]);
 
   // Get all possible materials with empty markers
   const allMaterialsDisplay = useMemo(() => {

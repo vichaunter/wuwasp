@@ -9,11 +9,11 @@ import { ascensionRequirements } from "@/data/ascension-requirements";
 import { forteRequirements } from "@/data/forte-requirements";
 import { getWeaponAscensionRequirements } from "@/data/weapon-ascension-requirements";
 import { getMaterialByNameAndQuality } from "@/data/materials";
+import { EXP_VALUES, weaponExpRequirements } from "@/data/exp-requirements";
 import {
-  characterExpRequirements,
-  EXP_VALUES,
-  weaponExpRequirements,
-} from "@/data/exp-requirements";
+  calculateExpNeeded,
+  calculateLevelingShellCredits,
+} from "@/data/level-requirements";
 
 export interface MaterialRequirement {
   materialId: string;
@@ -384,20 +384,13 @@ export function calculateCharacterInherentSkillMaterials(
  * below the config button, showing total EXP and total Shell Credits.
  */
 export function calculateCharacterExpMaterials(
-  currentRank: number,
-  targetRank: number
+  currentLevel: number,
+  targetLevel: number
 ): MaterialRequirement[] {
-  let totalExp = 0;
-  let totalShellCreditsForLeveling = 0;
+  if (currentLevel >= targetLevel) return [];
 
-  // Sum up EXP for each ascension rank
-  for (let rank = currentRank; rank < targetRank; rank++) {
-    if (rank >= 0 && rank < characterExpRequirements.length) {
-      totalExp += characterExpRequirements[rank].exp;
-      totalShellCreditsForLeveling +=
-        characterExpRequirements[rank].shellCredits;
-    }
-  }
+  const totalExp = calculateExpNeeded(currentLevel, targetLevel);
+  const totalShellCreditsForLeveling = calculateLevelingShellCredits(totalExp);
 
   if (totalExp === 0 && totalShellCreditsForLeveling === 0) {
     return [];
@@ -556,12 +549,12 @@ export function calculateCharacterTotalMaterials(
     }
   }
 
-  // EXP materials (Resonance Potions)
-  if (progress.ascension.current < progress.ascension.target) {
+  // EXP materials (Resonance Potions) - based on level, not ascension
+  if (progress.level.current < progress.level.target) {
     allMaterials.push(
       ...calculateCharacterExpMaterials(
-        progress.ascension.current,
-        progress.ascension.target
+        progress.level.current,
+        progress.level.target
       )
     );
   }
