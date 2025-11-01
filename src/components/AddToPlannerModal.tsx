@@ -3,6 +3,7 @@ import { useInventoryStore } from '@/store/inventory';
 import { Modal } from '@/components/Modal';
 import { characters } from '@/data/characters';
 import { weapons } from '@/data/weapons';
+import { getActivePlannerItems } from '@/utils/plannerItems';
 
 interface AddToPlannerModalProps {
   isOpen: boolean;
@@ -17,30 +18,20 @@ export function AddToPlannerModal({ isOpen, onClose, itemType, itemId, itemName 
   const updateWeaponAscension = useInventoryStore(state => state.updateWeaponAscension);
   const characterProgress = useInventoryStore(state => state.characterProgress);
   const weaponProgress = useInventoryStore(state => state.weaponProgress);
+  const completedCharacters = useInventoryStore(state => state.completedCharacters);
+  const completedWeapons = useInventoryStore(state => state.completedWeapons);
   
-  // Get ordered list of ALL items in the planner (both characters and weapons)
+  // Get ordered list of active items in the planner (enabled and not completed)
   const orderedItems = useMemo(() => {
-    const enabledChars = characters
-      .filter(c => characterProgress[c.id]?.enabled)
-      .map(c => ({
-        id: c.id,
-        name: c.name,
-        type: 'character' as const,
-        order: characterProgress[c.id].order,
-      }));
-    
-    const enabledWeapons = weapons
-      .filter(w => weaponProgress[w.id]?.enabled)
-      .map(w => ({
-        id: w.id,
-        name: w.name,
-        type: 'weapon' as const,
-        order: weaponProgress[w.id].order,
-      }));
-    
-    // Combine both and sort by order
-    return [...enabledChars, ...enabledWeapons].sort((a, b) => a.order - b.order);
-  }, [characterProgress, weaponProgress]);
+    return getActivePlannerItems(
+      characterProgress,
+      weaponProgress,
+      completedCharacters,
+      completedWeapons,
+      characters,
+      weapons
+    );
+  }, [characterProgress, weaponProgress, completedCharacters, completedWeapons]);
   
   const currentCount = orderedItems.length;
   
