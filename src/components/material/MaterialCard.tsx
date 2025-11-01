@@ -147,9 +147,9 @@ export function MaterialCard({
       )}
 
       <div
-        className={`group relative flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer ${
-          titleMode === "popover" ? "" : "overflow-hidden"
-        } ${isEmpty ? "opacity-50" : ""}`}
+        className={`group relative flex flex-col ${
+          isEmpty ? "opacity-50" : ""
+        }`}
         onClick={handleCardClick}
         onMouseEnter={() => {
           if (titleMode === "popover") {
@@ -162,7 +162,6 @@ export function MaterialCard({
           }
         }}
       >
-        {/* Popover - nombre del material (solo cuando titleMode="popover") */}
         {titleMode === "popover" && showTooltip && (
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-950 text-gray-100 text-xs font-medium rounded shadow-xl border border-gray-700 whitespace-nowrap pointer-events-none z-[100]">
             {material.name}
@@ -170,9 +169,7 @@ export function MaterialCard({
           </div>
         )}
 
-        {/* Wrapper con overflow-hidden solo para el contenido interno */}
-        <div className="overflow-hidden">
-          {/* Material Icon with gradient glow */}
+        <div className="flex flex-col bg-gray-800 rounded-lg border border-gray-700 transition-all cursor-pointer overflow-hidden">
           <MaterialCardImage
             material={material}
             showTooltip={titleMode === "popover" ? showTooltip : false}
@@ -180,10 +177,8 @@ export function MaterialCard({
             showTitle={titleMode === "visible"}
           />
 
-          {/* Color separator */}
           <div className={`w-full h-1 ${separatorColor}`}></div>
 
-          {/* Bottom section - changes based on mode */}
           {mode === "card" ? (
             <MaterialCardProgress available={available} required={required} />
           ) : mode === "title" ? (
