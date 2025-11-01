@@ -6,6 +6,7 @@ import {
   applyMigrations,
   CURRENT_STORAGE_VERSION,
 } from "@/utils/storage-migrations";
+import { calculateInsertOrder } from "@/utils/plannerOrdering";
 
 interface InventoryState {
   version?: number; // Storage version for migrations
@@ -221,27 +222,27 @@ export const useInventoryStore = create<InventoryState>()(
             }
           }
 
-          // Handle ordering
           if (order !== undefined) {
+            const { ordersToUpdate, newItemOrder } = calculateInsertOrder(
+              order,
+              characterId,
+              "character",
+              state.characterProgress,
+              state.weaponProgress,
+              state.completedCharacters,
+              state.completedWeapons
+            );
+
             const progress = state.characterProgress[characterId];
-            progress.order = order;
+            progress.order = newItemOrder;
 
-            // Reorder ALL enabled items (characters AND weapons) if necessary
-            Object.values(state.characterProgress).forEach((p) => {
-              if (
-                p.characterId !== characterId &&
-                p.enabled &&
-                p.order >= order
-              ) {
-                p.order++;
+            for (const update of ordersToUpdate) {
+              if (update.type === "character") {
+                state.characterProgress[update.id].order = update.newOrder;
+              } else {
+                state.weaponProgress[update.id].order = update.newOrder;
               }
-            });
-
-            Object.values(state.weaponProgress).forEach((p) => {
-              if (p.enabled && p.order >= order) {
-                p.order++;
-              }
-            });
+            }
           }
         });
       },
@@ -338,23 +339,27 @@ export const useInventoryStore = create<InventoryState>()(
             }
           }
 
-          // Handle ordering
           if (order !== undefined) {
+            const { ordersToUpdate, newItemOrder } = calculateInsertOrder(
+              order,
+              weaponId,
+              "weapon",
+              state.characterProgress,
+              state.weaponProgress,
+              state.completedCharacters,
+              state.completedWeapons
+            );
+
             const progress = state.weaponProgress[weaponId];
-            progress.order = order;
+            progress.order = newItemOrder;
 
-            // Reorder ALL enabled items (characters AND weapons) if necessary
-            Object.values(state.characterProgress).forEach((p) => {
-              if (p.enabled && p.order >= order) {
-                p.order++;
+            for (const update of ordersToUpdate) {
+              if (update.type === "character") {
+                state.characterProgress[update.id].order = update.newOrder;
+              } else {
+                state.weaponProgress[update.id].order = update.newOrder;
               }
-            });
-
-            Object.values(state.weaponProgress).forEach((p) => {
-              if (p.weaponId !== weaponId && p.enabled && p.order >= order) {
-                p.order++;
-              }
-            });
+            }
           }
         });
       },

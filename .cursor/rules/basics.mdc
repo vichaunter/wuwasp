@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+1. Write comments only where is needed. The code should be self-explanatory to a point of view of a senior developer. Add comments only in the complex parts that cannot be self-explanatory but in a short and concise way.
+2. Functions does not need documentation when is logically understandable by the name of the function or the typescript type signature.
+3. Code should be as reusable as possible. Util functions, hooks, etc should be prioritized over writing the same code over and over again.
+4. Components should follow the rule of keep the code as simple as possible. When possible, use hooks and custom hooks to keep the code clean and readable.
