@@ -9,6 +9,7 @@ import {
   getAvailableExpFromInventory,
   getAvailableShellCredits,
   type MaterialRequirementWithEmpty,
+  filterSpecialMaterials,
 } from "@/utils/plannerHelpers";
 import type { MaterialRequirement } from "@/utils/materialCalculator";
 import { processExpMaterials } from "@/utils/materialCalculator";
@@ -16,7 +17,12 @@ import type { CharacterProgress, WeaponProgress } from "@/types";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
 import { materials } from "@/data/materials";
-import { consumeMaterialsFromInventory } from "@/utils/materialSynthesis";
+import {
+  consumeMaterialsFromInventory,
+  calculateMaterialSynthesis,
+  type MaterialRequirement as SynthesisRequirement,
+  type MaterialInventory,
+} from "@/utils/materialSynthesis";
 import { SpecialMaterialUpdateModal } from "@/components/SpecialMaterialUpdateModal";
 
 interface PlannerSectionProps {
@@ -83,6 +89,93 @@ export function PlannerSection({
     () => sortMaterialsByRequirement(allMaterialsDisplay),
     [allMaterialsDisplay]
   );
+
+  // Check if we have enough resources to complete this item
+  const canComplete = useMemo(() => {
+    if (!effectiveInventory) return false;
+
+    // Check EXP
+    if (expRequirement && availableExp < expRequirement.quantity) {
+      return false;
+    }
+
+    // Check Shell Credits
+    if (totalShellCredits > 0 && availableShellCredits < totalShellCredits) {
+      return false;
+    }
+
+    // Check regular materials (filter out special materials)
+    const normalRequired = filterSpecialMaterials(requiredMaterials, type);
+
+    // Group materials by baseName (for synthesis validation)
+    const materialsByBase = new Map<
+      string,
+      {
+        required: SynthesisRequirement;
+        owned: MaterialInventory;
+        materialIdsByQuality: Map<string, string>;
+      }
+    >();
+
+    for (const req of normalRequired) {
+      const material = materials.find((m) => m.id === req.materialId);
+      if (!material) continue;
+
+      // Only check materials with quality (common/forgery) or boss/overworld
+      if (
+        !(
+          (material.quality &&
+            (material.category === "COMMON" ||
+              material.category === "FORGERY")) ||
+          material.category === "BOSS" ||
+          material.category === "OVERWORLD"
+        )
+      ) {
+        continue;
+      }
+
+      // Handle materials with quality (common/forgery) - group by baseName
+      if (material.quality && material.baseName) {
+        if (!materialsByBase.has(material.baseName)) {
+          materialsByBase.set(material.baseName, {
+            required: {},
+            owned: {},
+            materialIdsByQuality: new Map(),
+          });
+        }
+
+        const group = materialsByBase.get(material.baseName)!;
+        group.required[material.quality] =
+          (group.required[material.quality] || 0) + req.quantity;
+        group.materialIdsByQuality.set(material.quality, material.id);
+        group.owned[material.quality] = effectiveInventory[material.id] || 0;
+      } else {
+        // Handle simple materials (boss/overworld) - direct check
+        const owned = effectiveInventory[req.materialId] || 0;
+        if (owned < req.quantity) {
+          return false;
+        }
+      }
+    }
+
+    // Check synthesis for each base material group
+    for (const [, group] of materialsByBase) {
+      const result = calculateMaterialSynthesis(group.required, group.owned);
+      if (!result.canFulfill) {
+        return false;
+      }
+    }
+
+    return true;
+  }, [
+    effectiveInventory,
+    expRequirement,
+    availableExp,
+    totalShellCredits,
+    availableShellCredits,
+    requiredMaterials,
+    type,
+  ]);
 
   const handleComplete = () => {
     try {
@@ -221,7 +314,17 @@ export function PlannerSection({
                   setCompletionError(null);
                   setShowCompleteModal(true);
                 }}
-                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-md"
+                disabled={!canComplete}
+                className={`px-3 py-1 text-white text-xs rounded-md transition-colors ${
+                  canComplete
+                    ? "bg-green-600 hover:bg-green-700 cursor-pointer"
+                    : "bg-gray-600 opacity-50 cursor-not-allowed"
+                }`}
+                title={
+                  !canComplete
+                    ? "No hay suficientes materiales, experiencia o créditos"
+                    : undefined
+                }
               >
                 Completar
               </button>
