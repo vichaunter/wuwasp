@@ -8,6 +8,7 @@ interface ModalProps {
   acceptText?: string;
   cancelText?: string;
   acceptButtonClass?: string;
+  acceptDisabled?: boolean;
   maxWidth?: string;
   maxHeight?: string;
   contentPadding?: string;
@@ -22,6 +23,7 @@ export function Modal({
   acceptText = "Aceptar",
   cancelText = "Cancelar",
   acceptButtonClass = "bg-purple-600 hover:bg-purple-700",
+  acceptDisabled = false,
   maxWidth = "max-w-md",
   maxHeight = "",
   contentPadding = "p-6",
@@ -95,7 +97,10 @@ export function Modal({
             </button>
             <button
               onClick={onAccept}
-              className={`flex-1 px-4 py-2 ${acceptButtonClass} text-white rounded-lg font-medium transition-colors`}
+              disabled={acceptDisabled}
+              className={`flex-1 px-4 py-2 ${acceptButtonClass} text-white rounded-lg font-medium transition-colors ${
+                acceptDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {acceptText}
             </button>

@@ -258,6 +258,14 @@ export function CharacterCard({
         itemType="character"
         itemId={character.id}
         itemName={character.name}
+        title="Añadir al Planificador"
+        description={`¿Deseas añadir ${character.name} al planificador?`}
+        acceptButtonText="Añadir"
+        acceptButtonClass="bg-green-600 hover:bg-green-700"
+        onConfirm={(selectedPosition) => {
+          const updateCharacterAscension = useInventoryStore.getState().updateCharacterAscension;
+          updateCharacterAscension(character.id, 0, 6, selectedPosition);
+        }}
       />
 
       <RemoveFromPlannerModal

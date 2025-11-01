@@ -14,70 +14,34 @@ import {
 } from "@/utils/materialCalculator";
 import { calculateExpMaterials } from "@/data/exp-requirements";
 import { useEffect } from "react";
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-  DragOverlay,
-  type DragStartEvent,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  rectSortingStrategy,
-  useSortable,
-} from "@dnd-kit/sortable";
+import { AddToPlannerModal } from "@/components/AddToPlannerModal";
+import { calculateInsertOrder } from "@/utils/plannerOrdering";
 
-// Sortable Item wrapper component
-interface SortableItemProps {
-  id: string;
+// Planner Item wrapper component
+interface PlannerItemWrapperProps {
   children: React.ReactNode;
   index: number;
-  isDraggingGlobal: boolean;
+  itemId: string;
+  itemType: "character" | "weapon";
+  itemName: string;
+  onPositionClick: () => void;
 }
 
-function SortableItem({
-  id,
+function PlannerItemWrapper({
   children,
   index,
-  isDraggingGlobal,
-}: SortableItemProps) {
-  const { attributes, listeners, setNodeRef, isDragging, isOver } = useSortable(
-    {
-      id,
-      transition: null, // Disable transition animations
-    }
-  );
-
-  // Only change opacity, don't apply transform to prevent cards from moving during drag
-  const style = {
-    opacity: isDragging ? 0.3 : 1,
-  };
-
+  onPositionClick,
+}: PlannerItemWrapperProps) {
   return (
-    <div ref={setNodeRef} style={style} className="relative h-full">
-      {/* Drop indicator - white dashed line on the left side */}
-      {isOver && isDraggingGlobal && !isDragging && (
-        <div
-          className="absolute -left-3 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-white z-30"
-          style={{
-            filter: "drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))",
-          }}
-        />
-      )}
-
-      {/* Priority Badge with Drag Handle */}
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute -top-2 -left-2 z-20 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-gray-900 cursor-grab active:cursor-grabbing hover:bg-purple-500 transition-colors"
+    <div className="relative h-full">
+      {/* Position Badge - Clickable */}
+      <button
+        onClick={onPositionClick}
+        className="absolute -top-2 -left-2 z-20 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-gray-900 hover:bg-purple-500 transition-colors cursor-pointer"
+        title="Click para cambiar la posición"
       >
         {index + 1}
-      </div>
+      </button>
 
       <div className="h-full">{children}</div>
     </div>
@@ -94,24 +58,13 @@ export default function Planning() {
   const completedCharacters = useInventoryStore(
     (state) => state.completedCharacters
   );
-  const reorderPlannerItems = useInventoryStore(
-    (state) => state.reorderPlannerItems
-  );
-
-  // Track the active dragging item
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  // DnD sensors
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8, // 8px of movement required before drag starts
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
+  const [reorderModalOpen, setReorderModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<{
+    id: string;
+    type: "character" | "weapon";
+    name: string;
+    currentIndex: number;
+  } | null>(null);
 
   // Combine all enabled items and sort by global order
   // Completed items go to the end
@@ -349,41 +302,15 @@ export default function Planning() {
     });
   }, [allEnabledItems, characterProgress, weaponProgress, globalInventory]);
 
-  // Handle drag start
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
+  const handlePositionClick = (
+    itemId: string,
+    itemType: "character" | "weapon",
+    itemName: string,
+    currentIndex: number
+  ) => {
+    setSelectedItem({ id: itemId, type: itemType, name: itemName, currentIndex });
+    setReorderModalOpen(true);
   };
-
-  // Handle drag end
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    setActiveId(null);
-
-    if (!over || active.id === over.id) return;
-
-    // Find the items
-    const oldIndex = itemsWithInventory.findIndex(
-      (item) => `${item.type}-${item.data.id}` === active.id
-    );
-    const newIndex = itemsWithInventory.findIndex(
-      (item) => `${item.type}-${item.data.id}` === over.id
-    );
-
-    if (oldIndex === -1 || newIndex === -1) return;
-
-    const item = itemsWithInventory[oldIndex];
-
-    // Update the order in the store
-    reorderPlannerItems(item.data.id, item.type, newIndex);
-  };
-
-  // Get the active item for the DragOverlay
-  const activeItem = activeId
-    ? itemsWithInventory.find(
-        (item) => `${item.type}-${item.data.id}` === activeId
-      )
-    : null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -393,71 +320,45 @@ export default function Planning() {
           Planificación
         </h1>
         <p className="text-xl text-gray-400">
-          Gestiona la prioridad de ascensión (arrastra para reordenar)
+          Gestiona la prioridad de ascensión (click en el número para reordenar)
         </p>
       </div>
 
       {/* Content - Responsive Grid */}
       {itemsWithInventory.length > 0 ? (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={itemsWithInventory.map(
-              (item) => `${item.type}-${item.data.id}`
-            )}
-            strategy={rectSortingStrategy}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-fr">
-              {itemsWithInventory.map((item, index) => (
-                <SortableItem
-                  key={`${item.type}-${item.data.id}`}
-                  id={`${item.type}-${item.data.id}`}
-                  index={index}
-                  isDraggingGlobal={!!activeId}
-                >
-                  {item.type === "character" ? (
-                    <CharacterCard
-                      character={item.data}
-                      plannerMode={true}
-                      effectiveInventory={item.availableInventory}
-                    />
-                  ) : (
-                    <WeaponCard
-                      weapon={item.data}
-                      plannerMode={true}
-                      effectiveInventory={item.availableInventory}
-                    />
-                  )}
-                </SortableItem>
-              ))}
-            </div>
-          </SortableContext>
-
-          {/* Drag Overlay - shows the item being dragged */}
-          <DragOverlay dropAnimation={null}>
-            {activeItem && (
-              <div className="opacity-90 scale-105 shadow-2xl shadow-purple-500/50 ring-2 ring-purple-400">
-                {activeItem.type === "character" ? (
-                  <CharacterCard
-                    character={activeItem.data}
-                    plannerMode={true}
-                    effectiveInventory={activeItem.availableInventory}
-                  />
-                ) : (
-                  <WeaponCard
-                    weapon={activeItem.data}
-                    plannerMode={true}
-                    effectiveInventory={activeItem.availableInventory}
-                  />
-                )}
-              </div>
-            )}
-          </DragOverlay>
-        </DndContext>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-fr">
+          {itemsWithInventory.map((item, index) => (
+            <PlannerItemWrapper
+              key={`${item.type}-${item.data.id}`}
+              index={index}
+              itemId={item.data.id}
+              itemType={item.type}
+              itemName={item.data.name}
+              onPositionClick={() =>
+                handlePositionClick(
+                  item.data.id,
+                  item.type,
+                  item.data.name,
+                  index
+                )
+              }
+            >
+              {item.type === "character" ? (
+                <CharacterCard
+                  character={item.data}
+                  plannerMode={true}
+                  effectiveInventory={item.availableInventory}
+                />
+              ) : (
+                <WeaponCard
+                  weapon={item.data}
+                  plannerMode={true}
+                  effectiveInventory={item.availableInventory}
+                />
+              )}
+            </PlannerItemWrapper>
+          ))}
+        </div>
       ) : (
         <div className="text-center py-12 text-gray-400">
           <p className="text-lg mb-2">No hay items en el planificador</p>
@@ -492,6 +393,53 @@ export default function Planning() {
             ))}
           </div>
         </div>
+      )}
+
+      {/* Reorder Modal */}
+      {selectedItem && (
+        <AddToPlannerModal
+          isOpen={reorderModalOpen}
+          onClose={() => {
+            setReorderModalOpen(false);
+            setSelectedItem(null);
+          }}
+          itemType={selectedItem.type}
+          itemId={selectedItem.id}
+          itemName={selectedItem.name}
+          title="Reordenar en el Planificador"
+          description={`Mover ${selectedItem.name} a una nueva posición:`}
+          acceptButtonText="Mover"
+          acceptButtonClass="bg-purple-600 hover:bg-purple-700"
+          isReorderMode={true}
+          onConfirm={(selectedPosition) => {
+            const state = useInventoryStore.getState();
+            
+            // Calculate the correct insert position for calculateInsertOrder
+            // selectedPosition is based on orderedItems (which includes the current item)
+            // but calculateInsertOrder uses activeItems (which excludes the current item)
+            // We need to adjust: if selectedPosition > currentIndex, subtract 1
+            const currentIndex = selectedItem.currentIndex;
+            const adjustedPosition = selectedPosition > currentIndex 
+              ? selectedPosition - 1 
+              : selectedPosition;
+            
+            const { ordersToUpdate, newItemOrder } = calculateInsertOrder(
+              adjustedPosition,
+              selectedItem.id,
+              selectedItem.type,
+              state.characterProgress,
+              state.weaponProgress,
+              state.completedCharacters,
+              state.completedWeapons
+            );
+
+            ordersToUpdate.forEach((update) => {
+              state.reorderPlannerItems(update.id, update.type, update.newOrder);
+            });
+
+            state.reorderPlannerItems(selectedItem.id, selectedItem.type, newItemOrder);
+          }}
+        />
       )}
     </div>
   );

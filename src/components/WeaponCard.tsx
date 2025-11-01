@@ -240,6 +240,14 @@ export function WeaponCard({
         itemType="weapon"
         itemId={weapon.id}
         itemName={weapon.name}
+        title="Añadir al Planificador"
+        description={`¿Deseas añadir ${weapon.name} al planificador?`}
+        acceptButtonText="Añadir"
+        acceptButtonClass="bg-green-600 hover:bg-green-700"
+        onConfirm={(selectedPosition) => {
+          const updateWeaponAscension = useInventoryStore.getState().updateWeaponAscension;
+          updateWeaponAscension(weapon.id, 0, 6, selectedPosition);
+        }}
       />
 
       <RemoveFromPlannerModal

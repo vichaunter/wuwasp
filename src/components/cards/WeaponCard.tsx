@@ -69,9 +69,9 @@ export function WeaponCard({
   }, [plannerMode, isInPlanner, progress, weapon, requiredMaterials]);
 
   const rarityColors = {
-    3: "from-blue-600 to-blue-700",
-    4: "from-purple-600 to-purple-700",
-    5: "from-amber-600 to-yellow-600",
+    3: "from-blue-700 to-blue-800",
+    4: "from-purple-700 to-purple-800",
+    5: "from-amber-400 to-yellow-400",
   };
 
   const handleAddClick = (e: React.MouseEvent) => {
@@ -151,21 +151,58 @@ export function WeaponCard({
           <div className="flex gap-4 p-4">
             {/* Weapon Image */}
             <div
-              className={`relative w-24 h-32 bg-gradient-to-br ${
-                rarityColors[weapon.rarity]
-              } rounded-lg flex items-center justify-center ring-2 ring-gray-700 flex-shrink-0 overflow-hidden`}
+              className="relative w-24 h-32 rounded-lg flex items-center justify-center ring-2 ring-gray-700 flex-shrink-0 overflow-hidden group-hover:ring-purple-500/50 transition-all"
+              style={{
+                background: `radial-gradient(ellipse at center, rgba(17, 24, 39, 0.9) 35%, ${
+                  weapon.rarity === 3
+                    ? "rgba(29, 78, 216, 0.6)"
+                    : weapon.rarity === 4
+                    ? "rgba(147, 51, 234, 0.6)"
+                    : "rgba(217, 119, 6, 0.6)"
+                } 100%)`,
+              }}
             >
-              {weapon.image ? (
-                <img
-                  src={weapon.image}
-                  alt={weapon.name}
-                  className="w-20 h-28 object-contain drop-shadow-lg"
-                />
-              ) : (
-                <span className="text-3xl font-bold text-white drop-shadow-lg">
-                  {weapon.name.charAt(0).toUpperCase()}
-                </span>
-              )}
+              {/* Gradient from edges - more visible border effect */}
+              <div
+                className={`absolute inset-0 rounded-lg ${
+                  weapon.rarity === 3
+                    ? "bg-gradient-radial from-blue-600/60 via-blue-700/30 to-transparent"
+                    : weapon.rarity === 4
+                    ? "bg-gradient-radial from-purple-600/60 via-purple-700/30 to-transparent"
+                    : "bg-gradient-radial from-amber-600/60 via-yellow-600/30 to-transparent"
+                } opacity-70 group-hover:opacity-90 transition-opacity duration-300`}
+                style={{
+                  backgroundImage: `radial-gradient(ellipse 100% 110% at center, transparent 40%, ${
+                    weapon.rarity === 3
+                      ? "rgba(29, 78, 216, 0.8)"
+                      : weapon.rarity === 4
+                      ? "rgba(147, 51, 234, 0.8)"
+                      : "rgba(217, 119, 6, 0.8)"
+                  } 100%)`,
+                }}
+              ></div>
+
+              {/* Subtle glow behind image */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-b ${
+                  rarityColors[weapon.rarity]
+                } opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-30`}
+              ></div>
+
+              {/* Image container */}
+              <div className="relative w-full h-full flex items-center justify-center p-1 z-10">
+                {weapon.image ? (
+                  <img
+                    src={weapon.image}
+                    alt={weapon.name}
+                    className="w-20 h-28 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-transform duration-300 group-hover:scale-110"
+                  />
+                ) : (
+                  <span className="text-3xl font-bold text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                    {weapon.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Weapon Info */}
@@ -239,6 +276,15 @@ export function WeaponCard({
         itemType="weapon"
         itemId={weapon.id}
         itemName={weapon.name}
+        title="Añadir al Planificador"
+        description={`¿Deseas añadir ${weapon.name} al planificador?`}
+        acceptButtonText="Añadir"
+        acceptButtonClass="bg-green-600 hover:bg-green-700"
+        onConfirm={(selectedPosition) => {
+          const updateWeaponAscension =
+            useInventoryStore.getState().updateWeaponAscension;
+          updateWeaponAscension(weapon.id, 0, 6, selectedPosition);
+        }}
       />
 
       <RemoveFromPlannerModal
