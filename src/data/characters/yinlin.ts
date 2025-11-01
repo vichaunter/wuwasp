@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const yinlin: Character = {
   id: 'yinlin',
@@ -6,8 +7,8 @@ export const yinlin: Character = {
   slug: 'yinlin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454218',
   rarity: 5,
-  element: 'Electro',
-  weapon: 'Rectifier',
+  element: Element.Electro,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Whisperin Core',

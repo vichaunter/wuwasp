@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const sanhua: Character = {
   id: 'sanhua',
@@ -6,8 +7,8 @@ export const sanhua: Character = {
   slug: 'sanhua',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454225',
   rarity: 4,
-  element: 'Glacio',
-  weapon: 'Sword',
+  element: Element.Glacio,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Whisperin Core',

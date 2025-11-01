@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const waltz_in_masquerade: Weapon = {
   id: 'waltz-in-masquerade',
@@ -6,7 +7,7 @@ export const waltz_in_masquerade: Weapon = {
   slug: 'waltz-in-masquerade',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492573',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 462,
   subStat: '',
   skill: '',

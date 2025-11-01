@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const lingyang: Character = {
   id: 'lingyang',
@@ -6,8 +7,8 @@ export const lingyang: Character = {
   slug: 'lingyang',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454223',
   rarity: 5,
-  element: 'Glacio',
-  weapon: 'Gauntlets',
+  element: Element.Glacio,
+  weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
       common: 'Whisperin Core',

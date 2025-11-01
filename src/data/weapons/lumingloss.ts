@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const lumingloss: Weapon = {
   id: 'lumingloss',
@@ -6,7 +7,7 @@ export const lumingloss: Weapon = {
   slug: 'lumingloss',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455937',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 387,
   subStat: '',
   skill: '',

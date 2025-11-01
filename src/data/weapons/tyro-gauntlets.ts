@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const tyro_gauntlets: Weapon = {
   id: 'tyro-gauntlets',
@@ -6,7 +7,7 @@ export const tyro_gauntlets: Weapon = {
   slug: 'tyro-gauntlets',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455906',
   rarity: 5,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 0,
   subStat: '',
   skill: '',

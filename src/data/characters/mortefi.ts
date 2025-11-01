@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const mortefi: Character = {
   id: 'mortefi',
@@ -6,8 +7,8 @@ export const mortefi: Character = {
   slug: 'mortefi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454222',
   rarity: 4,
-  element: 'Fusion',
-  weapon: 'Pistols',
+  element: Element.Fusion,
+  weapon: WeaponType.Pistol,
   materials: {
     ascension: {
       common: 'Whisperin Core',

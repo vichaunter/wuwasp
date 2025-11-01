@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const somnoire_anchor: Weapon = {
   id: 'somnoire-anchor',
@@ -6,7 +7,7 @@ export const somnoire_anchor: Weapon = {
   slug: 'somnoire-anchor',
   url: 'https://game8.co/games/Wuthering-Waves/archives/483284',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 462,
   subStat: '',
   skill: '',

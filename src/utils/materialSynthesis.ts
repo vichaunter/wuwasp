@@ -1,4 +1,4 @@
-import type { MaterialQualityTier } from "@/types";
+import { MaterialQualityTier } from "@/types";
 import { getMaterialById, materials } from "@/data/materials";
 import { calculateExpMaterials, EXP_VALUES } from "@/data/exp-requirements";
 
@@ -11,7 +11,12 @@ import { calculateExpMaterials, EXP_VALUES } from "@/data/exp-requirements";
  */
 
 const SYNTHESIS_RATIO = 3;
-const QUALITY_ORDER: MaterialQualityTier[] = ["T1", "T2", "T3", "T4"];
+const QUALITY_ORDER: MaterialQualityTier[] = [
+  MaterialQualityTier.T1,
+  MaterialQualityTier.T2,
+  MaterialQualityTier.T3,
+  MaterialQualityTier.T4,
+];
 
 export interface MaterialRequirement {
   [quality: string]: number; // Quality tier -> quantity needed

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const emerald_sentence: Weapon = {
   id: 'emerald-sentence',
@@ -6,7 +7,7 @@ export const emerald_sentence: Weapon = {
   slug: 'emerald-sentence',
   url: 'https://game8.co/games/Wuthering-Waves/archives/553562',
   rarity: 5,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 587,
   subStat: '',
   skill: '',

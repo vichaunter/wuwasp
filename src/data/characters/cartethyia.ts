@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const cartethyia: Character = {
   id: 'cartethyia',
@@ -6,8 +7,8 @@ export const cartethyia: Character = {
   slug: 'cartethyia',
   url: 'https://game8.co/games/Wuthering-Waves/archives/507777',
   rarity: 5,
-  element: 'Aero',
-  weapon: 'Sword',
+  element: Element.Aero,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Tidal Residuum',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const aalto: Character = {
   id: 'aalto',
@@ -6,8 +7,8 @@ export const aalto: Character = {
   slug: 'aalto',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454214',
   rarity: 4,
-  element: 'Aero',
-  weapon: 'Pistols',
+  element: Element.Aero,
+  weapon: WeaponType.Pistol,
   materials: {
     ascension: {
       common: 'Howler Core',

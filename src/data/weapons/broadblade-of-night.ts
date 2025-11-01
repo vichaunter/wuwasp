@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const broadblade_of_night: Weapon = {
   id: 'broadblade-of-night',
@@ -6,7 +7,7 @@ export const broadblade_of_night: Weapon = {
   slug: 'broadblade-of-night',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455946',
   rarity: 3,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 325,
   subStat: '',
   skill: '',

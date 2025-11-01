@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const changli: Character = {
   id: 'changli',
@@ -6,8 +7,8 @@ export const changli: Character = {
   slug: 'changli',
   url: 'https://game8.co/games/Wuthering-Waves/archives/452826',
   rarity: 5,
-  element: 'Fusion',
-  weapon: 'Sword',
+  element: Element.Fusion,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Crude Ring',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const amity_accord: Weapon = {
   id: 'amity-accord',
@@ -6,7 +7,7 @@ export const amity_accord: Weapon = {
   slug: 'amity-accord',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455914',
   rarity: 4,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 337,
   subStat: '',
   skill: '',

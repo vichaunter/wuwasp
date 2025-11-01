@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const call_of_the_abyss: Weapon = {
   id: 'call-of-the-abyss',
@@ -6,7 +7,7 @@ export const call_of_the_abyss: Weapon = {
   slug: 'call-of-the-abyss',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492574',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 337,
   subStat: '',
   skill: '',

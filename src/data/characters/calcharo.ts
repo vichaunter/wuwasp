@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const calcharo: Character = {
   id: 'calcharo',
@@ -6,8 +7,8 @@ export const calcharo: Character = {
   slug: 'calcharo',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454217',
   rarity: 5,
-  element: 'Electro',
-  weapon: 'Broadblade',
+  element: Element.Electro,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Crude Ring',

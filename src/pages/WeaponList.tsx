@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { WeaponCard } from "@/components/cards";
 import { weapons } from "@/data/weapons";
 import { SearchInput, FilterGroup } from "@/components/filters";
-import type { WeaponType } from "@/types";
+import { WeaponType } from "@/types";
 import {
   filterWeapons,
   countWeaponsByType,
@@ -20,11 +20,11 @@ export default function WeaponList() {
 
   const types: Array<WeaponType | "ALL"> = [
     "ALL",
-    "Sword",
-    "Broadblade",
-    "Pistol",
-    "Gauntlet",
-    "Rectifier",
+    WeaponType.Sword,
+    WeaponType.Broadblade,
+    WeaponType.Pistol,
+    WeaponType.Gauntlet,
+    WeaponType.Rectifier,
   ];
 
   const rarities: Array<WeaponRarity | "ALL"> = ["ALL", 5, 4, 3];

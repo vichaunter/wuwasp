@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const moongazer_s_sigil: Weapon = {
   id: 'moongazer-s-sigil',
@@ -6,7 +7,7 @@ export const moongazer_s_sigil: Weapon = {
   slug: 'moongazer-s-sigil',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544474',
   rarity: 5,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 500,
   subStat: '',
   skill: '',

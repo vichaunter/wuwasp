@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const comet_flare: Weapon = {
   id: 'comet-flare',
@@ -6,7 +7,7 @@ export const comet_flare: Weapon = {
   slug: 'comet-flare',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455925',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 412,
   subStat: '',
   skill: '',

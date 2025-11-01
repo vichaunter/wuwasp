@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const pistols_26: Weapon = {
   id: 'pistols-26',
@@ -6,7 +7,7 @@ export const pistols_26: Weapon = {
   slug: 'pistols-26',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455974',
   rarity: 4,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 387,
   subStat: '',
   skill: '',

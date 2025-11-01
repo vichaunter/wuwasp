@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const taoqi: Character = {
   id: 'taoqi',
@@ -6,8 +7,8 @@ export const taoqi: Character = {
   slug: 'taoqi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454226',
   rarity: 4,
-  element: 'Havoc',
-  weapon: 'Broadblade',
+  element: Element.Havoc,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Howler Core',

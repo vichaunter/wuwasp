@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const feather_edge: Weapon = {
   id: 'feather-edge',
@@ -6,7 +7,7 @@ export const feather_edge: Weapon = {
   slug: 'feather-edge',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544590',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 412,
   subStat: '',
   skill: '',

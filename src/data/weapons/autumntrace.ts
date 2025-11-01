@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const autumntrace: Weapon = {
   id: 'autumntrace',
@@ -6,7 +7,7 @@ export const autumntrace: Weapon = {
   slug: 'autumntrace',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455950',
   rarity: 4,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 412,
   subStat: '',
   skill: '',

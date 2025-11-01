@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const lustrous_razor: Weapon = {
   id: 'lustrous-razor',
@@ -6,7 +7,7 @@ export const lustrous_razor: Weapon = {
   slug: 'lustrous-razor',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455952',
   rarity: 5,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 587,
   subStat: '',
   skill: '',

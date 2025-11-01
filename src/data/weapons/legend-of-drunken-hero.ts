@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const legend_of_drunken_hero: Weapon = {
   id: 'legend-of-drunken-hero',
@@ -6,7 +7,7 @@ export const legend_of_drunken_hero: Weapon = {
   slug: 'legend-of-drunken-hero',
   url: 'https://game8.co/games/Wuthering-Waves/archives/492572',
   rarity: 4,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 462,
   subStat: '',
   skill: '',

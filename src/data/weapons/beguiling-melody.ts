@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const beguiling_melody: Weapon = {
   id: 'beguiling-melody',
@@ -6,7 +7,7 @@ export const beguiling_melody: Weapon = {
   slug: 'beguiling-melody',
   url: 'https://game8.co/games/Wuthering-Waves/archives/458986',
   rarity: 3,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 300,
   subStat: '',
   skill: '',

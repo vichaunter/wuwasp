@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const augusta: Character = {
   id: 'augusta',
@@ -6,8 +7,8 @@ export const augusta: Character = {
   slug: 'augusta',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524890',
   rarity: 5,
-  element: 'Electro',
-  weapon: 'Broadblade',
+  element: Element.Electro,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Tidal Residuum',

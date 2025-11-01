@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const rectifier_25: Weapon = {
   id: 'rectifier-25',
@@ -6,7 +7,7 @@ export const rectifier_25: Weapon = {
   slug: 'rectifier-25',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455916',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 337,
   subStat: '',
   skill: '',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const stellar_symphony: Weapon = {
   id: 'stellar-symphony',
@@ -6,7 +7,7 @@ export const stellar_symphony: Weapon = {
   slug: 'stellar-symphony',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474386',
   rarity: 5,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 412,
   subStat: '',
   skill: '',

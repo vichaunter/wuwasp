@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const radiant_dawn: Weapon = {
   id: 'radiant-dawn',
@@ -6,7 +7,7 @@ export const radiant_dawn: Weapon = {
   slug: 'radiant-dawn',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544744',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 412,
   subStat: '',
   skill: '',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const novaburst: Weapon = {
   id: 'novaburst',
@@ -6,7 +7,7 @@ export const novaburst: Weapon = {
   slug: 'novaburst',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455902',
   rarity: 4,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 412,
   subStat: '',
   skill: '',

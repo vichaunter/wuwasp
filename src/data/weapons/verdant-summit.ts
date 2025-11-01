@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const verdant_summit: Weapon = {
   id: 'verdant-summit',
@@ -6,7 +7,7 @@ export const verdant_summit: Weapon = {
   slug: 'verdant-summit',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455951',
   rarity: 5,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 587,
   subStat: '',
   skill: '',

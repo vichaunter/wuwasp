@@ -1,16 +1,11 @@
-import type {
-  Character,
-  Weapon,
-  WeaponType,
-  Material,
-  MaterialCategory,
-} from "@/types";
+import type { Character, Weapon, Material } from "@/types";
+import { WeaponType, Element, MaterialCategory, MaterialQualityTier } from "@/types";
 
 export function filterCharacters(
   characters: Character[],
   searchQuery: string,
-  selectedElement: string | "ALL",
-  selectedWeapon: string | "ALL",
+  selectedElement: Element | "ALL",
+  selectedWeapon: WeaponType | "ALL",
   selectedRarity: 4 | 5 | "ALL"
 ): Character[] {
   let filtered = characters;
@@ -20,10 +15,7 @@ export function filterCharacters(
   }
 
   if (selectedWeapon !== "ALL") {
-    const normalizedSelected = normalizeWeaponName(selectedWeapon);
-    filtered = filtered.filter(
-      (c) => normalizeWeaponName(c.weapon) === normalizedSelected
-    );
+    filtered = filtered.filter((c) => c.weapon === selectedWeapon);
   }
 
   if (selectedRarity !== "ALL") {
@@ -80,26 +72,16 @@ export function filterWeapons(
   });
 }
 
-export function getCharacterElements(characters: Character[]): string[] {
-  const elements = new Set<string>();
+export function getCharacterElements(characters: Character[]): Element[] {
+  const elements = new Set<Element>();
   characters.forEach((c) => elements.add(c.element));
   return Array.from(elements).sort();
 }
 
-const weaponNameMap: Record<string, string> = {
-  Pistols: "Pistol",
-  Gauntlets: "Gauntlet",
-};
-
-export function normalizeWeaponName(weapon: string): string {
-  return weaponNameMap[weapon] || weapon;
-}
-
-export function getCharacterWeapons(characters: Character[]): string[] {
-  const weapons = new Set<string>();
+export function getCharacterWeapons(characters: Character[]): WeaponType[] {
+  const weapons = new Set<WeaponType>();
   characters.forEach((c) => {
-    const normalized = normalizeWeaponName(c.weapon);
-    weapons.add(normalized);
+    weapons.add(c.weapon);
   });
   return Array.from(weapons).sort();
 }
@@ -114,20 +96,15 @@ export function countByElement(
   return counts;
 }
 
-export function countByWeapon(
-  characters: Character[]
-): Record<string, number> {
+export function countByWeapon(characters: Character[]): Record<string, number> {
   const counts: Record<string, number> = { ALL: characters.length };
   characters.forEach((c) => {
-    const normalized = normalizeWeaponName(c.weapon);
-    counts[normalized] = (counts[normalized] || 0) + 1;
+    counts[c.weapon] = (counts[c.weapon] || 0) + 1;
   });
   return counts;
 }
 
-export function countByRarity(
-  characters: Character[]
-): Record<string, number> {
+export function countByRarity(characters: Character[]): Record<string, number> {
   const counts: Record<string, number> = { ALL: characters.length };
   characters.forEach((c) => {
     counts[c.rarity] = (counts[c.rarity] || 0) + 1;
@@ -178,12 +155,12 @@ export function filterMaterials(
   return filtered.sort((a, b) => {
     if (groupBySet) {
       const categoryOrder: Record<string, number> = {
-        BOSS: 1,
-        FORGERY: 2,
-        COMMON: 3,
-        OVERWORLD: 4,
-        EXP: 5,
-        CURRENCY: 6,
+        [MaterialCategory.BOSS]: 1,
+        [MaterialCategory.FORGERY]: 2,
+        [MaterialCategory.COMMON]: 3,
+        [MaterialCategory.OVERWORLD]: 4,
+        [MaterialCategory.EXP]: 5,
+        [MaterialCategory.CURRENCY]: 6,
       };
 
       const aCategoryOrder = categoryOrder[a.category] || 999;
@@ -198,7 +175,12 @@ export function filterMaterials(
       }
 
       if (a.quality && b.quality) {
-        const qualityOrder = { T1: 1, T2: 2, T3: 3, T4: 4 };
+        const qualityOrder = {
+          [MaterialQualityTier.T1]: 1,
+          [MaterialQualityTier.T2]: 2,
+          [MaterialQualityTier.T3]: 3,
+          [MaterialQualityTier.T4]: 4,
+        };
         const aQuality = qualityOrder[a.quality] || 0;
         const bQuality = qualityOrder[b.quality] || 0;
         if (aQuality !== bQuality) {
@@ -213,7 +195,12 @@ export function filterMaterials(
       }
 
       if (a.quality && b.quality) {
-        const qualityOrder = { T4: 4, T3: 3, T2: 2, T1: 1 };
+        const qualityOrder = {
+          [MaterialQualityTier.T4]: 4,
+          [MaterialQualityTier.T3]: 3,
+          [MaterialQualityTier.T2]: 2,
+          [MaterialQualityTier.T1]: 1,
+        };
         const aQuality = qualityOrder[a.quality] || 0;
         const bQuality = qualityOrder[b.quality] || 0;
         if (aQuality !== bQuality) {
@@ -235,4 +222,3 @@ export function countMaterialsByCategory(
   });
   return counts;
 }
-

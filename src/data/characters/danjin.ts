@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const danjin: Character = {
   id: 'danjin',
@@ -6,8 +7,8 @@ export const danjin: Character = {
   slug: 'danjin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454227',
   rarity: 4,
-  element: 'Havoc',
-  weapon: 'Sword',
+  element: Element.Havoc,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Crude Ring',

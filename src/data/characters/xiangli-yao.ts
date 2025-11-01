@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const xiangli_yao: Character = {
   id: 'xiangli-yao',
@@ -6,8 +7,8 @@ export const xiangli_yao: Character = {
   slug: 'xiangli-yao',
   url: 'https://game8.co/games/Wuthering-Waves/archives/461501',
   rarity: 5,
-  element: 'Electro',
-  weapon: 'Gauntlets',
+  element: Element.Electro,
+  weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
       common: 'Whisperin Core',

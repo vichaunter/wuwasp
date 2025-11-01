@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const rime_draped_sprouts: Weapon = {
   id: 'rime-draped-sprouts',
@@ -6,7 +7,7 @@ export const rime_draped_sprouts: Weapon = {
   slug: 'rime-draped-sprouts',
   url: 'https://game8.co/games/Wuthering-Waves/archives/464109',
   rarity: 5,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 500,
   subStat: '',
   skill: '',

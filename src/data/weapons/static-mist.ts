@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const static_mist: Weapon = {
   id: 'static-mist',
@@ -6,7 +7,7 @@ export const static_mist: Weapon = {
   slug: 'static-mist',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455904',
   rarity: 5,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 587,
   subStat: '',
   skill: '',

@@ -1,17 +1,17 @@
-interface FilterOption<T extends string | number> {
+interface FilterOption<T> {
   value: T | "ALL";
   label: string;
   count?: number;
 }
 
-interface FilterGroupProps<T extends string | number> {
+interface FilterGroupProps<T> {
   title: string;
   options: FilterOption<T>[];
   selected: T | "ALL";
   onSelect: (value: T | "ALL") => void;
 }
 
-export function FilterGroup<T extends string | number>({
+export function FilterGroup<T>({
   title,
   options,
   selected,

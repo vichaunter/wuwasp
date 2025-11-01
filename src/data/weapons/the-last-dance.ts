@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const the_last_dance: Weapon = {
   id: 'the-last-dance',
@@ -6,7 +7,7 @@ export const the_last_dance: Weapon = {
   slug: 'the-last-dance',
   url: 'https://game8.co/games/Wuthering-Waves/archives/491970',
   rarity: 5,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 500,
   subStat: '',
   skill: '',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const hollow_mirage: Weapon = {
   id: 'hollow-mirage',
@@ -6,7 +7,7 @@ export const hollow_mirage: Weapon = {
   slug: 'hollow-mirage',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455913',
   rarity: 4,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 412,
   subStat: '',
   skill: '',

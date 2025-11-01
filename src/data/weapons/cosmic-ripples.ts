@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const cosmic_ripples: Weapon = {
   id: 'cosmic-ripples',
@@ -6,7 +7,7 @@ export const cosmic_ripples: Weapon = {
   slug: 'cosmic-ripples',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455928',
   rarity: 5,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 500,
   subStat: '',
   skill: '',

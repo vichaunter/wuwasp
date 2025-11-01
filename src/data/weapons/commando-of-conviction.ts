@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const commando_of_conviction: Weapon = {
   id: 'commando-of-conviction',
@@ -6,7 +7,7 @@ export const commando_of_conviction: Weapon = {
   slug: 'commando-of-conviction',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455938',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 412,
   subStat: '',
   skill: '',

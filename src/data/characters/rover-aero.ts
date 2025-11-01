@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const rover_aero: Character = {
   id: 'rover-aero',
@@ -6,8 +7,8 @@ export const rover_aero: Character = {
   slug: 'rover-aero',
   url: 'https://game8.co/games/Wuthering-Waves/archives/505267',
   rarity: 5,
-  element: 'Aero',
-  weapon: 'Sword',
+  element: Element.Aero,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Whisperin Core',

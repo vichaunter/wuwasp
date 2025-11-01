@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const wildfire_mark: Weapon = {
   id: 'wildfire-mark',
@@ -6,7 +7,7 @@ export const wildfire_mark: Weapon = {
   slug: 'wildfire-mark',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524869',
   rarity: 5,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 587,
   subStat: '',
   skill: '',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const galbrena: Character = {
   id: 'galbrena',
@@ -6,8 +7,8 @@ export const galbrena: Character = {
   slug: 'galbrena',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524888',
   rarity: 5,
-  element: 'Fusion',
-  weapon: 'Pistols',
+  element: Element.Fusion,
+  weapon: WeaponType.Pistol,
   materials: {
     ascension: {
       common: 'Tidal Residuum',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const dauntless_evernight: Weapon = {
   id: 'dauntless-evernight',
@@ -6,7 +7,7 @@ export const dauntless_evernight: Weapon = {
   slug: 'dauntless-evernight',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455949',
   rarity: 4,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 337,
   subStat: '',
   skill: '',

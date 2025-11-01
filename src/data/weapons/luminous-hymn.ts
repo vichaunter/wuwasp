@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const luminous_hymn: Weapon = {
   id: 'luminous-hymn',
@@ -6,7 +7,7 @@ export const luminous_hymn: Weapon = {
   slug: 'luminous-hymn',
   url: 'https://game8.co/games/Wuthering-Waves/archives/498527',
   rarity: 5,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 500,
   subStat: '',
   skill: '',

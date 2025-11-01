@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const endless_collapse: Weapon = {
   id: 'endless-collapse',
@@ -6,7 +7,7 @@ export const endless_collapse: Weapon = {
   slug: 'endless-collapse',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474515',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 462,
   subStat: '',
   skill: '',

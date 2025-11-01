@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const fusion_accretion: Weapon = {
   id: 'fusion-accretion',
@@ -6,7 +7,7 @@ export const fusion_accretion: Weapon = {
   slug: 'fusion-accretion',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474512',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 462,
   subStat: '',
   skill: '',

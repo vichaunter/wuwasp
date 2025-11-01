@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const lux_umbra: Weapon = {
   id: 'lux-umbra',
@@ -6,7 +7,7 @@ export const lux_umbra: Weapon = {
   slug: 'lux-umbra',
   url: 'https://game8.co/games/Wuthering-Waves/archives/553561',
   rarity: 5,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 587,
   subStat: '',
   skill: '',

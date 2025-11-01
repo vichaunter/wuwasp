@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const ocean_s_gift: Weapon = {
   id: 'ocean-s-gift',
@@ -6,7 +7,7 @@ export const ocean_s_gift: Weapon = {
   slug: 'ocean-s-gift',
   url: 'https://game8.co/games/Wuthering-Waves/archives/498526',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 462,
   subStat: '',
   skill: '',

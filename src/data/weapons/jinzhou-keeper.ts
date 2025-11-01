@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const jinzhou_keeper: Weapon = {
   id: 'jinzhou-keeper',
@@ -6,7 +7,7 @@ export const jinzhou_keeper: Weapon = {
   slug: 'jinzhou-keeper',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455924',
   rarity: 4,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 387,
   subStat: '',
   skill: '',

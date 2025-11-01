@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const yuanwu: Character = {
   id: 'yuanwu',
@@ -6,8 +7,8 @@ export const yuanwu: Character = {
   slug: 'yuanwu',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454219',
   rarity: 4,
-  element: 'Electro',
-  weapon: 'Gauntlets',
+  element: Element.Electro,
+  weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
       common: 'Crude Ring',

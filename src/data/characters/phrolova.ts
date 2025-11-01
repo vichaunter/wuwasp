@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const phrolova: Character = {
   id: 'phrolova',
@@ -6,8 +7,8 @@ export const phrolova: Character = {
   slug: 'phrolova',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524877',
   rarity: 5,
-  element: 'Havoc',
-  weapon: 'Rectifier',
+  element: Element.Havoc,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Polygon Core',

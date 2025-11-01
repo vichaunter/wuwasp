@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const blazing_brilliance: Weapon = {
   id: 'blazing-brilliance',
@@ -6,7 +7,7 @@ export const blazing_brilliance: Weapon = {
   slug: 'blazing-brilliance',
   url: 'https://game8.co/games/Wuthering-Waves/archives/458273',
   rarity: 5,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 587,
   subStat: '',
   skill: '',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const camellya: Character = {
   id: 'camellya',
@@ -6,8 +7,8 @@ export const camellya: Character = {
   slug: 'camellya',
   url: 'https://game8.co/games/Wuthering-Waves/archives/473332',
   rarity: 5,
-  element: 'Havoc',
-  weapon: 'Sword',
+  element: Element.Havoc,
+  weapon: WeaponType.Sword,
   materials: {
     ascension: {
       common: 'Whisperin Core',

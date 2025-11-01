@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const baizhi: Character = {
   id: 'baizhi',
@@ -6,8 +7,8 @@ export const baizhi: Character = {
   slug: 'baizhi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454224',
   rarity: 4,
-  element: 'Glacio',
-  weapon: 'Rectifier',
+  element: Element.Glacio,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Howler Core',

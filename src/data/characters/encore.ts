@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const encore: Character = {
   id: 'encore',
@@ -6,8 +7,8 @@ export const encore: Character = {
   slug: 'encore',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454221',
   rarity: 5,
-  element: 'Fusion',
-  weapon: 'Rectifier',
+  element: Element.Fusion,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Whisperin Core',

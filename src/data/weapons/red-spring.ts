@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const red_spring: Weapon = {
   id: 'red-spring',
@@ -6,7 +7,7 @@ export const red_spring: Weapon = {
   slug: 'red-spring',
   url: 'https://game8.co/games/Wuthering-Waves/archives/483281',
   rarity: 5,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 587,
   subStat: '',
   skill: '',

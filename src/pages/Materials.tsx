@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { materials } from "@/data/materials";
 import { MaterialCard } from "@/components/material/MaterialCard";
 import { SearchInput, FilterGroup } from "@/components/filters";
-import type { MaterialCategory } from "@/types";
+import { MaterialCategory } from "@/types";
 import {
   filterMaterials,
   countMaterialsByCategory,
@@ -36,15 +36,14 @@ export function Materials() {
     localStorage.setItem("materialsGroupBySet", groupBySet.toString());
   }, [groupBySet]);
 
-  // Get unique categories
   const categories: Array<MaterialCategory | "ALL"> = [
     "ALL",
-    "COMMON",
-    "FORGERY",
-    "BOSS",
-    "OVERWORLD",
-    "EXP",
-    "CURRENCY",
+    MaterialCategory.COMMON,
+    MaterialCategory.FORGERY,
+    MaterialCategory.BOSS,
+    MaterialCategory.OVERWORLD,
+    MaterialCategory.EXP,
+    MaterialCategory.CURRENCY,
   ];
 
   const filteredMaterials = useMemo(

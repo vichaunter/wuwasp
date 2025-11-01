@@ -1,4 +1,5 @@
-import type { Character } from "@/types";
+import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const iuno: Character = {
   id: "iuno",
@@ -6,8 +7,8 @@ export const iuno: Character = {
   slug: "iuno",
   url: "https://game8.co/games/Wuthering-Waves/archives/524889",
   rarity: 5,
-  element: "Aero",
-  weapon: "Gauntlets",
+  element: Element.Aero,
+  weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
       common: "Polygon Core",

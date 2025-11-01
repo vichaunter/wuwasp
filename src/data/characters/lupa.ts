@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const lupa: Character = {
   id: 'lupa',
@@ -6,8 +7,8 @@ export const lupa: Character = {
   slug: 'lupa',
   url: 'https://game8.co/games/Wuthering-Waves/archives/520661',
   rarity: 5,
-  element: 'Fusion',
-  weapon: 'Broadblade',
+  element: Element.Fusion,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Howler Core',

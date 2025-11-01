@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const lumi: Character = {
   id: 'lumi',
@@ -6,8 +7,8 @@ export const lumi: Character = {
   slug: 'lumi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/473488',
   rarity: 4,
-  element: 'Electro',
-  weapon: 'Broadblade',
+  element: Element.Electro,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Howler Core',

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const overture: Weapon = {
   id: 'overture',
@@ -6,7 +7,7 @@ export const overture: Weapon = {
   slug: 'overture',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455935',
   rarity: 4,
-  type: 'Sword',
+  type: WeaponType.Sword,
   baseAtk: 337,
   subStat: '',
   skill: '',

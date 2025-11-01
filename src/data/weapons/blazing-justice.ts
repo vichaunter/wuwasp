@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const blazing_justice: Weapon = {
   id: 'blazing-justice',
@@ -6,7 +7,7 @@ export const blazing_justice: Weapon = {
   slug: 'blazing-justice',
   url: 'https://game8.co/games/Wuthering-Waves/archives/514609',
   rarity: 5,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 587,
   subStat: '',
   skill: '',

@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { CharacterCard } from "@/components/cards";
 import { characters } from "@/data/characters";
 import { SearchInput, FilterGroup } from "@/components/filters";
+import { Element, WeaponType } from "@/types";
 import {
   filterCharacters,
   getCharacterElements,
@@ -15,18 +16,22 @@ type CharacterRarity = 4 | 5;
 
 export default function CharacterList() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedElement, setSelectedElement] = useState<string | "ALL">("ALL");
-  const [selectedWeapon, setSelectedWeapon] = useState<string | "ALL">("ALL");
+  const [selectedElement, setSelectedElement] = useState<Element | "ALL">(
+    "ALL"
+  );
+  const [selectedWeapon, setSelectedWeapon] = useState<WeaponType | "ALL">(
+    "ALL"
+  );
   const [selectedRarity, setSelectedRarity] = useState<CharacterRarity | "ALL">(
     "ALL"
   );
 
   const elements = useMemo(
-    () => ["ALL", ...getCharacterElements(characters)],
+    () => ["ALL" as const, ...getCharacterElements(characters)] as const,
     []
   );
   const weapons = useMemo(
-    () => ["ALL", ...getCharacterWeapons(characters)],
+    () => ["ALL" as const, ...getCharacterWeapons(characters)] as const,
     []
   );
   const rarities: Array<CharacterRarity | "ALL"> = ["ALL", 5, 4];
@@ -63,7 +68,7 @@ export default function CharacterList() {
           placeholder="Buscar personajes..."
         />
 
-        <FilterGroup
+        <FilterGroup<Element | "ALL">
           title="Elemento"
           options={elements.map((element) => ({
             value: element,
@@ -74,16 +79,11 @@ export default function CharacterList() {
           onSelect={setSelectedElement}
         />
 
-        <FilterGroup
+        <FilterGroup<WeaponType | "ALL">
           title="Arma"
           options={weapons.map((weapon) => ({
             value: weapon,
-            label:
-              weapon === "Pistol"
-                ? "Pistols"
-                : weapon === "Gauntlet"
-                ? "Gauntlets"
-                : weapon,
+            label: weapon,
             count: weaponCounts[weapon],
           }))}
           selected={selectedWeapon}

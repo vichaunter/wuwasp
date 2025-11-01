@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const verity_s_handle: Weapon = {
   id: 'verity-s-handle',
@@ -6,7 +7,7 @@ export const verity_s_handle: Weapon = {
   slug: 'verity-s-handle',
   url: 'https://game8.co/games/Wuthering-Waves/archives/464110',
   rarity: 5,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 587,
   subStat: '',
   skill: '',

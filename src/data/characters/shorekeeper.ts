@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const shorekeeper: Character = {
   id: 'shorekeeper',
@@ -6,8 +7,8 @@ export const shorekeeper: Character = {
   slug: 'shorekeeper',
   url: 'https://game8.co/games/Wuthering-Waves/archives/463667',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Rectifier',
+  element: Element.Spectro,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Whisperin Core',

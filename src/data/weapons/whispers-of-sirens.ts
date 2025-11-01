@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const whispers_of_sirens: Weapon = {
   id: 'whispers-of-sirens',
@@ -6,7 +7,7 @@ export const whispers_of_sirens: Weapon = {
   slug: 'whispers-of-sirens',
   url: 'https://game8.co/games/Wuthering-Waves/archives/506482',
   rarity: 5,
-  type: 'Rectifier',
+  type: WeaponType.Rectifier,
   baseAtk: 500,
   subStat: '',
   skill: '',

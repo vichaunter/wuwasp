@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const aureate_zenith: Weapon = {
   id: 'aureate-zenith',
@@ -6,7 +7,7 @@ export const aureate_zenith: Weapon = {
   slug: 'aureate-zenith',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544589',
   rarity: 4,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 412,
   subStat: '',
   skill: '',

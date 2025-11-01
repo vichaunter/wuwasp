@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const jinhsi: Character = {
   id: 'jinhsi',
@@ -6,8 +7,8 @@ export const jinhsi: Character = {
   slug: 'jinhsi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455405',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: Element.Spectro,
+  weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
       common: 'Howler Core',

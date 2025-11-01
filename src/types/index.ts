@@ -1,8 +1,64 @@
 // Material quality tiers (generic)
-export type MaterialQualityTier = 'T1' | 'T2' | 'T3' | 'T4';
+export type MaterialQualityTier = "T1" | "T2" | "T3" | "T4";
+
+export const MaterialQualityTier = {
+  T1: "T1" as MaterialQualityTier,
+  T2: "T2" as MaterialQualityTier,
+  T3: "T3" as MaterialQualityTier,
+  T4: "T4" as MaterialQualityTier,
+} as const;
 
 // Material categories
-export type MaterialCategory = 'COMMON' | 'FORGERY' | 'BOSS' | 'OVERWORLD' | 'CURRENCY' | 'EXP';
+export type MaterialCategory =
+  | "COMMON"
+  | "FORGERY"
+  | "BOSS"
+  | "OVERWORLD"
+  | "CURRENCY"
+  | "EXP";
+
+export const MaterialCategory = {
+  COMMON: "COMMON" as MaterialCategory,
+  FORGERY: "FORGERY" as MaterialCategory,
+  BOSS: "BOSS" as MaterialCategory,
+  OVERWORLD: "OVERWORLD" as MaterialCategory,
+  CURRENCY: "CURRENCY" as MaterialCategory,
+  EXP: "EXP" as MaterialCategory,
+} as const;
+
+// Weapon types
+export type WeaponType =
+  | "Sword"
+  | "Broadblade"
+  | "Pistol"
+  | "Gauntlet"
+  | "Rectifier";
+
+export const WeaponType = {
+  Sword: "Sword" as WeaponType,
+  Broadblade: "Broadblade" as WeaponType,
+  Pistol: "Pistol" as WeaponType,
+  Gauntlet: "Gauntlet" as WeaponType,
+  Rectifier: "Rectifier" as WeaponType,
+} as const;
+
+// Character elements
+export type Element =
+  | "Glacio"
+  | "Fusion"
+  | "Electro"
+  | "Aero"
+  | "Spectro"
+  | "Havoc";
+
+export const Element = {
+  Glacio: "Glacio" as Element,
+  Fusion: "Fusion" as Element,
+  Electro: "Electro" as Element,
+  Aero: "Aero" as Element,
+  Spectro: "Spectro" as Element,
+  Havoc: "Havoc" as Element,
+} as const;
 
 export interface Material {
   id: string; // e.g., "lf-tidal-residuum" or "tidal-residuum" (for non-quality materials)
@@ -16,14 +72,14 @@ export interface Material {
 // Character material references (just IDs/names, not quantities)
 export interface CharacterMaterials {
   ascension: {
-    common: string;      // e.g., "Tidal Residuum" (has 4 qualities: LF, MF, HF, FF)
-    boss: string;        // e.g., "Blighted Crown of Puppet King" (unique)
-    overworld: string;   // e.g., "Luminous Calendula" (flower/collectible, unique)
+    common: string; // e.g., "Tidal Residuum" (has 4 qualities: LF, MF, HF, FF)
+    boss: string; // e.g., "Blighted Crown of Puppet King" (unique)
+    overworld: string; // e.g., "Luminous Calendula" (flower/collectible, unique)
   };
   forte: {
-    common: string;      // e.g., "Tidal Residuum" (same as ascension common)
-    forgery: string;     // e.g., "Waveworn Residue" (has 4 qualities: 210, 226, 235, 239)
-    boss: string;        // e.g., "Blighted Crown of Puppet King" (same as ascension boss)
+    common: string; // e.g., "Tidal Residuum" (same as ascension common)
+    forgery: string; // e.g., "Waveworn Residue" (has 4 qualities: 210, 226, 235, 239)
+    boss: string; // e.g., "Blighted Crown of Puppet King" (same as ascension boss)
   };
 }
 
@@ -33,21 +89,18 @@ export interface Character {
   slug: string;
   url: string;
   rarity: 4 | 5;
-  element: string;
-  weapon: string;
-  tier?: string; // e.g., "S", "A", "B", "C"
+  element: Element;
+  weapon: WeaponType;
+  tier?: string;
   materials: CharacterMaterials;
   image?: string;
 }
 
-// Weapon types
-export type WeaponType = 'Sword' | 'Broadblade' | 'Pistol' | 'Gauntlet' | 'Rectifier';
-
 // Weapon material references
 export interface WeaponMaterials {
-  common: string;      // e.g., "Howler Core" (has 4 qualities: LF, MF, HF, FF)
-  forgery: string;     // e.g., "Waveworn Residue" (has 4 qualities: 210, 226, 235, 239)
-  ascension: string;   // e.g., "Monument Bell" (weapon-specific ascension material, unique)
+  common: string; // e.g., "Howler Core" (has 4 qualities: LF, MF, HF, FF)
+  forgery: string; // e.g., "Waveworn Residue" (has 4 qualities: 210, 226, 235, 239)
+  ascension: string; // e.g., "Monument Bell" (weapon-specific ascension material, unique)
 }
 
 export interface Weapon {
@@ -58,8 +111,8 @@ export interface Weapon {
   rarity: 3 | 4 | 5;
   type: WeaponType;
   baseAtk: number;
-  subStat: string;        // e.g., "ATK+8.1%", "Crit Rate+5.4%"
-  skill: string;          // Skill name
+  subStat: string; // e.g., "ATK+8.1%", "Crit Rate+5.4%"
+  skill: string; // Skill name
   skillDescription: string;
   materials: WeaponMaterials;
   image?: string;
@@ -72,11 +125,11 @@ export interface CharacterProgress {
   order: number; // Position in the planning list
   level: {
     current: number; // 1-90
-    target: number;  // 1-90
+    target: number; // 1-90
   };
   ascension: {
     current: number; // 0-6
-    target: number;  // 0-6
+    target: number; // 0-6
   };
   forte: {
     // Main nodes (1-10 each)
@@ -102,11 +155,11 @@ export interface WeaponProgress {
   order: number; // Position in the planning list
   level: {
     current: number; // 1-90
-    target: number;  // 1-90
+    target: number; // 1-90
   };
   ascension: {
     current: number; // 0-6 (weapons also have 6 ranks)
-    target: number;  // 0-6
+    target: number; // 0-6
   };
 }
 

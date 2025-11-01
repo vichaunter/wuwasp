@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const celestial_spiral: Weapon = {
   id: 'celestial-spiral',
@@ -6,7 +7,7 @@ export const celestial_spiral: Weapon = {
   slug: 'celestial-spiral',
   url: 'https://game8.co/games/Wuthering-Waves/archives/474517',
   rarity: 4,
-  type: 'Gauntlet',
+  type: WeaponType.Gauntlet,
   baseAtk: 462,
   subStat: '',
   skill: '',

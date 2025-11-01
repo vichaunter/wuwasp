@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const thunderflare_dominion: Weapon = {
   id: 'thunderflare-dominion',
@@ -6,7 +7,7 @@ export const thunderflare_dominion: Weapon = {
   slug: 'thunderflare-dominion',
   url: 'https://game8.co/games/Wuthering-Waves/archives/544473',
   rarity: 5,
-  type: 'Broadblade',
+  type: WeaponType.Broadblade,
   baseAtk: 675,
   subStat: '',
   skill: '',

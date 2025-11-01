@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const cantarella: Character = {
   id: 'cantarella',
@@ -6,8 +7,8 @@ export const cantarella: Character = {
   slug: 'cantarella',
   url: 'https://game8.co/games/Wuthering-Waves/archives/500493',
   rarity: 5,
-  element: 'Havoc',
-  weapon: 'Rectifier',
+  element: Element.Havoc,
+  weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
       common: 'Polygon Core',

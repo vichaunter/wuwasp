@@ -1,4 +1,5 @@
-import type { Character } from "@/types";
+import type { Character } from '@/types';
+import { Element, WeaponType } from '@/types';
 
 export const ciaccona: Character = {
   id: "ciaccona",
@@ -6,8 +7,8 @@ export const ciaccona: Character = {
   slug: "ciaccona",
   url: "https://game8.co/games/Wuthering-Waves/archives/507924",
   rarity: 5,
-  element: "Aero",
-  weapon: "Pistols",
+  element: Element.Aero,
+  weapon: WeaponType.Pistol,
   materials: {
     ascension: {
       common: "Tidal Residuum",

@@ -1,4 +1,5 @@
 import type { Weapon } from '@/types';
+import { WeaponType } from '@/types';
 
 export const cadenza: Weapon = {
   id: 'cadenza',
@@ -6,7 +7,7 @@ export const cadenza: Weapon = {
   slug: 'cadenza',
   url: 'https://game8.co/games/Wuthering-Waves/archives/455903',
   rarity: 4,
-  type: 'Pistol',
+  type: WeaponType.Pistol,
   baseAtk: 337,
   subStat: '',
   skill: '',
