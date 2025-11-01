@@ -6,8 +6,8 @@ export const brant: Character = {
   slug: 'brant',
   url: 'https://game8.co/games/Wuthering-Waves/archives/486245',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Tidal Residuum',

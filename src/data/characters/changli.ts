@@ -6,8 +6,8 @@ export const changli: Character = {
   slug: 'changli',
   url: 'https://game8.co/games/Wuthering-Waves/archives/452826',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Crude Ring',

@@ -6,8 +6,8 @@ export const iuno: Character = {
   slug: "iuno",
   url: "https://game8.co/games/Wuthering-Waves/archives/524889",
   rarity: 5,
-  element: "Spectro",
-  weapon: "Broadblade",
+  element: "Aero",
+  weapon: "Gauntlets",
   materials: {
     ascension: {
       common: "Polygon Core",

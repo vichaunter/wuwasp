@@ -6,8 +6,8 @@ export const rover_aero: Character = {
   slug: 'rover-aero',
   url: 'https://game8.co/games/Wuthering-Waves/archives/505267',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Aero',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Whisperin Core',

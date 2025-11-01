@@ -6,8 +6,8 @@ export const mortefi: Character = {
   slug: 'mortefi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454222',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Pistols',
   materials: {
     ascension: {
       common: 'Whisperin Core',

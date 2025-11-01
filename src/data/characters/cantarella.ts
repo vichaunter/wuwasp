@@ -6,8 +6,8 @@ export const cantarella: Character = {
   slug: 'cantarella',
   url: 'https://game8.co/games/Wuthering-Waves/archives/500493',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Havoc',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Polygon Core',

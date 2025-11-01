@@ -6,7 +6,7 @@ export const taoqi: Character = {
   slug: 'taoqi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454226',
   rarity: 4,
-  element: 'Spectro',
+  element: 'Havoc',
   weapon: 'Broadblade',
   materials: {
     ascension: {

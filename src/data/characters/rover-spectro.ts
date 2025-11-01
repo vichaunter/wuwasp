@@ -7,7 +7,7 @@ export const rover_spectro: Character = {
   url: 'https://game8.co/games/Wuthering-Waves/archives/454228',
   rarity: 5,
   element: 'Spectro',
-  weapon: 'Broadblade',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Whisperin Core',

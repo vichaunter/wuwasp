@@ -6,7 +6,7 @@ export const lumi: Character = {
   slug: 'lumi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/473488',
   rarity: 4,
-  element: 'Spectro',
+  element: 'Electro',
   weapon: 'Broadblade',
   materials: {
     ascension: {

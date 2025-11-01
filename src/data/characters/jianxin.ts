@@ -6,8 +6,8 @@ export const jianxin: Character = {
   slug: 'jianxin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454213',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Aero',
+  weapon: 'Gauntlets',
   materials: {
     ascension: {
       common: 'Whisperin Core',

@@ -6,7 +6,7 @@ export const jiyan: Character = {
   slug: 'jiyan',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454216',
   rarity: 5,
-  element: 'Spectro',
+  element: 'Aero',
   weapon: 'Broadblade',
   materials: {
     ascension: {

@@ -6,8 +6,8 @@ export const camellya: Character = {
   slug: 'camellya',
   url: 'https://game8.co/games/Wuthering-Waves/archives/473332',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Havoc',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Whisperin Core',

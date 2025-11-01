@@ -6,8 +6,8 @@ export const baizhi: Character = {
   slug: 'baizhi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454224',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Glacio',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Howler Core',

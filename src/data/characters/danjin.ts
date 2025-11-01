@@ -6,8 +6,8 @@ export const danjin: Character = {
   slug: 'danjin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454227',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Havoc',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Crude Ring',

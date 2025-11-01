@@ -6,8 +6,8 @@ export const zhezhi: Character = {
   slug: 'zhezhi',
   url: 'https://game8.co/games/Wuthering-Waves/archives/461497',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Glacio',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Howler Core',

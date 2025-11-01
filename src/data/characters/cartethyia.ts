@@ -6,8 +6,8 @@ export const cartethyia: Character = {
   slug: 'cartethyia',
   url: 'https://game8.co/games/Wuthering-Waves/archives/507777',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Aero',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Tidal Residuum',

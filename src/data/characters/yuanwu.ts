@@ -6,8 +6,8 @@ export const yuanwu: Character = {
   slug: 'yuanwu',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454219',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Electro',
+  weapon: 'Gauntlets',
   materials: {
     ascension: {
       common: 'Crude Ring',

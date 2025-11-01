@@ -6,8 +6,8 @@ export const aalto: Character = {
   slug: 'aalto',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454214',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Aero',
+  weapon: 'Pistols',
   materials: {
     ascension: {
       common: 'Howler Core',

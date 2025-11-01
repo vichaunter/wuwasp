@@ -1,24 +1,24 @@
-import type { Character } from '@/types';
+import type { Character } from "@/types";
 
 export const ciaccona: Character = {
-  id: 'ciaccona',
-  name: 'ciaccona',
-  slug: 'ciaccona',
-  url: 'https://game8.co/games/Wuthering-Waves/archives/507924',
+  id: "ciaccona",
+  name: "ciaccona",
+  slug: "ciaccona",
+  url: "https://game8.co/games/Wuthering-Waves/archives/507924",
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: "Aero",
+  weapon: "Pistols",
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Blazing Bone',
-      overworld: 'Golden Fleece',
+      common: "Tidal Residuum",
+      boss: "Blazing Bone",
+      overworld: "Golden Fleece",
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Impure Phlogiston',
-      boss: 'When Irises Bloom',
+      common: "Tidal Residuum",
+      forgery: "Impure Phlogiston",
+      boss: "When Irises Bloom",
     },
   },
-  image: '/characters/ciaccona.png',
+  image: "/characters/ciaccona.png",
 };

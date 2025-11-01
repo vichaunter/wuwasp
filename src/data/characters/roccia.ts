@@ -6,8 +6,8 @@ export const roccia: Character = {
   slug: 'roccia',
   url: 'https://game8.co/games/Wuthering-Waves/archives/486246',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Havoc',
+  weapon: 'Gauntlets',
   materials: {
     ascension: {
       common: 'Tidal Residuum',

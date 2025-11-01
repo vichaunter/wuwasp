@@ -6,8 +6,8 @@ export const yinlin: Character = {
   slug: 'yinlin',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454218',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Electro',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Whisperin Core',

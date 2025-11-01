@@ -7,7 +7,7 @@ export const shorekeeper: Character = {
   url: 'https://game8.co/games/Wuthering-Waves/archives/463667',
   rarity: 5,
   element: 'Spectro',
-  weapon: 'Broadblade',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Whisperin Core',

@@ -6,8 +6,8 @@ export const youhu: Character = {
   slug: 'youhu',
   url: 'https://game8.co/games/Wuthering-Waves/archives/463668',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Glacio',
+  weapon: 'Gauntlets',
   materials: {
     ascension: {
       common: 'Crude Ring',

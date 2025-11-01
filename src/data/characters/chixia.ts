@@ -6,8 +6,8 @@ export const chixia: Character = {
   slug: 'chixia',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454220',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Pistols',
   materials: {
     ascension: {
       common: 'Whisperin Core',

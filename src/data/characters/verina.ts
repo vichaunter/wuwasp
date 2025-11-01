@@ -7,7 +7,7 @@ export const verina: Character = {
   url: 'https://game8.co/games/Wuthering-Waves/archives/454229',
   rarity: 5,
   element: 'Spectro',
-  weapon: 'Broadblade',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Howler Core',

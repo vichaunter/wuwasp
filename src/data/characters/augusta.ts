@@ -6,7 +6,7 @@ export const augusta: Character = {
   slug: 'augusta',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524890',
   rarity: 5,
-  element: 'Spectro',
+  element: 'Electro',
   weapon: 'Broadblade',
   materials: {
     ascension: {

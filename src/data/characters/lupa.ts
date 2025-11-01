@@ -6,7 +6,7 @@ export const lupa: Character = {
   slug: 'lupa',
   url: 'https://game8.co/games/Wuthering-Waves/archives/520661',
   rarity: 5,
-  element: 'Spectro',
+  element: 'Fusion',
   weapon: 'Broadblade',
   materials: {
     ascension: {

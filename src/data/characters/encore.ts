@@ -6,8 +6,8 @@ export const encore: Character = {
   slug: 'encore',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454221',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Rectifier',
   materials: {
     ascension: {
       common: 'Whisperin Core',

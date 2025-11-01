@@ -6,8 +6,8 @@ export const rover_havoc: Character = {
   slug: 'rover-havoc',
   url: 'https://game8.co/games/Wuthering-Waves/archives/456120',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Havoc',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Whisperin Core',

@@ -6,8 +6,8 @@ export const yangyang: Character = {
   slug: 'yangyang',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454215',
   rarity: 4,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Aero',
+  weapon: 'Sword',
   materials: {
     ascension: {
       common: 'Crude Ring',

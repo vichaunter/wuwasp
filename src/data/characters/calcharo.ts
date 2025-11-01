@@ -6,7 +6,7 @@ export const calcharo: Character = {
   slug: 'calcharo',
   url: 'https://game8.co/games/Wuthering-Waves/archives/454217',
   rarity: 5,
-  element: 'Spectro',
+  element: 'Electro',
   weapon: 'Broadblade',
   materials: {
     ascension: {

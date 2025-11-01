@@ -6,8 +6,8 @@ export const xiangli_yao: Character = {
   slug: 'xiangli-yao',
   url: 'https://game8.co/games/Wuthering-Waves/archives/461501',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Electro',
+  weapon: 'Gauntlets',
   materials: {
     ascension: {
       common: 'Whisperin Core',

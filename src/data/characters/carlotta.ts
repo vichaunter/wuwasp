@@ -6,8 +6,8 @@ export const carlotta: Character = {
   slug: 'carlotta',
   url: 'https://game8.co/games/Wuthering-Waves/archives/486251',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Glacio',
+  weapon: 'Pistols',
   materials: {
     ascension: {
       common: '',

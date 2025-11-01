@@ -6,8 +6,8 @@ export const galbrena: Character = {
   slug: 'galbrena',
   url: 'https://game8.co/games/Wuthering-Waves/archives/524888',
   rarity: 5,
-  element: 'Spectro',
-  weapon: 'Broadblade',
+  element: 'Fusion',
+  weapon: 'Pistols',
   materials: {
     ascension: {
       common: 'Tidal Residuum',
