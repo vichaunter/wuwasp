@@ -8,7 +8,7 @@
 import type { UserData } from '@/types';
 
 // Current version of the data structure
-export const CURRENT_STORAGE_VERSION = 3;
+export const CURRENT_STORAGE_VERSION = 4;
 
 // Migration from version 1 to version 2
 // Migrates old forte structure (passive1, passive2, bonusPassive) 
@@ -82,12 +82,33 @@ function migrateV2toV3(data: any): any {
   return data;
 }
 
+// Migration from version 3 to version 4
+// Ensures completedCharacters and completedWeapons exist and validates data integrity
+function migrateV3toV4(data: any): any {
+  console.log('🔄 Migrating storage from v3 to v4...');
+  
+  // Ensure completedCharacters exists
+  if (!data.completedCharacters || typeof data.completedCharacters !== 'object') {
+    data.completedCharacters = {};
+    console.log('  ✓ Initialized completedCharacters');
+  }
+  
+  // Ensure completedWeapons exists
+  if (!data.completedWeapons || typeof data.completedWeapons !== 'object') {
+    data.completedWeapons = {};
+    console.log('  ✓ Initialized completedWeapons');
+  }
+  
+  return data;
+}
+
 // Registry of all migration functions
 const migrations: Record<number, (data: any) => any> = {
   1: migrateV1toV2,
   2: migrateV2toV3,
+  3: migrateV3toV4,
   // Add future migrations here:
-  // 3: migrateV3toV4,
+  // 4: migrateV4toV5,
 };
 
 /**
@@ -127,7 +148,11 @@ export function applyMigrations(data: any): UserData {
   }
   
   console.log('✅ Migrations completed successfully');
-  return migratedData as UserData;
+  
+  // After migrations, validate and fix any data inconsistencies
+  const validatedData = validateAndFixData(migratedData);
+  
+  return validatedData as UserData;
 }
 
 /**
@@ -176,5 +201,224 @@ export function saveMigratedData(storageKey: string, data: UserData): void {
 export function resetStorage(storageKey: string): void {
   console.warn('⚠️ Resetting storage to defaults');
   localStorage.removeItem(storageKey);
+}
+
+/**
+ * Validates and fixes data inconsistencies
+ * This should be called after migrations to ensure data integrity
+ * Returns data in the format expected by Zustand persist (without 'state' wrapper)
+ */
+export function validateAndFixData(data: any): any {
+  const fixed = { ...data };
+  const isProduction = typeof process !== 'undefined' && process.env?.NODE_ENV === "production";
+  let hasChanges = false;
+
+  // Ensure completedCharacters exists and is an object
+  if (!fixed.completedCharacters || typeof fixed.completedCharacters !== 'object') {
+    fixed.completedCharacters = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing completedCharacters');
+    }
+  }
+
+  // Ensure completedWeapons exists and is an object
+  if (!fixed.completedWeapons || typeof fixed.completedWeapons !== 'object') {
+    fixed.completedWeapons = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing completedWeapons');
+    }
+  }
+
+  // Ensure inventory exists and is an object
+  if (!fixed.inventory || typeof fixed.inventory !== 'object') {
+    fixed.inventory = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing inventory');
+    }
+  }
+
+  // Ensure characterProgress exists and is an object
+  if (!fixed.characterProgress || typeof fixed.characterProgress !== 'object') {
+    fixed.characterProgress = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing characterProgress');
+    }
+  }
+
+  // Ensure weaponProgress exists and is an object
+  if (!fixed.weaponProgress || typeof fixed.weaponProgress !== 'object') {
+    fixed.weaponProgress = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing weaponProgress');
+    }
+  }
+
+  // Ensure collapsedSections exists and is an object
+  if (!fixed.collapsedSections || typeof fixed.collapsedSections !== 'object') {
+    fixed.collapsedSections = {};
+    hasChanges = true;
+    if (!isProduction) {
+      console.log('🔧 Fixed: Initialized missing collapsedSections');
+    }
+  }
+
+  // Validate character progress: if a character is marked as completed,
+  // ensure it's properly tracked (but keep enabled state as user preference)
+  if (fixed.characterProgress && fixed.completedCharacters) {
+    Object.keys(fixed.characterProgress).forEach((characterId) => {
+      const progress = fixed.characterProgress[characterId];
+      
+      // Ensure progress is valid
+      if (!progress || typeof progress !== 'object') {
+        delete fixed.characterProgress[characterId];
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Removed invalid character progress for ${characterId}`);
+        }
+        return;
+      }
+
+      // Ensure required fields exist
+      if (typeof progress.enabled !== 'boolean') {
+        progress.enabled = false;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Set default enabled=false for character ${characterId}`);
+        }
+      }
+
+      if (typeof progress.order !== 'number' || !isFinite(progress.order)) {
+        progress.order = 999;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Set default order for character ${characterId}`);
+        }
+      }
+
+      // Ensure ascension fields exist
+      if (!progress.ascension || typeof progress.ascension !== 'object') {
+        progress.ascension = { current: 0, target: 6 };
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Added missing ascension for character ${characterId}`);
+        }
+      }
+
+      // Ensure level fields exist
+      if (!progress.level || typeof progress.level !== 'object') {
+        progress.level = { current: 1, target: 90 };
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Added missing level for character ${characterId}`);
+        }
+      }
+    });
+  }
+
+  // Validate weapon progress: same as characters
+  if (fixed.weaponProgress && fixed.completedWeapons) {
+    Object.keys(fixed.weaponProgress).forEach((weaponId) => {
+      const progress = fixed.weaponProgress[weaponId];
+      
+      // Ensure progress is valid
+      if (!progress || typeof progress !== 'object') {
+        delete fixed.weaponProgress[weaponId];
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Removed invalid weapon progress for ${weaponId}`);
+        }
+        return;
+      }
+
+      // Ensure required fields exist
+      if (typeof progress.enabled !== 'boolean') {
+        progress.enabled = false;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Set default enabled=false for weapon ${weaponId}`);
+        }
+      }
+
+      if (typeof progress.order !== 'number' || !isFinite(progress.order)) {
+        progress.order = 999;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Set default order for weapon ${weaponId}`);
+        }
+      }
+
+      // Ensure ascension fields exist
+      if (!progress.ascension || typeof progress.ascension !== 'object') {
+        progress.ascension = { current: 0, target: 7 };
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Added missing ascension for weapon ${weaponId}`);
+        }
+      }
+
+      // Ensure level fields exist
+      if (!progress.level || typeof progress.level !== 'object') {
+        progress.level = { current: 1, target: 90 };
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Added missing level for weapon ${weaponId}`);
+        }
+      }
+    });
+  }
+
+  // Validate inventory values: ensure all values are numbers >= 0
+  if (fixed.inventory) {
+    Object.keys(fixed.inventory).forEach((materialId) => {
+      const value = fixed.inventory[materialId];
+      if (typeof value !== 'number' || value < 0 || !isFinite(value)) {
+        fixed.inventory[materialId] = 0;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Invalid inventory value for ${materialId}, set to 0`);
+        }
+      }
+    });
+  }
+
+  // Validate completedCharacters and completedWeapons: ensure they're boolean maps
+  if (fixed.completedCharacters) {
+    Object.keys(fixed.completedCharacters).forEach((characterId) => {
+      if (typeof fixed.completedCharacters[characterId] !== 'boolean') {
+        fixed.completedCharacters[characterId] = true;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Invalid completedCharacters value for ${characterId}`);
+        }
+      }
+    });
+  }
+
+  if (fixed.completedWeapons) {
+    Object.keys(fixed.completedWeapons).forEach((weaponId) => {
+      if (typeof fixed.completedWeapons[weaponId] !== 'boolean') {
+        fixed.completedWeapons[weaponId] = true;
+        hasChanges = true;
+        if (!isProduction) {
+          console.log(`🔧 Fixed: Invalid completedWeapons value for ${weaponId}`);
+        }
+      }
+    });
+  }
+
+  if (!isProduction) {
+    if (hasChanges) {
+      console.log('✅ Data validation completed with fixes');
+    } else {
+      console.log('✅ Data validation passed - no fixes needed');
+    }
+  }
+
+  return fixed;
 }
 

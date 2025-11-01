@@ -474,13 +474,62 @@ export const useInventoryStore = create<InventoryState>()(
       name: "wuwa-planner-inventory",
       version: CURRENT_STORAGE_VERSION,
       migrate: (persistedState: any, version: number) => {
-        console.log(`🔧 Storage migration triggered from version ${version}`);
+        const isProduction = process.env.NODE_ENV === "production";
+        
+        if (!isProduction) {
+          console.log(`🔧 Storage migration triggered from version ${version}`);
+        }
+
+        // Zustand persist wraps the state in a 'state' property
+        // If persistedState already has state, use it; otherwise assume it's the raw state
+        const rawState = persistedState?.state || persistedState || {};
 
         // Apply migrations to bring data to current version
-        const migratedState = applyMigrations(persistedState);
+        const migratedState = applyMigrations(rawState) as any;
 
-        return migratedState;
+        // Extract inventory from UserInventory format if needed
+        let inventory: Record<string, number> = {};
+        if (migratedState.inventory) {
+          if (typeof migratedState.inventory === 'object' && 'materials' in migratedState.inventory) {
+            // Old format with UserInventory wrapper
+            inventory = migratedState.inventory.materials || {};
+          } else {
+            // Direct format (Record<string, number>)
+            inventory = migratedState.inventory as Record<string, number>;
+          }
+        }
+
+        // Ensure all required fields exist with defaults
+        const validatedState = {
+          version: migratedState.version ?? CURRENT_STORAGE_VERSION,
+          inventory: inventory,
+          characterProgress: migratedState.characterProgress || {},
+          weaponProgress: migratedState.weaponProgress || {},
+          collapsedSections: migratedState.collapsedSections || {},
+          completedWeapons: migratedState.completedWeapons || {},
+          completedCharacters: migratedState.completedCharacters || {},
+        };
+
+        if (!isProduction && (
+          !rawState.completedCharacters ||
+          !rawState.completedWeapons ||
+          Object.keys(rawState).length !== Object.keys(validatedState).length - 1 // -1 for methods
+        )) {
+          console.log('✅ State validated and fixed during migration');
+        }
+
+        return validatedState;
       },
+      // Validate state after hydration (when data is loaded from localStorage)
+      partialize: (state: InventoryState) => ({
+        inventory: state.inventory,
+        characterProgress: state.characterProgress,
+        weaponProgress: state.weaponProgress,
+        collapsedSections: state.collapsedSections,
+        completedWeapons: state.completedWeapons,
+        completedCharacters: state.completedCharacters,
+        version: state.version,
+      }),
     }
   )
 );

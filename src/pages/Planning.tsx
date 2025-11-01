@@ -67,36 +67,41 @@ export default function Planning() {
   } | null>(null);
 
   // Combine all enabled items and sort by global order
-  // Completed items go to the end
+  // IMPORTANT: Completed items are EXCLUDED to prevent them from consuming materials
   const allEnabledItems = useMemo(() => {
+    // Ensure completedCharacters and completedWeapons are objects (defensive)
+    const safeCompletedChars = completedCharacters || {};
+    const safeCompletedWeapons = completedWeapons || {};
+    
     const enabledChars = characters
-      .filter((c) => characterProgress[c.id]?.enabled)
+      .filter((c) => {
+        const progress = characterProgress[c.id];
+        // Only include if enabled AND not completed
+        return progress?.enabled && !safeCompletedChars[c.id];
+      })
       .map((c) => ({
         type: "character" as const,
         data: c,
         order: characterProgress[c.id]?.order ?? 999,
-        isCompleted: completedCharacters[c.id] ?? false,
+        isCompleted: false, // We already filtered out completed items
       }));
 
     const enabledWeapons = weapons
-      .filter((w) => weaponProgress[w.id]?.enabled)
+      .filter((w) => {
+        const progress = weaponProgress[w.id];
+        // Only include if enabled AND not completed
+        return progress?.enabled && !safeCompletedWeapons[w.id];
+      })
       .map((w) => ({
         type: "weapon" as const,
         data: w,
         order: weaponProgress[w.id]?.order ?? 999,
-        isCompleted: completedWeapons[w.id] ?? false,
+        isCompleted: false, // We already filtered out completed items
       }));
 
-    return [...enabledChars, ...enabledWeapons]
-      .filter((item) => !item.isCompleted) // Exclude completed items from the main list
-      .sort((a, b) => {
-        // Completed items always go last
-        // if (a.isCompleted !== b.isCompleted) {
-        //   return a.isCompleted ? 1 : -1;
-        // }
-        // Otherwise sort by order
-        return a.order - b.order;
-      });
+    return [...enabledChars, ...enabledWeapons].sort((a, b) => {
+      return a.order - b.order;
+    });
   }, [
     characterProgress,
     weaponProgress,
