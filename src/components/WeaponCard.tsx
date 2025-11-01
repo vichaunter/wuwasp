@@ -28,6 +28,21 @@ export function WeaponCard({
     state.getWeaponProgress(weapon.id)
   );
   const isInPlanner = progress?.enabled ?? false;
+  const isCompleted = useInventoryStore((state) =>
+    state.isWeaponCompleted(weapon.id)
+  );
+  const toggleWeaponCompleted = useInventoryStore(
+    (state) => state.toggleWeaponCompleted
+  );
+  const setInventory = useInventoryStore((state) => state.setInventory);
+
+  const handlePlannerComplete = (
+    itemId: string,
+    newInventory: Record<string, number>
+  ) => {
+    setInventory(newInventory);
+    toggleWeaponCompleted(itemId);
+  };
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -211,6 +226,8 @@ export function WeaponCard({
               requiredMaterials={requiredMaterials}
               allMaterialsDisplay={allMaterialsDisplay}
               effectiveInventory={effectiveInventory}
+              onComplete={handlePlannerComplete}
+              isCompleted={isCompleted}
             />
           )}
         </div>

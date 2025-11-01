@@ -135,7 +135,6 @@ export function PlannerSection({
         } else {
           materialsToConsume.push({
             materialId: matId,
-            materialName: materials.find((m) => m.id === matId)?.name || matId,
             quantity: quantity,
           });
         }

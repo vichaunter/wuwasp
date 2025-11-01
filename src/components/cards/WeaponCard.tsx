@@ -226,6 +226,7 @@ export function WeaponCard({
               allMaterialsDisplay={allMaterialsDisplay}
               effectiveInventory={effectiveInventory}
               onComplete={handlePlannerComplete}
+              isCompleted={isCompleted}
             />
           )}
         </div>

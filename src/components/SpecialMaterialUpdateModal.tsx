@@ -1,5 +1,4 @@
 import { Modal } from "@/components/Modal";
-import { useInventoryStore } from "@/store/inventory";
 import { materials } from "@/data/materials";
 import { MaterialCard } from "@/components/material";
 
@@ -12,8 +11,6 @@ export function SpecialMaterialUpdateModal({
   isOpen,
   onClose,
 }: SpecialMaterialUpdateModalProps) {
-  const { setMaterialQuantity } = useInventoryStore();
-
   const resonancePotions = materials.filter(
     (mat) => mat.baseName === "Resonance Potion"
   );
@@ -21,10 +18,6 @@ export function SpecialMaterialUpdateModal({
   const shellCreditMaterial = materials.find(
     (mat) => mat.id === "shell-credit"
   );
-
-  const handleSave = () => {
-    onClose();
-  };
 
   return (
     <Modal
