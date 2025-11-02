@@ -640,7 +640,7 @@ export const materials: Material[] = [
     quality: MaterialQualityTier.T4,
     image: "/materials/premium-resonance-potion.webp",
   },
-  // EXP Materials - Energy Cores (Weapon EXP) - 3 levels
+  // EXP Materials - Energy Cores (Weapon EXP) - 4 levels
   {
     id: "basic-energy-core",
     name: "Basic Energy Core",
@@ -650,11 +650,19 @@ export const materials: Material[] = [
     image: "/materials/basic-energy-core.webp",
   },
   {
+    id: "medium-energy-core",
+    name: "Medium Energy Core",
+    baseName: "Energy Core",
+    category: MaterialCategory.EXP,
+    quality: MaterialQualityTier.T2,
+    image: "/materials/medium-energy-core.webp",
+  },
+  {
     id: "advanced-energy-core",
     name: "Advanced Energy Core",
     baseName: "Energy Core",
     category: MaterialCategory.EXP,
-    quality: MaterialQualityTier.T2,
+    quality: MaterialQualityTier.T3,
     image: "/materials/advanced-energy-core.webp",
   },
   {
@@ -662,7 +670,7 @@ export const materials: Material[] = [
     name: "Premium Energy Core",
     baseName: "Energy Core",
     category: MaterialCategory.EXP,
-    quality: MaterialQualityTier.T3,
+    quality: MaterialQualityTier.T4,
     image: "/materials/premium-energy-core.webp",
   },
   // Currency

@@ -9,7 +9,7 @@ import { ascensionRequirements } from "@/data/ascension-requirements";
 import { forteRequirements } from "@/data/forte-requirements";
 import { getWeaponAscensionRequirements } from "@/data/weapon-ascension-requirements";
 import { getMaterialByNameAndQuality } from "@/data/materials";
-import { EXP_VALUES, weaponExpRequirements } from "@/data/exp-requirements";
+import { EXP_VALUES } from "@/data/exp-requirements";
 import {
   calculateExpNeeded,
   calculateLevelingShellCredits,
@@ -427,19 +427,13 @@ export function calculateCharacterExpMaterials(
  * below the config button, showing total EXP and total Shell Credits.
  */
 export function calculateWeaponExpMaterials(
-  currentRank: number,
-  targetRank: number
+  currentLevel: number,
+  targetLevel: number
 ): MaterialRequirement[] {
-  let totalExp = 0;
-  let totalShellCreditsForLeveling = 0;
+  if (currentLevel >= targetLevel) return [];
 
-  // Sum up EXP for each ascension rank
-  for (let rank = currentRank; rank < targetRank; rank++) {
-    if (rank >= 0 && rank < weaponExpRequirements.length) {
-      totalExp += weaponExpRequirements[rank].exp;
-      totalShellCreditsForLeveling += weaponExpRequirements[rank].shellCredits;
-    }
-  }
+  const totalExp = calculateExpNeeded(currentLevel, targetLevel);
+  const totalShellCreditsForLeveling = calculateLevelingShellCredits(totalExp);
 
   if (totalExp === 0 && totalShellCreditsForLeveling === 0) {
     return [];
@@ -727,12 +721,12 @@ export function calculateWeaponTotalMaterials(
     )
   );
 
-  // EXP materials (Energy Cores)
-  if (progress.ascension.current < progress.ascension.target) {
+  // EXP materials (Energy Cores) - based on level, not ascension
+  if (progress.level.current < progress.level.target) {
     allMaterials.push(
       ...calculateWeaponExpMaterials(
-        progress.ascension.current,
-        progress.ascension.target
+        progress.level.current,
+        progress.level.target
       )
     );
   }

@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { consumeMaterialsFromInventory } from "../materialSynthesis";
-import { calculateExpMaterials } from "@/data/exp-requirements";
 
 describe("EXP sequential consumption", () => {
   it("first item consumes only what it needs and remaining cascades", () => {
@@ -11,7 +10,7 @@ describe("EXP sequential consumption", () => {
       "basic-resonance-potion": 100, // 1k each => 100k
     };
 
-    // First item needs 58,000 EXP -> should be satisfied by 2 premium (40k) + 1 advanced (10k) + 2 medium (8k)
+    // First item needs 58,000 EXP -> should be satisfied by 2 premium (40k) + 1 advanced (10k) + 2 medium (8k) = 58k total
     const firstExp = 58000;
     const firstReq = [{ materialId: "character-exp", quantity: firstExp }];
 
@@ -22,17 +21,26 @@ describe("EXP sequential consumption", () => {
       "character"
     );
 
-    // Calculate expected potion usage via calculateExpMaterials
-    const expectedUsage = calculateExpMaterials(firstExp, "resonance-potion");
+    // consumeMaterialsFromInventory works by:
+    // 1. Calculate total available EXP
+    // 2. Subtract required EXP
+    // 3. Convert remaining EXP back to materials
+    // So we need to verify that the total EXP calculation is correct
+    const totalBefore = 
+      (globalInventory["premium-resonance-potion"] || 0) * 20000 +
+      (globalInventory["advanced-resonance-potion"] || 0) * 10000 +
+      (globalInventory["medium-resonance-potion"] || 0) * 4000 +
+      (globalInventory["basic-resonance-potion"] || 0) * 1000;
+    
+    const totalAfter = 
+      (afterFirst["premium-resonance-potion"] || 0) * 20000 +
+      (afterFirst["advanced-resonance-potion"] || 0) * 10000 +
+      (afterFirst["medium-resonance-potion"] || 0) * 4000 +
+      (afterFirst["basic-resonance-potion"] || 0) * 1000;
 
-    // Verify inventory decreased by expected usage (or to zero if not enough)
-    for (const id of Object.keys(expectedUsage)) {
-      const used = expectedUsage[id];
-      const before = globalInventory[id] || 0;
-      const after = afterFirst[id] || 0;
-      const expectedAfter = Math.max(0, before - used);
-      expect(after).toBe(expectedAfter);
-    }
+    // Verify that exactly firstExp was consumed (or all if not enough)
+    const consumedExp = totalBefore - totalAfter;
+    expect(consumedExp).toBe(Math.min(firstExp, totalBefore));
 
     // Second item needs 40k -> ensure it consumes from remaining inventory
     const secondExp = 40000;

@@ -15,10 +15,11 @@ export const EXP_VALUES = {
   "advanced-resonance-potion": 10000, // T3 Morada
   "premium-resonance-potion": 20000, // T4 Dorada
 
-  // Energy Cores (Weapon EXP) - 3 levels
+  // Energy Cores (Weapon EXP) - 4 levels
   "basic-energy-core": 1000, // T1 Verde
-  "advanced-energy-core": 4000, // T2 Azul
-  "premium-energy-core": 8000, // T3 Dorada (CORRECTED)
+  "medium-energy-core": 3000, // T2 Azul
+  "advanced-energy-core": 8000, // T3 Morado
+  "premium-energy-core": 20000, // T4 Dorado
 } as const;
 
 // Character leveling EXP requirements by ascension level
@@ -147,23 +148,30 @@ export function calculateExpMaterials(
       materials["basic-resonance-potion"] = basic;
     }
   } else {
-    // Weapon EXP - 3 levels (Verde, Azul, Dorada)
+    // Weapon EXP - 4 levels (Verde, Azul, Morado, Dorado)
 
-    // 1. Dorada/Premium (8,000 EXP)
-    const premium = Math.floor(remaining / 8000);
+    // 1. Dorado/Premium (20,000 EXP)
+    const premium = Math.floor(remaining / 20000);
     if (premium > 0) {
       materials["premium-energy-core"] = premium;
+      remaining = remaining % 20000;
+    }
+
+    // 2. Morado/Advanced (8,000 EXP)
+    const advanced = Math.floor(remaining / 8000);
+    if (advanced > 0) {
+      materials["advanced-energy-core"] = advanced;
       remaining = remaining % 8000;
     }
 
-    // 2. Azul/Advanced (4,000 EXP)
-    const advanced = Math.floor(remaining / 4000);
-    if (advanced > 0) {
-      materials["advanced-energy-core"] = advanced;
-      remaining = remaining % 4000;
+    // 3. Azul/Medium (3,000 EXP)
+    const medium = Math.floor(remaining / 3000);
+    if (medium > 0) {
+      materials["medium-energy-core"] = medium;
+      remaining = remaining % 3000;
     }
 
-    // 3. Verde/Basic (1,000 EXP)
+    // 4. Verde/Basic (1,000 EXP)
     const basic = Math.ceil(remaining / 1000);
     if (basic > 0) {
       materials["basic-energy-core"] = basic;
