@@ -29,6 +29,9 @@ export const MaterialCategory = {
 // Material Base Names (unique material names)
 export { MaterialBaseName } from './material-base-names';
 
+// Weapon Ascension Ranks
+export { WeaponAscensionRank, type WeaponAscensionRankType } from './weapon-ascension-rank';
+
 // Weapon types
 export type WeaponType =
   | "Sword"
