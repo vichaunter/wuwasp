@@ -13,6 +13,8 @@ import { EXP_VALUES } from "@/data/exp-requirements";
 import {
   calculateExpNeeded,
   calculateLevelingShellCredits,
+  calculateWeaponExpNeeded,
+  calculateWeaponLevelingShellCredits,
 } from "@/data/level-requirements";
 
 export interface MaterialRequirement {
@@ -425,15 +427,20 @@ export function calculateCharacterExpMaterials(
  * Returns the TOTAL EXP needed and Shell Credits for leveling,
  * NOT individual cores. The UI will display these as separate rows
  * below the config button, showing total EXP and total Shell Credits.
+ * 
+ * @param currentLevel Starting level (1-90)
+ * @param targetLevel Target level (1-90)
+ * @param weaponRarity Weapon rarity (1-5 stars) - different rarities have different EXP requirements
  */
 export function calculateWeaponExpMaterials(
   currentLevel: number,
-  targetLevel: number
+  targetLevel: number,
+  weaponRarity: 1 | 2 | 3 | 4 | 5 = 5
 ): MaterialRequirement[] {
   if (currentLevel >= targetLevel) return [];
 
-  const totalExp = calculateExpNeeded(currentLevel, targetLevel);
-  const totalShellCreditsForLeveling = calculateLevelingShellCredits(totalExp);
+  const totalExp = calculateWeaponExpNeeded(currentLevel, targetLevel, weaponRarity);
+  const totalShellCreditsForLeveling = calculateWeaponLevelingShellCredits(totalExp);
 
   if (totalExp === 0 && totalShellCreditsForLeveling === 0) {
     return [];
@@ -726,7 +733,8 @@ export function calculateWeaponTotalMaterials(
     allMaterials.push(
       ...calculateWeaponExpMaterials(
         progress.level.current,
-        progress.level.target
+        progress.level.target,
+        weapon.rarity as 1 | 2 | 3 | 4 | 5
       )
     );
   }
