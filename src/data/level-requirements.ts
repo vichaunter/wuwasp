@@ -4,101 +4,122 @@
  */
 
 /**
- * Cumulative EXP required from level 1 to reach each level
+ * Character EXP increments - EXP needed to go from level X to X+1
+ * These are the "To Next" values from the game
+ * Index corresponds to level (e.g., index 0 = EXP to go from 1→2, index 89 = EXP to go from 89→90)
+ * Both 4★ and 5★ characters use the same EXP table
+ */
+const CHARACTER_EXP_INCREMENTS: number[] = [
+  400, // 1 → 2
+  400, // 2 → 3
+  500, // 3 → 4
+  600, // 4 → 5
+  700, // 5 → 6
+  900, // 6 → 7
+  1000, // 7 → 8
+  1200, // 8 → 9
+  1300, // 9 → 10
+  1500, // 10 → 11
+  1700, // 11 → 12
+  2000, // 12 → 13
+  2200, // 13 → 14
+  2400, // 14 → 15
+  2700, // 15 → 16
+  3000, // 16 → 17
+  3300, // 17 → 18
+  3600, // 18 → 19
+  3900, // 19 → 20
+  4300, // 20 → 21
+  4600, // 21 → 22
+  5000, // 22 → 23
+  5400, // 23 → 24
+  5800, // 24 → 25
+  6300, // 25 → 26
+  6700, // 26 → 27
+  7200, // 27 → 28
+  7700, // 28 → 29
+  8200, // 29 → 30
+  8700, // 30 → 31
+  9300, // 31 → 32
+  9800, // 32 → 33
+  10400, // 33 → 34
+  11000, // 34 → 35
+  11700, // 35 → 36
+  12300, // 36 → 37
+  13000, // 37 → 38
+  13700, // 38 → 39
+  14400, // 39 → 40
+  15100, // 40 → 41
+  15900, // 41 → 42
+  16700, // 42 → 43
+  17500, // 43 → 44
+  18300, // 44 → 45
+  19200, // 45 → 46
+  20000, // 46 → 47
+  20900, // 47 → 48
+  21900, // 48 → 49
+  22800, // 49 → 50
+  23800, // 50 → 51
+  24800, // 51 → 52
+  25800, // 52 → 53
+  26900, // 53 → 54
+  28000, // 54 → 55
+  29100, // 55 → 56
+  30300, // 56 → 57
+  31400, // 57 → 58
+  32600, // 58 → 59
+  33900, // 59 → 60
+  35100, // 60 → 61
+  36400, // 61 → 62
+  37700, // 62 → 63
+  39100, // 63 → 64
+  40500, // 64 → 65
+  41900, // 65 → 66
+  43300, // 66 → 67
+  44800, // 67 → 68
+  46300, // 68 → 69
+  47900, // 69 → 70
+  49500, // 70 → 71
+  51100, // 71 → 72
+  52800, // 72 → 73
+  54500, // 73 → 74
+  56200, // 74 → 75
+  58000, // 75 → 76
+  59800, // 76 → 77
+  61600, // 77 → 78
+  63500, // 78 → 79
+  65400, // 79 → 80
+  67400, // 80 → 81
+  69400, // 81 → 82
+  71400, // 82 → 83
+  73500, // 83 → 84
+  75600, // 84 → 85
+  77800, // 85 → 86
+  80000, // 86 → 87
+  82300, // 87 → 88
+  84600, // 88 → 89
+  86900, // 89 → 90
+];
+
+/**
+ * Helper function to convert incremental EXP to cumulative EXP table
+ */
+function generateCumulativeExpTable(increments: number[]): number[] {
+  const cumulative = [0]; // Level 1 has 0 total EXP
+  let total = 0;
+  for (const increment of increments) {
+    total += increment;
+    cumulative.push(total);
+  }
+  return cumulative;
+}
+
+/**
+ * Cumulative EXP required from level 1 to reach each level (for characters)
+ * Generated from CHARACTER_EXP_INCREMENTS
  * Index corresponds to level (e.g., index 0 = level 1, index 89 = level 90)
  */
-export const CHARACTER_EXP_TABLE: number[] = [
-  0, // Level 1
-  1000, // Level 2
-  2100, // Level 3
-  3300, // Level 4
-  4600, // Level 5
-  6000, // Level 6
-  7500, // Level 7
-  9100, // Level 8
-  10800, // Level 9
-  12600, // Level 10
-  14500, // Level 11
-  16500, // Level 12
-  18600, // Level 13
-  20800, // Level 14
-  23100, // Level 15
-  25500, // Level 16
-  28000, // Level 17
-  30600, // Level 18
-  33300, // Level 19
-  37500, // Level 20
-  41800, // Level 21
-  46200, // Level 22
-  50700, // Level 23
-  55300, // Level 24
-  60000, // Level 25
-  64800, // Level 26
-  69700, // Level 27
-  74700, // Level 28
-  79800, // Level 29
-  85000, // Level 30
-  90300, // Level 31
-  95700, // Level 32
-  101200, // Level 33
-  107000, // Level 34
-  113100, // Level 35
-  119500, // Level 36
-  126200, // Level 37
-  131800, // Level 38
-  137500, // Level 39
-  143300, // Level 40
-  149300, // Level 41
-  155500, // Level 42
-  161900, // Level 43
-  168500, // Level 44
-  175300, // Level 45
-  182300, // Level 46
-  189500, // Level 47
-  196900, // Level 48
-  204500, // Level 49
-  212300, // Level 50
-  220300, // Level 51
-  228500, // Level 52
-  236800, // Level 53
-  245200, // Level 54
-  253800, // Level 55
-  262600, // Level 56
-  271600, // Level 57
-  280800, // Level 58
-  290200, // Level 59
-  299800, // Level 60
-  309600, // Level 61
-  319700, // Level 62
-  330100, // Level 63
-  340800, // Level 64
-  351800, // Level 65
-  363100, // Level 66
-  374700, // Level 67
-  386600, // Level 68
-  398800, // Level 69
-  411300, // Level 70
-  424100, // Level 71
-  436600, // Level 72
-  449250, // Level 73
-  462050, // Level 74
-  475350, // Level 75
-  489150, // Level 76
-  503450, // Level 77
-  518250, // Level 78
-  533550, // Level 79
-  549350, // Level 80
-  565650, // Level 81
-  583950, // Level 82
-  604250, // Level 83
-  626550, // Level 84
-  650850, // Level 85
-  677150, // Level 86
-  705450, // Level 87
-  735750, // Level 88
-  768050, // Level 89
-  802350, // Level 90
-];
+export const CHARACTER_EXP_TABLE = generateCumulativeExpTable(CHARACTER_EXP_INCREMENTS);
 
 /**
  * Calculate EXP needed to go from one level to another for characters
@@ -607,19 +628,6 @@ const WEAPON_EXP_INCREMENTS_1STAR: number[] = [
   59360, // 89 → 90
 ];
 
-/**
- * Helper function to convert incremental EXP to cumulative EXP table
- */
-function generateCumulativeExpTable(increments: number[]): number[] {
-  const cumulative = [0]; // Level 1 has 0 total EXP
-  let total = 0;
-  for (const increment of increments) {
-    total += increment;
-    cumulative.push(total);
-  }
-  return cumulative;
-}
-
 // Generate cumulative tables from increments for efficient lookups
 export const WEAPON_EXP_TABLE_5STAR = generateCumulativeExpTable(WEAPON_EXP_INCREMENTS_5STAR);
 export const WEAPON_EXP_TABLE_4STAR = generateCumulativeExpTable(WEAPON_EXP_INCREMENTS_4STAR);
@@ -671,10 +679,10 @@ export function getMinLevelForAscension(ascensionRank: number): number {
 
 /**
  * Shell Credits needed for leveling characters from one level to another
- * Formula: 250 Shell Credits per 10,000 EXP (0.025 per EXP)
+ * Formula: 0.35 Shell Credits per 1 EXP
  */
 export function calculateLevelingShellCredits(expNeeded: number): number {
-  return Math.floor((expNeeded / 10000) * 250);
+  return Math.floor(expNeeded * 0.35);
 }
 
 /**
