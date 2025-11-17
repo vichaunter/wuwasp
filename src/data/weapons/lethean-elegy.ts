@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const lethean_elegy: Weapon = {
   id: 'lethean-elegy',
@@ -13,8 +13,8 @@ export const lethean_elegy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Lento Helix',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.LENTO_HELIX,
     ascension: '',
   },
   image: '/weapons/lethean-elegy.png',

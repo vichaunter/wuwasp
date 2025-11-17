@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const tyro_broadblade: Weapon = {
   id: 'tyro-broadblade',
@@ -13,8 +13,8 @@ export const tyro_broadblade: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Waveworn Residue',
-    forgery: 'Whisperin Core',
+    common: MaterialBaseName.WHISPERIN_CORE,
+    forgery: MaterialBaseName.WAVEWORN_RESIDUE,
     ascension: '',
   },
   image: '/weapons/tyro-broadblade.png',

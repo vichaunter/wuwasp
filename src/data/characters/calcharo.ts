@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const calcharo: Character = {
@@ -11,14 +12,14 @@ export const calcharo: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Thundering Tacet Core',
-      overworld: 'Iris',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.THUNDERING_TACET_CORE,
+      overworld: MaterialBaseName.IRIS,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Waveworn Residue',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/calcharo.png',

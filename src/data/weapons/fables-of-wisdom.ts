@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const fables_of_wisdom: Weapon = {
   id: 'fables-of-wisdom',
@@ -13,8 +13,8 @@ export const fables_of_wisdom: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Inert Metallic Drip',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.INERT_METALLIC_DRIP,
     ascension: '',
   },
   image: '/weapons/fables-of-wisdom.png',

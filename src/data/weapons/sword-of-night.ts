@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const sword_of_night: Weapon = {
   id: 'sword-of-night',
@@ -13,8 +13,8 @@ export const sword_of_night: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Inert Metallic Drip',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.INERT_METALLIC_DRIP,
     ascension: '',
   },
   image: '/weapons/sword-of-night.png',

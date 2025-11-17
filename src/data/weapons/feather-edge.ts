@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const feather_edge: Weapon = {
   id: 'feather-edge',
@@ -13,8 +13,8 @@ export const feather_edge: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Inert Metallic Drip',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.INERT_METALLIC_DRIP,
     ascension: '',
   },
   image: '/weapons/feather-edge.png',

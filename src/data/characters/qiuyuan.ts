@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const qiuyuan: Character = {
@@ -11,14 +12,14 @@ export const qiuyuan: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: "Whisperin Core",
-      boss: "Truth in Lies",
-      overworld: "Wintry Bell",
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.TRUTH_IN_LIES,
+      overworld: MaterialBaseName.WINTRY_BELL,
     },
     forte: {
-      common: "Whisperin Core",
-      forgery: "Inert Metallic Drip",
-      boss: "Curse of the Abyss",
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.CURSE_OF_THE_ABYSS,
     },
   },
   image: "/characters/qiuyuan.png",

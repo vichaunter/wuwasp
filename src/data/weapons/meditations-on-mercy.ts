@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const meditations_on_mercy: Weapon = {
   id: 'meditations-on-mercy',
@@ -13,8 +13,8 @@ export const meditations_on_mercy: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Waveworn Residue',
-    forgery: 'Whisperin Core',
+    common: MaterialBaseName.WHISPERIN_CORE,
+    forgery: MaterialBaseName.WAVEWORN_RESIDUE,
     ascension: '',
   },
   image: '/weapons/meditations-on-mercy.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const aalto: Character = {
@@ -11,14 +12,14 @@ export const aalto: Character = {
   weapon: WeaponType.Pistol,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Roaring Rock Fist',
-      overworld: 'Wintry Bell',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.ROARING_ROCK_FIST,
+      overworld: MaterialBaseName.WINTRY_BELL,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Impure Phlogiston',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.IMPURE_PHLOGISTON,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/aalto.png',

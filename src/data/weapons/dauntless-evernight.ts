@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const dauntless_evernight: Weapon = {
   id: 'dauntless-evernight',
@@ -13,8 +13,8 @@ export const dauntless_evernight: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Waveworn Residue',
-    forgery: 'Whisperin Core',
+    common: MaterialBaseName.WHISPERIN_CORE,
+    forgery: MaterialBaseName.WAVEWORN_RESIDUE,
     ascension: '',
   },
   image: '/weapons/dauntless-evernight.png',

@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const sword_18: Weapon = {
   id: 'sword-18',
@@ -13,8 +13,8 @@ export const sword_18: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Inert Metallic Drip',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.INERT_METALLIC_DRIP,
     ascension: '',
   },
   image: '/weapons/sword-18.png',

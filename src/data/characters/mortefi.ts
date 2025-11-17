@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const mortefi: Character = {
@@ -11,14 +12,14 @@ export const mortefi: Character = {
   weapon: WeaponType.Pistol,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Rage Tacet Core',
-      overworld: 'Coriolus',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.RAGE_TACET_CORE,
+      overworld: MaterialBaseName.CORIOLUS,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Impure Phlogiston',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.IMPURE_PHLOGISTON,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/mortefi.png',

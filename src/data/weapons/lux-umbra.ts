@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const lux_umbra: Weapon = {
   id: 'lux-umbra',
@@ -13,8 +13,8 @@ export const lux_umbra: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Impure Phlogiston',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.IMPURE_PHLOGISTON,
     ascension: '',
   },
   image: '/weapons/lux-umbra.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const brant: Character = {
@@ -11,13 +12,13 @@ export const brant: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Blazing Bone',
-      overworld: 'Golden Fleece',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.BLAZING_BONE,
+      overworld: MaterialBaseName.GOLDEN_FLEECE,
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Inert Metallic Drip',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
       boss: 'The Netherworld\'s Stare',
     },
   },

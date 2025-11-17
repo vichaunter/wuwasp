@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const zani: Character = {
@@ -11,13 +12,13 @@ export const zani: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Polygon Core',
-      boss: 'Platinum Core',
-      overworld: 'Sword Acorus',
+      common: MaterialBaseName.POLYGON_CORE,
+      boss: MaterialBaseName.PLATINUM_CORE,
+      overworld: MaterialBaseName.SWORD_ACORUS,
     },
     forte: {
-      common: 'Polygon Core',
-      forgery: 'Cadence Seed',
+      common: MaterialBaseName.POLYGON_CORE,
+      forgery: MaterialBaseName.CADENCE_SEED,
       boss: 'The Netherworld\'s Stare',
     },
   },

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const changli: Character = {
@@ -11,13 +12,13 @@ export const changli: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Rage Tacet Core',
-      overworld: 'Pavo Plum',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.RAGE_TACET_CORE,
+      overworld: MaterialBaseName.PAVO_PLUM,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Inert Metallic Drip',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
       boss: 'Sentinel\'s Dagger',
     },
   },

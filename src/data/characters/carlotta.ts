@@ -1,5 +1,5 @@
 import type { Character } from "@/types";
-import { Element, WeaponType } from "@/types";
+import { Element, WeaponType, MaterialBaseName } from "@/types";
 
 export const carlotta: Character = {
   id: "carlotta",
@@ -11,14 +11,14 @@ export const carlotta: Character = {
   weapon: WeaponType.Pistol,
   materials: {
     ascension: {
-      common: "Polygon Core",
-      boss: "Platinum Core",
-      overworld: "Sword Acorus",
+      common: MaterialBaseName.POLYGON_CORE,
+      boss: MaterialBaseName.PLATINUM_CORE,
+      overworld: MaterialBaseName.SWORD_ACORUS,
     },
     forte: {
-      common: "Polygon Core",
-      forgery: "Impure Phlogiston",
-      boss: "The Netherworld's Stare",
+      common: MaterialBaseName.POLYGON_CORE,
+      forgery: MaterialBaseName.IMPURE_PHLOGISTON,
+      boss: MaterialBaseName.THE_NETHERWORLDS_STARE,
     },
   },
   image: "/characters/carlotta.png",

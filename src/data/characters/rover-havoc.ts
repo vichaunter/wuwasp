@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const rover_havoc: Character = {
@@ -11,14 +12,14 @@ export const rover_havoc: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
+      common: MaterialBaseName.WHISPERIN_CORE,
       boss: '',
-      overworld: 'Pecok Flower',
+      overworld: MaterialBaseName.PECOK_FLOWER,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Inert Metallic Drip',
-      boss: 'Dreamless Feather',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.DREAMLESS_FEATHER,
     },
   },
   image: '/characters/rover-havoc.png',

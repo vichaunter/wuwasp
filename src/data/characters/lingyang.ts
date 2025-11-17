@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const lingyang: Character = {
@@ -11,14 +12,14 @@ export const lingyang: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Sound-Keeping Tacet Core',
-      overworld: 'Coriolus',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.SOUND_KEEPING_TACET_CORE,
+      overworld: MaterialBaseName.CORIOLUS,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Cadence Seed',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/lingyang.png',

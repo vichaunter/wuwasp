@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const jiyan: Character = {
@@ -11,14 +12,14 @@ export const jiyan: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Roaring Rock Fist',
-      overworld: 'Pecok Flower',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.ROARING_ROCK_FIST,
+      overworld: MaterialBaseName.PECOK_FLOWER,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Waveworn Residue',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/jiyan.png',

@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const stellar_symphony: Weapon = {
   id: 'stellar-symphony',
@@ -13,8 +13,8 @@ export const stellar_symphony: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Lento Helix',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.LENTO_HELIX,
     ascension: '',
   },
   image: '/weapons/stellar-symphony.png',

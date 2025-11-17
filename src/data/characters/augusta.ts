@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const augusta: Character = {
@@ -11,14 +12,14 @@ export const augusta: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Blighted Crown of Puppet King',
-      overworld: 'Luminous Calendula',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.BLIGHTED_CROWN_OF_PUPPET_KING,
+      overworld: MaterialBaseName.LUMINOUS_CALENDULA,
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Waveworn Residue',
-      boss: 'When Irises Bloom',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
+      boss: MaterialBaseName.WHEN_IRISES_BLOOM,
     },
   },
   image: '/characters/augusta.png',

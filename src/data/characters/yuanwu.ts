@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const yuanwu: Character = {
@@ -11,14 +12,14 @@ export const yuanwu: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Hidden Thunder Tacet Core',
-      overworld: 'Terraspawn Fungus',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.HIDDEN_THUNDER_TACET_CORE,
+      overworld: MaterialBaseName.TERRASPAWN_FUNGUS,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Cadence Seed',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/yuanwu.png',

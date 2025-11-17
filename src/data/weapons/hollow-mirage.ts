@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const hollow_mirage: Weapon = {
   id: 'hollow-mirage',
@@ -13,8 +13,8 @@ export const hollow_mirage: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Cadence Seed',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.CADENCE_SEED,
     ascension: '',
   },
   image: '/weapons/hollow-mirage.png',

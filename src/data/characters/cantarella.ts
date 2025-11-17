@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const cantarella: Character = {
@@ -11,14 +12,14 @@ export const cantarella: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Polygon Core',
-      boss: 'Cleansing Conch',
-      overworld: 'Seaside Cendrelis',
+      common: MaterialBaseName.POLYGON_CORE,
+      boss: MaterialBaseName.CLEANSING_CONCH,
+      overworld: MaterialBaseName.SEASIDE_CENDRELIS,
     },
     forte: {
-      common: 'Polygon Core',
-      forgery: 'Lento Helix',
-      boss: 'When Irises Bloom',
+      common: MaterialBaseName.POLYGON_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
+      boss: MaterialBaseName.WHEN_IRISES_BLOOM,
     },
   },
   image: '/characters/cantarella.png',

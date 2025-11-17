@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const abyss_surges: Weapon = {
   id: 'abyss-surges',
@@ -13,8 +13,8 @@ export const abyss_surges: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Cadence Seed',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.CADENCE_SEED,
     ascension: '',
   },
   image: '/weapons/abyss-surges.png',

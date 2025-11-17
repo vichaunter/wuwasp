@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const galbrena: Character = {
@@ -11,14 +12,14 @@ export const galbrena: Character = {
   weapon: WeaponType.Pistol,
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Blighted Crown of Puppet King',
-      overworld: 'Stone Rose',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.BLIGHTED_CROWN_OF_PUPPET_KING,
+      overworld: MaterialBaseName.STONE_ROSE,
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Impure Phlogiston',
-      boss: 'Curse of the Abyss',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.IMPURE_PHLOGISTON,
+      boss: MaterialBaseName.CURSE_OF_THE_ABYSS,
     },
   },
   image: '/characters/galbrena.png',

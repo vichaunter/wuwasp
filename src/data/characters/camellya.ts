@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const camellya: Character = {
@@ -11,14 +12,14 @@ export const camellya: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Topological Confinement',
-      overworld: 'Nova',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.TOPOLOGICAL_CONFINEMENT,
+      overworld: MaterialBaseName.NOVA,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Inert Metallic Drip',
-      boss: 'Dreamless Feather',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.DREAMLESS_FEATHER,
     },
   },
   image: '/characters/camellya.png',

@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const red_spring: Weapon = {
   id: 'red-spring',
@@ -13,8 +13,8 @@ export const red_spring: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Inert Metallic Drip',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.INERT_METALLIC_DRIP,
     ascension: '',
   },
   image: '/weapons/red-spring.png',

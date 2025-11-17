@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const originite_type_iv: Weapon = {
   id: 'originite-type-iv',
@@ -13,8 +13,8 @@ export const originite_type_iv: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Howler Core',
-    forgery: 'Cadence Seed',
+    common: MaterialBaseName.HOWLER_CORE,
+    forgery: MaterialBaseName.CADENCE_SEED,
     ascension: '',
   },
   image: '/weapons/originite-type-iv.png',

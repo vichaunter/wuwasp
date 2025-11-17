@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const training_pistols: Weapon = {
   id: 'training-pistols',
@@ -13,8 +13,8 @@ export const training_pistols: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Impure Phlogiston',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.IMPURE_PHLOGISTON,
     ascension: '',
   },
   image: '/weapons/training-pistols.png',

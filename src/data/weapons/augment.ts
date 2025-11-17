@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const augment: Weapon = {
   id: 'augment',
@@ -13,8 +13,8 @@ export const augment: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Lento Helix',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.LENTO_HELIX,
     ascension: '',
   },
   image: '/weapons/augment.png',

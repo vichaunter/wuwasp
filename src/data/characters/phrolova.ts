@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const phrolova: Character = {
@@ -11,13 +12,13 @@ export const phrolova: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Polygon Core',
-      boss: 'Truth in Lies',
-      overworld: 'Afterlife',
+      common: MaterialBaseName.POLYGON_CORE,
+      boss: MaterialBaseName.TRUTH_IN_LIES,
+      overworld: MaterialBaseName.AFTERLIFE,
     },
     forte: {
-      common: 'Polygon Core',
-      forgery: 'Lento Helix',
+      common: MaterialBaseName.POLYGON_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
       boss: 'The Netherworld\'s Stare',
     },
   },

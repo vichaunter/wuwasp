@@ -1,5 +1,5 @@
 import type { Weapon } from "@/types";
-import { WeaponType } from "@/types";
+import { WeaponType, MaterialBaseName } from "@/types";
 
 export const ages_of_harvest: Weapon = {
   id: "ages-of-harvest",
@@ -13,8 +13,8 @@ export const ages_of_harvest: Weapon = {
   skill: "",
   skillDescription: "",
   materials: {
-    common: "Whisperin Core",
-    forgery: "Waveworn Residue",
+    common: MaterialBaseName.WHISPERIN_CORE,
+    forgery: MaterialBaseName.WAVEWORN_RESIDUE,
     ascension: "",
   },
   image: "/weapons/ages-of-harvest.png",

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const yinlin: Character = {
@@ -11,14 +12,14 @@ export const yinlin: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Group Abomination Tacet Core',
-      overworld: 'Coriolus',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.GROUP_ABOMINATION_TACET_CORE,
+      overworld: MaterialBaseName.CORIOLUS,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Lento Helix',
-      boss: 'Dreamless Feather',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
+      boss: MaterialBaseName.DREAMLESS_FEATHER,
     },
   },
   image: '/characters/yinlin.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const baizhi: Character = {
@@ -11,14 +12,14 @@ export const baizhi: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Sound-Keeping Tacet Core',
-      overworld: 'Lanternberry',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.SOUND_KEEPING_TACET_CORE,
+      overworld: MaterialBaseName.LANTERNBERRY,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Lento Helix',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/baizhi.png',

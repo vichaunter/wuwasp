@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const iuno: Character = {
@@ -11,14 +12,14 @@ export const iuno: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: "Polygon Core",
-      boss: "Abyssal Husk",
-      overworld: "Silverglow Bloom",
+      common: MaterialBaseName.POLYGON_CORE,
+      boss: MaterialBaseName.ABYSSAL_HUSK,
+      overworld: MaterialBaseName.SILVERGLOW_BLOOM,
     },
     forte: {
-      common: "Polygon Core",
-      forgery: "Cadence Seed",
-      boss: "The Netherworld's Stare",
+      common: MaterialBaseName.POLYGON_CORE,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.THE_NETHERWORLDS_STARE,
     },
   },
   image: "/characters/iuno.png",

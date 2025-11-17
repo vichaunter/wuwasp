@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const the_last_dance: Weapon = {
   id: 'the-last-dance',
@@ -13,8 +13,8 @@ export const the_last_dance: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Impure Phlogiston',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.IMPURE_PHLOGISTON,
     ascension: '',
   },
   image: '/weapons/the-last-dance.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const roccia: Character = {
@@ -11,13 +12,13 @@ export const roccia: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Cleansing Conch',
-      overworld: 'Firecracker Jewelweed',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.CLEANSING_CONCH,
+      overworld: MaterialBaseName.FIRECRACKER_JEWELWEED,
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Cadence Seed',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.CADENCE_SEED,
       boss: 'The Netherworld\'s Stare',
     },
   },

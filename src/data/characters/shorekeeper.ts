@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const shorekeeper: Character = {
@@ -11,13 +12,13 @@ export const shorekeeper: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Topological Confinement',
-      overworld: 'Nova',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.TOPOLOGICAL_CONFINEMENT,
+      overworld: MaterialBaseName.NOVA,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Lento Helix',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
       boss: 'Sentinel\'s Dagger',
     },
   },

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const taoqi: Character = {
@@ -11,14 +12,14 @@ export const taoqi: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Gold-Dissolving Feather',
-      overworld: 'Iris',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.GOLD_DISSOLVING_FEATHER,
+      overworld: MaterialBaseName.IRIS,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Waveworn Residue',
-      boss: 'Dreamless Feather',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
+      boss: MaterialBaseName.DREAMLESS_FEATHER,
     },
   },
   image: '/characters/taoqi.png',

@@ -1,5 +1,5 @@
 import type { Weapon } from '@/types';
-import { WeaponType } from '@/types';
+import { WeaponType, MaterialBaseName } from '@/types';
 
 export const pistols_of_night: Weapon = {
   id: 'pistols-of-night',
@@ -13,8 +13,8 @@ export const pistols_of_night: Weapon = {
   skill: '',
   skillDescription: '',
   materials: {
-    common: 'Crude Ring',
-    forgery: 'Impure Phlogiston',
+    common: MaterialBaseName.RING,
+    forgery: MaterialBaseName.IMPURE_PHLOGISTON,
     ascension: '',
   },
   image: '/weapons/pistols-of-night.png',

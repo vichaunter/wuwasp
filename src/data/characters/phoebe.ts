@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const phoebe: Character = {
@@ -11,13 +12,13 @@ export const phoebe: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Cleansing Conch',
-      overworld: 'Firecracker Jewelweed',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.CLEANSING_CONCH,
+      overworld: MaterialBaseName.FIRECRACKER_JEWELWEED,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Lento Helix',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
       boss: 'Sentinel\'s Dagger',
     },
   },

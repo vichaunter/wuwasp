@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const ciaccona: Character = {
@@ -11,14 +12,14 @@ export const ciaccona: Character = {
   weapon: WeaponType.Pistol,
   materials: {
     ascension: {
-      common: "Tidal Residuum",
-      boss: "Blazing Bone",
-      overworld: "Golden Fleece",
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.BLAZING_BONE,
+      overworld: MaterialBaseName.GOLDEN_FLEECE,
     },
     forte: {
-      common: "Tidal Residuum",
-      forgery: "Impure Phlogiston",
-      boss: "When Irises Bloom",
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.IMPURE_PHLOGISTON,
+      boss: MaterialBaseName.WHEN_IRISES_BLOOM,
     },
   },
   image: "/characters/ciaccona.png",

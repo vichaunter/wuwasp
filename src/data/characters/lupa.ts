@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const lupa: Character = {
@@ -11,13 +12,13 @@ export const lupa: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Unfading Glory',
-      overworld: 'Bloodleaf Viburnum',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.UNFADING_GLORY,
+      overworld: MaterialBaseName.BLOODLEAF_VIBURNUM,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Waveworn Residue',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
       boss: 'The Netherworld\'s Stare',
     },
   },

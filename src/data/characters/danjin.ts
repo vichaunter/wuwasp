@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const danjin: Character = {
@@ -11,14 +12,14 @@ export const danjin: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Strife Tacet Core',
-      overworld: 'Belle Poppy',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.STRIFE_TACET_CORE,
+      overworld: MaterialBaseName.BELLE_POPPY,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Inert Metallic Drip',
-      boss: 'Dreamless Feather',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.DREAMLESS_FEATHER,
     },
   },
   image: '/characters/danjin.png',

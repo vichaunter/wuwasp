@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const lumi: Character = {
@@ -11,13 +12,13 @@ export const lumi: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Thundering Tacet Core',
-      overworld: 'Terraspawn Fungus',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.THUNDERING_TACET_CORE,
+      overworld: MaterialBaseName.TERRASPAWN_FUNGUS,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Waveworn Residue',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
       boss: 'Sentinel\'s Dagger',
     },
   },

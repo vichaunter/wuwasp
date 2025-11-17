@@ -26,6 +26,9 @@ export const MaterialCategory = {
   EXP: "EXP" as MaterialCategory,
 } as const;
 
+// Material Base Names (unique material names)
+export { MaterialBaseName } from './material-base-names';
+
 // Weapon types
 export type WeaponType =
   | "Sword"

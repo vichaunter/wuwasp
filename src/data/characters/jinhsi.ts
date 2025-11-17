@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const jinhsi: Character = {
@@ -11,13 +12,13 @@ export const jinhsi: Character = {
   weapon: WeaponType.Broadblade,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Elegy Tacet Core',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.ELEGY_TACET_CORE,
       overworld: 'Loong\'s Pearl',
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Waveworn Residue',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.WAVEWORN_RESIDUE,
       boss: 'Sentinel\'s Dagger',
     },
   },

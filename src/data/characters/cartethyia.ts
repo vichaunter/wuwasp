@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const cartethyia: Character = {
@@ -11,14 +12,14 @@ export const cartethyia: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Tidal Residuum',
-      boss: 'Unfading Glory',
-      overworld: 'Bamboo Iris',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      boss: MaterialBaseName.UNFADING_GLORY,
+      overworld: MaterialBaseName.BAMBOO_IRIS,
     },
     forte: {
-      common: 'Tidal Residuum',
-      forgery: 'Inert Metallic Drip',
-      boss: 'When Irises Bloom',
+      common: MaterialBaseName.TIDAL_RESIDUUM,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.WHEN_IRISES_BLOOM,
     },
   },
   image: '/characters/cartethyia.png',

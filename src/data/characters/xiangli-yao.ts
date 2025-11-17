@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const xiangli_yao: Character = {
@@ -11,14 +12,14 @@ export const xiangli_yao: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Hidden Thunder Tacet Core',
-      overworld: 'Violet Coral',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.HIDDEN_THUNDER_TACET_CORE,
+      overworld: MaterialBaseName.VIOLET_CORAL,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Cadence Seed',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/xiangli-yao.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const youhu: Character = {
@@ -11,14 +12,14 @@ export const youhu: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Topological Confinement',
-      overworld: 'Violet Coral',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.TOPOLOGICAL_CONFINEMENT,
+      overworld: MaterialBaseName.VIOLET_CORAL,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Cadence Seed',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/youhu.png',

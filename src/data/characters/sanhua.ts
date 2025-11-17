@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const sanhua: Character = {
@@ -11,14 +12,14 @@ export const sanhua: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Sound-Keeping Tacet Core',
-      overworld: 'Wintry Bell',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.SOUND_KEEPING_TACET_CORE,
+      overworld: MaterialBaseName.WINTRY_BELL,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Inert Metallic Drip',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/sanhua.png',

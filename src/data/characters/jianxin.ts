@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const jianxin: Character = {
@@ -11,14 +12,14 @@ export const jianxin: Character = {
   weapon: WeaponType.Gauntlet,
   materials: {
     ascension: {
-      common: 'Whisperin Core',
-      boss: 'Roaring Rock Fist',
-      overworld: 'Lanternberry',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      boss: MaterialBaseName.ROARING_ROCK_FIST,
+      overworld: MaterialBaseName.LANTERNBERRY,
     },
     forte: {
-      common: 'Whisperin Core',
-      forgery: 'Cadence Seed',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.WHISPERIN_CORE,
+      forgery: MaterialBaseName.CADENCE_SEED,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/jianxin.png',

@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const verina: Character = {
@@ -11,14 +12,14 @@ export const verina: Character = {
   weapon: WeaponType.Rectifier,
   materials: {
     ascension: {
-      common: 'Howler Core',
-      boss: 'Elegy Tacet Core',
-      overworld: 'Belle Poppy',
+      common: MaterialBaseName.HOWLER_CORE,
+      boss: MaterialBaseName.ELEGY_TACET_CORE,
+      overworld: MaterialBaseName.BELLE_POPPY,
     },
     forte: {
-      common: 'Howler Core',
-      forgery: 'Lento Helix',
-      boss: 'Monument Bell',
+      common: MaterialBaseName.HOWLER_CORE,
+      forgery: MaterialBaseName.LENTO_HELIX,
+      boss: MaterialBaseName.MONUMENT_BELL,
     },
   },
   image: '/characters/verina.png',

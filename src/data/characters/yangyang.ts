@@ -1,4 +1,5 @@
 import type { Character } from '@/types';
+import { MaterialBaseName } from '@/types';
 import { Element, WeaponType } from '@/types';
 
 export const yangyang: Character = {
@@ -11,14 +12,14 @@ export const yangyang: Character = {
   weapon: WeaponType.Sword,
   materials: {
     ascension: {
-      common: 'Crude Ring',
-      boss: 'Roaring Rock Fist',
-      overworld: 'Wintry Bell',
+      common: MaterialBaseName.RING,
+      boss: MaterialBaseName.ROARING_ROCK_FIST,
+      overworld: MaterialBaseName.WINTRY_BELL,
     },
     forte: {
-      common: 'Crude Ring',
-      forgery: 'Inert Metallic Drip',
-      boss: 'Unending Destruction',
+      common: MaterialBaseName.RING,
+      forgery: MaterialBaseName.INERT_METALLIC_DRIP,
+      boss: MaterialBaseName.UNENDING_DESTRUCTION,
     },
   },
   image: '/characters/yangyang.png',
